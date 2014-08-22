@@ -362,14 +362,15 @@ public class BasicParseTest extends junit.framework.TestCase
         assertTrue(commentNum != -1);
         String paramNames = comments.getProperty("comment" + commentNum + ".params");
         assertEquals(paramNames, "args");
+        assertNotNull(comments.get("comment0.text"));
+        System.out.println(javadocReport(getFile("GameBuilder.dat")));
     }
     
-    public void testCommentExtraction() throws Exception
-    {
+    public void testCommentExtraction() throws Exception{
         String aSrc = "class A {\n"
-            + "  void method1(int [] a) { }\n"
-            + "  void method2(int a[]) { }\n"
-            + "  void method3(String [] a) { }\n"
+            + "  public void method1(int [] a) { }\n"
+            + "  public void method2(int a[]) { }\n"
+            + "  public void method3(String [] a) { }\n"
             + "}\n";
         
         ClassInfo info = InfoParser.parse(new StringReader(aSrc), new ClassLoaderResolver(getClass().getClassLoader()), null);
@@ -377,8 +378,35 @@ public class BasicParseTest extends junit.framework.TestCase
         assertTrue(findTarget(comments, "void method1(int[])") != -1);
         assertTrue(findTarget(comments, "void method2(int[])") != -1);
         assertTrue(findTarget(comments, "void method3(java.lang.String[])") != -1);
+        assertNull(comments.get("comment0.text"));
     }
-
+    public String javadocReport(File file) throws Exception{
+    	ClassInfo info = InfoParser.parse(file);
+    	return javadocReport(info);
+    }
+    public String javadocReport(String text) throws Exception{
+    	ClassInfo info = InfoParser.parse(new StringReader(text), new ClassLoaderResolver(getClass().getClassLoader()), null);
+    	return javadocReport(info);
+    }
+    public String javadocReport(ClassInfo info) throws Exception{
+    	StringBuilder sb=new StringBuilder();
+        Properties comments = info.getComments();
+        System.out.println(comments);
+        for (int i=0;comments.get("comment"+i+".target")!=null;i++){
+        	sb.append("*******\n");
+        	if (comments.get("comment"+i+".text")!=null){
+        		sb.append(comments.get("comment"+i+".target"));
+        		sb.append(" has javadoc comment: \n");
+        		sb.append(comments.get("comment"+i+".text")+"\n");
+        	}
+        	else{
+        		sb.append(comments.get("comment"+i+".target"));
+        		sb.append(" hasn't javadoc comment. \n");
+        	}
+        	sb.append("*******\n");
+        }
+        return sb.toString();
+    }
     public void testCommentExtraction2() throws Exception
     {
         String aSrc = "class A<T> {\n"
