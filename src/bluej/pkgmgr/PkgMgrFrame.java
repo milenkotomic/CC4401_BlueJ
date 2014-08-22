@@ -125,6 +125,7 @@ import bluej.pkgmgr.actions.NewInheritsAction;
 import bluej.pkgmgr.actions.NewMEprojectAction;
 import bluej.pkgmgr.actions.NewPackageAction;
 import bluej.pkgmgr.actions.NewProjectAction;
+import bluej.pkgmgr.actions.NewTabAction;
 import bluej.pkgmgr.actions.NewUsesAction;
 import bluej.pkgmgr.actions.OpenNonBlueJAction;
 import bluej.pkgmgr.actions.OpenProjectAction;
@@ -150,6 +151,7 @@ import bluej.pkgmgr.actions.StandardAPIHelpAction;
 import bluej.pkgmgr.actions.TutorialAction;
 import bluej.pkgmgr.actions.UseLibraryAction;
 import bluej.pkgmgr.actions.WebsiteAction;
+import bluej.pkgmgr.actions.NewWindowAction;
 import bluej.pkgmgr.dependency.Dependency;
 import bluej.pkgmgr.target.ClassTarget;
 import bluej.pkgmgr.target.PackageTarget;
@@ -1364,6 +1366,17 @@ public class PkgMgrFrame extends JFrame
         }
         return openedProject;
     }
+    
+    public void doOpenWindow(){
+    	
+     	
+    }
+    
+    public void doOpenTab(){
+    	
+     	
+    }
+    
     
     /**
      * Open a dialog that lets the user choose a project. The project selected
@@ -3028,8 +3041,10 @@ public class PkgMgrFrame extends JFrame
             createMenuItem(closeProjectAction, menu);
             createMenuItem(saveProjectAction, menu);
             createMenuItem(saveProjectAsAction, menu);
+            createMenuItem(NewWindowAction.getInstance(),menu);
+            createMenuItem(NewTabAction.getInstance(),menu);
             menu.addSeparator();
-
+            
             createMenuItem(importProjectAction, menu);
             createMenuItem(exportProjectAction, menu);
             javaMEdeployMenuItem = createMenuItem( deployMIDletAction, menu ); 
