@@ -393,7 +393,7 @@ public class BasicParseTest extends junit.framework.TestCase
         Properties comments = info.getComments();
         System.out.println(comments);
         for (int i=0;comments.get("comment"+i+".target")!=null;i++){
-        	sb.append("*******\n");
+        	sb.append("**************\n");
         	if (comments.get("comment"+i+".text")!=null){
         		sb.append(comments.get("comment"+i+".target"));
         		sb.append(" has javadoc comment: \n");
@@ -403,7 +403,7 @@ public class BasicParseTest extends junit.framework.TestCase
         		sb.append(comments.get("comment"+i+".target"));
         		sb.append(" hasn't javadoc comment. \n");
         	}
-        	sb.append("*******\n");
+        	sb.append("**************\n");
         }
         return sb.toString();
     }
