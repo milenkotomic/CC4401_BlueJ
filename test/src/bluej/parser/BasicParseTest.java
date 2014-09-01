@@ -363,7 +363,6 @@ public class BasicParseTest extends junit.framework.TestCase
         String paramNames = comments.getProperty("comment" + commentNum + ".params");
         assertEquals(paramNames, "args");
         assertNotNull(comments.get("comment0.text"));
-        System.out.println(javadocReport(getFile("GameBuilder.dat")));
     }
     
     public void testCommentExtraction() throws Exception{
@@ -380,6 +379,11 @@ public class BasicParseTest extends junit.framework.TestCase
         assertTrue(findTarget(comments, "void method3(java.lang.String[])") != -1);
         assertNull(comments.get("comment0.text"));
     }
+    public void testCC4401() throws Exception{
+    	System.out.println(javadocReport(getFile("GameBuilder.dat")));
+    	System.out.println(javadocReport(getFile("A.dat")));
+    	System.out.println(javadocReport(getFile("B.dat")));
+    }
     public String javadocReport(File file) throws Exception{
     	ClassInfo info = InfoParser.parse(file);
     	return javadocReport(info);
@@ -391,7 +395,6 @@ public class BasicParseTest extends junit.framework.TestCase
     public String javadocReport(ClassInfo info) throws Exception{
     	StringBuilder sb=new StringBuilder();
         Properties comments = info.getComments();
-        System.out.println(comments);
         for (int i=0;comments.get("comment"+i+".target")!=null;i++){
         	sb.append("**************\n");
         	if (comments.get("comment"+i+".text")!=null){
