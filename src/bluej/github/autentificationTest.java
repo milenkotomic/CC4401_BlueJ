@@ -13,7 +13,7 @@ public class autentificationTest {
 
 	public static void main(String[] args) throws IOException {
 		GitHubClient cliente = new GitHubClient();
-		cliente.setCredentials("milenkotomic", "Franteamo5393");
+		cliente.setCredentials("milenkotomic", "");
 		System.out.println(cliente.getUser());
 		
 		RepositoryService service = new RepositoryService();
