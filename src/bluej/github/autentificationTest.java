@@ -19,14 +19,18 @@ public class autentificationTest {
 
 	public static void main(String[] args) throws IOException {
 		GitHubClient cliente = new GitHubClient();
+		//char[] username = null;
 		char[] password = null;
+		
+		String username = JOptionPane.showInputDialog("Ingrese usuario");
+		
 		JPanel panel = new JPanel();		
 		JPasswordField pass = new JPasswordField(10);		
 		panel.add(pass);
 		String[] options = new String[]{"OK", "Cancel"};
 		int option = JOptionPane.showOptionDialog(null, panel, "Ingrese password",
 		                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-		                         null, options, options[1]);
+		                         null, options, options[0]);
 		if(option == 0) // pressing OK button
 		{
 		    password = pass.getPassword();
@@ -38,17 +42,7 @@ public class autentificationTest {
 		
 		RepositoryService service = new RepositoryService(cliente);
 		for (Repository repo : service.getRepositories())
-		  System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
-		
-		
-		/*Issue is = new Issue();
-		is.setTitle("Issue prueba API");
-		IssueService i = new IssueService(cliente);
-		is = i.createIssue(cliente.getUser(), "CC4401_BlueJ", is);
-		*/
-		
-		
-		
+		  System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());		
 		
 
 	}
