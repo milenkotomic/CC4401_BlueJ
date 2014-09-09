@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:javaapplication="http://www.eclipse.org/MoDisco/Java/Composition/0.1.incubation/javaApplication">
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej_java2kdm.xmi#/11"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.4"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.classmgr_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.classmgr_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.classmgr_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.classmgr_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.classmgr_java2kdm.xmi#/4"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.5"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.collect_java2kdm.xmi#/13"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.2"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.6"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.compiler_java2kdm.xmi#/10"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.3"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.8"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.debugger_java2kdm.xmi#/12"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.3/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.8/@inventoryElement.12"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.debugger.gentype_java2kdm.xmi#/22"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.3/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.8/@inventoryElement.13"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.debugger.jdi_java2kdm.xmi#/20"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.4"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.9"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.debugmgr_java2kdm.xmi#/19"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.4/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.9/@inventoryElement.13"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.debugmgr.inspector_java2kdm.xmi#/7"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.4/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.9/@inventoryElement.19"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.debugmgr.objectbench_java2kdm.xmi#/7"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.4/@ownedPackages.2"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.9/@inventoryElement.21"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.debugmgr.texteval_java2kdm.xmi#/6"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.5"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.10"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.editor_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.editor_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.editor_java2kdm.xmi#/2"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.5/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.10/@inventoryElement.3"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/27"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/28"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/29"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/30"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/31"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/32"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/33"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/34"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/35"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/36"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/37"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/38"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/39"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/40"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/41"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/42"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/43"/>
+    <java2FileChildren href="bluej.editor.moe_java2kdm.xmi#/44"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.11"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.extensions_java2kdm.xmi#/26"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.11/@inventoryElement.14"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.extensions.editor_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.extensions.editor_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.extensions.editor_java2kdm.xmi#/2"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.11/@inventoryElement.15"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.extensions.event_java2kdm.xmi#/16"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.11/@inventoryElement.27"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.extensions.painter_java2kdm.xmi#/"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.7"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.12"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.extmgr_java2kdm.xmi#/11"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.8"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.13"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.graph_java2kdm.xmi#/16"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.9"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.14"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.groupwork_java2kdm.xmi#/27"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.9/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.14/@inventoryElement.0"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.groupwork.actions_java2kdm.xmi#/11"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.9/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.14/@inventoryElement.4"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.groupwork.cvsnb_java2kdm.xmi#/20"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.9/@ownedPackages.2"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.14/@inventoryElement.13"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.groupwork.svn_java2kdm.xmi#/10"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.9/@ownedPackages.3"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.14/@inventoryElement.26"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.groupwork.ui_java2kdm.xmi#/17"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.10"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.16"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/27"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/28"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/29"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/30"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/31"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/32"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/33"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/34"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/35"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/36"/>
+    <java2FileChildren href="bluej.parser_java2kdm.xmi#/37"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.10/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.16/@inventoryElement.8"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/27"/>
+    <java2FileChildren href="bluej.parser.entity_java2kdm.xmi#/28"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.10/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.16/@inventoryElement.14"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.parser.lexer_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.parser.lexer_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.parser.lexer_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.parser.lexer_java2kdm.xmi#/3"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.10/@ownedPackages.2"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.16/@inventoryElement.16"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.parser.nodes_java2kdm.xmi#/20"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.10/@ownedPackages.3"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.16/@inventoryElement.21"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.parser.symtab_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.parser.symtab_java2kdm.xmi#/1"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.11"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.17"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/27"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/28"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/29"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/30"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/31"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/32"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/33"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/34"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/35"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/36"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/37"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/38"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/39"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/40"/>
+    <java2FileChildren href="bluej.pkgmgr_java2kdm.xmi#/41"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.11/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.17/@inventoryElement.1"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/27"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/28"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/29"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/30"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/31"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/32"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/33"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/34"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/35"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/36"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/37"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/38"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/39"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/40"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/41"/>
+    <java2FileChildren href="bluej.pkgmgr.actions_java2kdm.xmi#/42"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.11/@ownedPackages.1"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.17/@inventoryElement.6"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.pkgmgr.dependency_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.pkgmgr.dependency_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.pkgmgr.dependency_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.pkgmgr.dependency_java2kdm.xmi#/3"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.11/@ownedPackages.2"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.17/@inventoryElement.12"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.pkgmgr.graphPainter_java2kdm.xmi#/7"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.11/@ownedPackages.3"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.17/@inventoryElement.42"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.pkgmgr.target_java2kdm.xmi#/7"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.11/@ownedPackages.3/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.17/@inventoryElement.42/@inventoryElement.6"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.pkgmgr.target.role_java2kdm.xmi#/7"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.12"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.18"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.prefmgr_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.prefmgr_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.prefmgr_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.prefmgr_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.prefmgr_java2kdm.xmi#/4"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.13"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.20"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.runtime_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.runtime_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.runtime_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.runtime_java2kdm.xmi#/3"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.14"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.21"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.terminal_java2kdm.xmi#/7"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.15"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.22"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.testmgr_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.testmgr_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.testmgr_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.testmgr_java2kdm.xmi#/3"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.15/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.22/@inventoryElement.2"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.testmgr.record_java2kdm.xmi#/11"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.16"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.23"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/11"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/12"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/13"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/14"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/15"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/16"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/17"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/18"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/19"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/20"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/21"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/22"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/23"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/24"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/25"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/26"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/27"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/28"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/29"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/30"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/31"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/32"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/33"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/34"/>
+    <java2FileChildren href="bluej.utility_java2kdm.xmi#/35"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.16/@ownedPackages.0"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.23/@inventoryElement.10"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.utility.filefilter_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.utility.filefilter_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.utility.filefilter_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.utility.filefilter_java2kdm.xmi#/3"/>
+  </javaapplication:Java2Directory>
+  <javaapplication:Java2Directory>
+    <javaPackage href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.17"/>
+    <directory href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.24"/>
+    <parent href="../CC4401_BlueJ_java2kdm.xmi#/"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/0"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/1"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/2"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/3"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/4"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/5"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/6"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/7"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/8"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/9"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/10"/>
+    <java2FileChildren href="bluej.views_java2kdm.xmi#/11"/>
+  </javaapplication:Java2Directory>
+</xmi:XMI>
