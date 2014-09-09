@@ -37,7 +37,7 @@ public class autentificationTest {
 		    
 		}
 		String contraseña = String.valueOf(password);
-		cliente.setCredentials("milenkotomic", contraseña);
+		cliente.setCredentials(username, contraseña);
 		System.out.println(cliente.getUser());
 		
 		RepositoryService service = new RepositoryService(cliente);
