@@ -79,6 +79,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
@@ -190,7 +191,6 @@ public class PkgMgrFrame extends JFrame
     private static PkgMgrFrame recentFrame = null;
 
     // instance fields:
-
     private JPanel buttonPanel;
     private JPanel testPanel;
     private JPanel javaMEPanel;
@@ -1367,7 +1367,7 @@ public class PkgMgrFrame extends JFrame
         return openedProject;
     }
     
-    /**Opens an empty window.*/
+    /**Opens an empty window. Action performed when the "New Window" button is pressed*/
     public void doOpenWindow(){
     	PkgMgrFrame frame = PkgMgrFrame.createFrame();
     	frame.setLocation(0, 0);
@@ -1378,8 +1378,13 @@ public class PkgMgrFrame extends JFrame
     
     /** Opens an empty tab.*/
     public void doOpenTab(){
+    	/*Por ahora, se incluyen las pestañas en una ventana aparte, que luego tendrá las funcionalidades
+    	 * de una ventana de BlueJ normal.
+    	 */
+    	TabbedPkgFrame frame = new TabbedPkgFrame();
     	
-     	
+    	frame.setVisible(true);
+        	
     }
     
     
@@ -2944,7 +2949,10 @@ public class PkgMgrFrame extends JFrame
         if (isEmptyFrame()) {
             enableFunctions(false);
         }
+        
+              
     }
+      
 
     /**
      * Add the text evaluation pane in the lower area of the frame.
