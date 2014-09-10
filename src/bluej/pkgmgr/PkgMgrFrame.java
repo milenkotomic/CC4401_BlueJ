@@ -175,7 +175,7 @@ import bluej.views.MethodView;
 /**
  * The main user interface frame which allows editing of packages
  */
-public class PkgMgrFrame extends JFrame
+public class PkgMgrFrame extends AbstractPkgFrame
     implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener
 {
     private static Font pkgMgrFont = PrefMgr.getStandardFont();
@@ -3054,8 +3054,6 @@ public class PkgMgrFrame extends JFrame
             createMenuItem(closeProjectAction, menu);
             createMenuItem(saveProjectAction, menu);
             createMenuItem(saveProjectAsAction, menu);
-            createMenuItem(NewWindowAction.getInstance(),menu);
-            createMenuItem(NewTabAction.getInstance(),menu);
             menu.addSeparator();
             
             createMenuItem(importProjectAction, menu);
@@ -3213,15 +3211,7 @@ public class PkgMgrFrame extends JFrame
         setJMenuBar(menubar);
     }
 
-    /**
-     * Add a new menu item to a menu.
-     */
-    private JMenuItem createMenuItem(Action action, JMenu menu)
-    {
-        JMenuItem item = menu.add(action);
-        item.setIcon(null);
-        return item;
-    }
+   
 
     /**
      * Add a new menu item to a menu.
