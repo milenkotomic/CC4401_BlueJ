@@ -362,14 +362,14 @@ public class BasicParseTest extends junit.framework.TestCase
         assertTrue(commentNum != -1);
         String paramNames = comments.getProperty("comment" + commentNum + ".params");
         assertEquals(paramNames, "args");
+        assertNotNull(comments.get("comment0.text"));
     }
     
-    public void testCommentExtraction() throws Exception
-    {
+    public void testCommentExtraction() throws Exception{
         String aSrc = "class A {\n"
-            + "  void method1(int [] a) { }\n"
-            + "  void method2(int a[]) { }\n"
-            + "  void method3(String [] a) { }\n"
+            + "  public void method1(int [] a) { }\n"
+            + "  public void method2(int a[]) { }\n"
+            + "  public void method3(String [] a) { }\n"
             + "}\n";
         
         ClassInfo info = InfoParser.parse(new StringReader(aSrc), new ClassLoaderResolver(getClass().getClassLoader()), null);
@@ -377,6 +377,7 @@ public class BasicParseTest extends junit.framework.TestCase
         assertTrue(findTarget(comments, "void method1(int[])") != -1);
         assertTrue(findTarget(comments, "void method2(int[])") != -1);
         assertTrue(findTarget(comments, "void method3(java.lang.String[])") != -1);
+        assertNull(comments.get("comment0.text"));
     }
 
     public void testCommentExtraction2() throws Exception
