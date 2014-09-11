@@ -1369,6 +1369,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
     
     /**Opens an empty window. Action performed when the "New Window" button is pressed*/
     public void doOpenWindow(){
+    	/*Crea nueva ventana vacía*/
     	PkgMgrFrame frame = PkgMgrFrame.createFrame();
     	frame.setLocation(0, 0);
 
