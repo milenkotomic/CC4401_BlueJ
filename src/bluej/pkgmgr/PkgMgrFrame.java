@@ -112,6 +112,7 @@ import bluej.pkgmgr.actions.CancelTestRecordAction;
 import bluej.pkgmgr.actions.CheckExtensionsAction;
 import bluej.pkgmgr.actions.CheckVersionAction;
 import bluej.pkgmgr.actions.CloseProjectAction;
+import bluej.pkgmgr.actions.CommitGitHubAction;
 import bluej.pkgmgr.actions.CompileAction;
 import bluej.pkgmgr.actions.CompileSelectedAction;
 import bluej.pkgmgr.actions.DeployMIDletAction;
@@ -122,6 +123,7 @@ import bluej.pkgmgr.actions.HelpAboutAction;
 import bluej.pkgmgr.actions.ImportProjectAction;
 import bluej.pkgmgr.actions.NewClassAction;
 import bluej.pkgmgr.actions.NewInheritsAction;
+import bluej.pkgmgr.actions.NewIssueGitHubAction;
 import bluej.pkgmgr.actions.NewMEprojectAction;
 import bluej.pkgmgr.actions.NewPackageAction;
 import bluej.pkgmgr.actions.NewProjectAction;
@@ -132,6 +134,8 @@ import bluej.pkgmgr.actions.PageSetupAction;
 import bluej.pkgmgr.actions.PkgMgrAction;
 import bluej.pkgmgr.actions.PreferencesAction;
 import bluej.pkgmgr.actions.PrintAction;
+import bluej.pkgmgr.actions.PullGitHubAction;
+import bluej.pkgmgr.actions.PushGitHubAction;
 import bluej.pkgmgr.actions.QuitAction;
 import bluej.pkgmgr.actions.RebuildAction;
 import bluej.pkgmgr.actions.RemoveAction;
@@ -3169,10 +3173,36 @@ public class PkgMgrFrame extends JFrame
             createMenuItem(TutorialAction.getInstance(), menu);
             createMenuItem(StandardAPIHelpAction.getInstance(), menu);
         }
+        
+        menu = new JMenu("GitHub");
+        menubar.add(menu);
+        {
+            createMenuItem(PushGitHubAction.getInstance(), menu);
+            createMenuItem(PullGitHubAction.getInstance(), menu);
+            createMenuItem(CommitGitHubAction.getInstance(), menu);
+            createMenuItem(NewIssueGitHubAction.getInstance(), menu);
+        }
+            
         addUserHelpItems(menu);
         updateRecentProjects();
 
         setJMenuBar(menubar);
+    }
+    
+    public void doPushGitHub(){
+    	System.out.println("Push");
+    }
+    
+    public void doPullGitHub(){
+    	System.out.println("Pull");
+    }
+
+    public void doCommitGitHub(){
+    	System.out.println("Commit");
+    }
+    
+    public void doNewIssueGitHub(){
+    	System.out.println("New Issue");
     }
 
     /**
