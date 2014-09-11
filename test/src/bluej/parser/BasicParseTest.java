@@ -379,37 +379,7 @@ public class BasicParseTest extends junit.framework.TestCase
         assertTrue(findTarget(comments, "void method3(java.lang.String[])") != -1);
         assertNull(comments.get("comment0.text"));
     }
-    public void testCC4401() throws Exception{
-    	System.out.println(javadocReport(getFile("GameBuilder.dat")));
-    	System.out.println(javadocReport(getFile("A.dat")));
-    	System.out.println(javadocReport(getFile("B.dat")));
-    }
-    public String javadocReport(File file) throws Exception{
-    	ClassInfo info = InfoParser.parse(file);
-    	return javadocReport(info);
-    }
-    public String javadocReport(String text) throws Exception{
-    	ClassInfo info = InfoParser.parse(new StringReader(text), new ClassLoaderResolver(getClass().getClassLoader()), null);
-    	return javadocReport(info);
-    }
-    public String javadocReport(ClassInfo info) throws Exception{
-    	StringBuilder sb=new StringBuilder();
-        Properties comments = info.getComments();
-        for (int i=0;comments.get("comment"+i+".target")!=null;i++){
-        	sb.append("**************\n");
-        	if (comments.get("comment"+i+".text")!=null){
-        		sb.append(comments.get("comment"+i+".target"));
-        		sb.append(" has javadoc comment: \n");
-        		sb.append(comments.get("comment"+i+".text")+"\n");
-        	}
-        	else{
-        		sb.append(comments.get("comment"+i+".target"));
-        		sb.append(" hasn't javadoc comment. \n");
-        	}
-        	sb.append("**************\n");
-        }
-        return sb.toString();
-    }
+
     public void testCommentExtraction2() throws Exception
     {
         String aSrc = "class A<T> {\n"
