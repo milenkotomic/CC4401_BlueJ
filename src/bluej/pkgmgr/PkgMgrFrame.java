@@ -3183,16 +3183,7 @@ public class PkgMgrFrame extends JFrame
             }
         }
 
-        menu = new JMenu("Windows");
-        //menu.setMnemonic(Config.getMnemonicKey(""));
-        menubar.add(menu);
-        {
-        	 createMenuItem(NewWindowAction.getInstance(),menu);
-             createMenuItem(NewTabAction.getInstance(),menu);
-             //menu.addSeparator();
-        	
-        }
-        
+              
         menu = new JMenu(Config.getString("menu.help"));
         menu.setMnemonic(Config.getMnemonicKey("menu.help"));
         menubar.add(menu);
@@ -3208,6 +3199,15 @@ public class PkgMgrFrame extends JFrame
             createMenuItem(WebsiteAction.getInstance(), menu);
             createMenuItem(TutorialAction.getInstance(), menu);
             createMenuItem(StandardAPIHelpAction.getInstance(), menu);
+        }
+        
+        menu = new JMenu("Windows");
+        menubar.add(menu);
+        {
+        	 createMenuItem(NewWindowAction.getInstance(),menu);
+             createMenuItem(NewTabAction.getInstance(),menu);
+             //menu.addSeparator();
+        	
         }
         
         menu = new JMenu("GitHub");
