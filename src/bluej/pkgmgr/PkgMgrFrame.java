@@ -3201,6 +3201,16 @@ public class PkgMgrFrame extends JFrame
             createMenuItem(StandardAPIHelpAction.getInstance(), menu);
         }
         
+                
+        menu = new JMenu("GitHub");
+        menubar.add(menu);
+        {
+            createMenuItem(PushGitHubAction.getInstance(), menu);
+            createMenuItem(PullGitHubAction.getInstance(), menu);
+            createMenuItem(CommitGitHubAction.getInstance(), menu);
+            createMenuItem(NewIssueGitHubAction.getInstance(), menu);
+        }
+        
         menu = new JMenu("Windows");
         menubar.add(menu);
         {
@@ -3210,15 +3220,7 @@ public class PkgMgrFrame extends JFrame
         	
         }
         
-        menu = new JMenu("GitHub");
-        menubar.add(menu);
-        {
-            createMenuItem(PushGitHubAction.getInstance(), menu);
-            createMenuItem(PullGitHubAction.getInstance(), menu);
-            createMenuItem(CommitGitHubAction.getInstance(), menu);
-            createMenuItem(NewIssueGitHubAction.getInstance(), menu);
-        }
-            
+        
         addUserHelpItems(menu);
         updateRecentProjects();
 
