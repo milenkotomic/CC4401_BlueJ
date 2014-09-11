@@ -21,7 +21,7 @@ public class NewIssueGitHubAction extends PkgMgrAction {
     
     private NewIssueGitHubAction()
     {
-        super("NewIssue");
+        super("New Issue");
     }
     
     public void actionPerformed(PkgMgrFrame pmf)
