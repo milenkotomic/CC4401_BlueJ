@@ -127,7 +127,9 @@ import bluej.pkgmgr.actions.NewIssueGitHubAction;
 import bluej.pkgmgr.actions.NewMEprojectAction;
 import bluej.pkgmgr.actions.NewPackageAction;
 import bluej.pkgmgr.actions.NewProjectAction;
+import bluej.pkgmgr.actions.NewTabAction;
 import bluej.pkgmgr.actions.NewUsesAction;
+import bluej.pkgmgr.actions.NewWindowAction;
 import bluej.pkgmgr.actions.OpenNonBlueJAction;
 import bluej.pkgmgr.actions.OpenProjectAction;
 import bluej.pkgmgr.actions.PageSetupAction;
@@ -1368,6 +1370,28 @@ public class PkgMgrFrame extends JFrame
         }
         return openedProject;
     }
+    
+    /**Opens an empty window. Action performed when the "New Window" button is pressed*/
+    public void doOpenWindow(){
+    	/*Crea nueva ventana vacía*/
+    	PkgMgrFrame frame = PkgMgrFrame.createFrame();
+    	frame.setLocation(0, 0);
+
+    	/*Mostrar la ventana, una vez creada*/
+    	frame.setVisible(true);
+    }
+    
+    /** Opens an empty tab.*/
+    public void doOpenTab(){
+    	/*Por ahora, se incluyen las pestañas en una ventana aparte, que luego tendrá las funcionalidades
+    	 * de una ventana de BlueJ normal.
+    	 */
+    	TabbedPkgFrame frame = new TabbedPkgFrame();
+    	
+    	frame.setVisible(true);
+        	
+    }
+       
     
     /**
      * Open a dialog that lets the user choose a project. The project selected
@@ -3129,6 +3153,8 @@ public class PkgMgrFrame extends JFrame
             }
         }
 
+     
+        
         menu = new JMenu(Config.getString("menu.view"));
         menu.setMnemonic(Config.getMnemonicKey("menu.view"));
         menubar.add(menu);
@@ -3157,6 +3183,16 @@ public class PkgMgrFrame extends JFrame
             }
         }
 
+        menu = new JMenu("Windows");
+        //menu.setMnemonic(Config.getMnemonicKey(""));
+        menubar.add(menu);
+        {
+        	 createMenuItem(NewWindowAction.getInstance(),menu);
+             createMenuItem(NewTabAction.getInstance(),menu);
+             //menu.addSeparator();
+        	
+        }
+        
         menu = new JMenu(Config.getString("menu.help"));
         menu.setMnemonic(Config.getMnemonicKey("menu.help"));
         menubar.add(menu);
@@ -3204,6 +3240,7 @@ public class PkgMgrFrame extends JFrame
     public void doNewIssueGitHub(){
     	System.out.println("New Issue");
     }
+
 
     /**
      * Add a new menu item to a menu.
