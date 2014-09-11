@@ -81,6 +81,8 @@ public class EditorParser extends JavaParser
     private FieldNode lastField;
     private int arrayDecls;
     private String declaredPkg = "";
+    protected List<MethodNode> methods = new ArrayList<MethodNode> ();
+    
     
     class TypeParam
     {
@@ -967,6 +969,7 @@ public class EditorParser extends JavaParser
         int insPos = lineColToPosition(start.getLine(), start.getColumn());
 
         MethodNode pnode = new MethodNode(scopeStack.peek(), token.getText(), jdcomment);
+        methods.add(pnode);
         JavaEntity returnType = ParseUtils.getTypeEntity(pnode, currentQuerySource(), lastTypeSpec);
         pnode.setReturnType(returnType);
         pnode.setModifiers(currentModifiers);
@@ -1259,5 +1262,7 @@ public class EditorParser extends JavaParser
         gotImplements = true;
         gotExtends = false;
     }
-    
+    public List<MethodNode> getMethods(){
+    	return methods;
+    }
 }
