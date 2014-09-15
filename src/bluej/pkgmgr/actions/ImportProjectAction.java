@@ -31,7 +31,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class ImportProjectAction extends PkgMgrAction
 {
-    public ImportProjectAction()
+	static private ImportProjectAction instance = null;
+	
+	static public ImportProjectAction getInstance()
+    {
+        if(instance == null)
+            instance = new ImportProjectAction();
+        return instance;
+    }
+	
+	private ImportProjectAction()
     {
         super("menu.package.import");
     }

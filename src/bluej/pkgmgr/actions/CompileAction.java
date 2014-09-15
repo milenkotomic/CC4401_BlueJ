@@ -33,7 +33,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class CompileAction extends PkgMgrAction
 {
-    public CompileAction()
+	static private CompileAction instance = null;
+	
+	static public CompileAction getInstance()
+    {
+        if(instance == null)
+            instance = new CompileAction();
+        return instance;
+    }	
+	
+	private CompileAction()
     {
         super("menu.tools.compile");
         putValue(SHORT_DESCRIPTION, Config.getString("tooltip.compile"));

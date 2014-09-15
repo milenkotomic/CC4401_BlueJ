@@ -35,7 +35,16 @@ import bluej.pkgmgr.PkgMgrFrame;
 
 final public class ShowTerminalAction extends PkgMgrAction
 {
-    public ShowTerminalAction()
+	static private ShowTerminalAction instance = null;
+	
+	static public ShowTerminalAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new ShowTerminalAction();
+			 return instance;
+	}
+	
+	private ShowTerminalAction()
     {
         super("menu.view.showTerminal");
     }

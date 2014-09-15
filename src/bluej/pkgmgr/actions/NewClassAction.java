@@ -34,7 +34,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class NewClassAction extends PkgMgrAction
 {
-    public NewClassAction()
+	static private NewClassAction instance = null;
+	
+	static public NewClassAction getInstance()
+    {
+        if(instance == null)
+            instance = new NewClassAction();
+        return instance;
+    }
+	
+	private NewClassAction()
     {
         super("menu.edit.newClass");
         putValue(SHORT_DESCRIPTION, Config.getString("tooltip.newClass"));

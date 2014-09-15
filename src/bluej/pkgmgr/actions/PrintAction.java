@@ -32,7 +32,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class PrintAction extends PkgMgrAction
 {
-    public PrintAction()
+	static private PrintAction instance = null;
+	
+	static public PrintAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new PrintAction();
+			 return instance;
+	}
+	
+	private PrintAction()
     {
         super("menu.package.print");
     }

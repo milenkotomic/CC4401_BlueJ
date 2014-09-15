@@ -33,10 +33,21 @@ import bluej.pkgmgr.PkgMgrFrame;
 
 final public class AddClassAction extends PkgMgrAction
 {
-    public AddClassAction()
+	static private AddClassAction instance = null;
+	
+    private AddClassAction()
     {
         super("menu.edit.addClass");
     }
+    
+    static public AddClassAction getInstance()
+    {
+        if(instance == null)
+            instance = new AddClassAction();
+        return instance;
+    }
+    
+    
     
     public void actionPerformed(PkgMgrFrame pmf)
     {

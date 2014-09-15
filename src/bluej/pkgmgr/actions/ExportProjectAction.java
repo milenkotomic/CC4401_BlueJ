@@ -32,7 +32,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class ExportProjectAction extends PkgMgrAction
 {
-    public ExportProjectAction()
+	static private ExportProjectAction instance = null;
+	
+	static public ExportProjectAction getInstance()
+    {
+        if(instance == null)
+            instance = new ExportProjectAction();
+        return instance;
+    }
+	
+	private ExportProjectAction()
     {
         super("menu.package.export");
     }

@@ -33,10 +33,21 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class CloseProjectAction extends PkgMgrAction
 {
-    public CloseProjectAction()
+	static private CloseProjectAction instance = null;
+	
+    private CloseProjectAction()
     {
         super("menu.package.close");
     }
+    
+    static public CloseProjectAction getInstance()
+    {
+        if(instance == null)
+            instance = new CloseProjectAction();
+        return instance;
+    }
+    
+    
     
     public void actionPerformed(PkgMgrFrame pmf)
     {
