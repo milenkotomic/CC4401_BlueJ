@@ -14,6 +14,7 @@ import org.junit.Test;
 import bluej.parser.InfoParser;
 import bluej.parser.entity.ClassLoaderResolver;
 import bluej.parser.entity.EntityResolver;
+import bluej.parser.nodes.FieldNode;
 
 public class MyParserTestOwnFile {
 
@@ -32,7 +33,7 @@ public class MyParserTestOwnFile {
 	
 	@Test
 	public void methodsQuantityAnalizer(){
-		System.out.println(infop.getMethods().size());
+		//System.out.println(infop.getMethods().size());
 		assertTrue(infop.getMethods().size() == 8);
 	}
 
@@ -63,6 +64,19 @@ public class MyParserTestOwnFile {
 		assertTrue(infop.getMethods().get(6).getName().equals("threeParameters"));
 		assertTrue(infop.getMethods().get(7).getName().equals("noParams"));
 		
+		
+	}
+	
+	@Test
+	public void quantityTest(){
+		System.out.println(infop.getFields().size());
+		for (FieldNode n:infop.getFields()){
+			System.out.println(n.getName());
+		}
+		System.out.println(infop.getImports().size());
+		for (String n:infop.getImports()){
+			System.out.println(n);
+		}
 		
 	}
 	

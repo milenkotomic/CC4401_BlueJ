@@ -69,7 +69,7 @@ import bluej.parser.symtab.Selection;
  * 
  * @author Davin McCall
  */
-public class EditorParser extends JavaParser
+public class EditorParser extends JavaParser implements CodeSmellsDetector
 {
     protected Stack<JavaParentNode> scopeStack = new Stack<JavaParentNode>();
     private ParsedTypeNode innermostType;
@@ -82,6 +82,11 @@ public class EditorParser extends JavaParser
     private int arrayDecls;
     private String declaredPkg = "";
     protected List<MethodNode> methods = new ArrayList<MethodNode> ();
+    protected List<FieldNode> fields = new ArrayList<FieldNode> ();
+    protected List<String> imports = new ArrayList<String>();
+    private boolean fieldCapture =  true;
+    
+    
     
     
     class TypeParam
@@ -374,7 +379,7 @@ public class EditorParser extends JavaParser
         if (parentResolver == null) {
             return;
         }
-        
+        String memberName;
         if (isStatic) {
             // Apparently static inner classes can be imported with or without the "static" keyword
             // So, a static import imports a field and/or method and/or class.
@@ -382,8 +387,7 @@ public class EditorParser extends JavaParser
             
             // We want to pull the name out (and remove the intermediate dot)
             int newSize = tokens.size() - 2;
-            String memberName = tokens.get(newSize + 1).getText();
-            
+            memberName = tokens.get(newSize + 1).getText();
             List<LocatableToken> newList = new ArrayList<LocatableToken>(newSize);
             Iterator<LocatableToken> i = tokens.iterator();
             while (newSize > 0) {
@@ -395,16 +399,21 @@ public class EditorParser extends JavaParser
             TypeEntity tentity = (entity != null) ? entity.resolveAsType() : null;
             if (tentity != null) {
                 pcuNode.getImports().addStaticImport(memberName, tentity);
+                
+                
             }
         }
         else {
-            String memberName = tokens.get(tokens.size() - 1).getText();
+            memberName = tokens.get(tokens.size() - 1).getText();
             JavaEntity entity = ParseUtils.getImportEntity(parentResolver,
                     currentQuerySource(), tokens);
             if (entity != null) {
                 pcuNode.getImports().addNormalImport(memberName, entity);
             }
         }
+        imports.add(memberName);
+        
+        
     }
     
     @Override
@@ -913,6 +922,7 @@ public class EditorParser extends JavaParser
     @Override
     protected void gotImportStmtSemi(LocatableToken token)
     {
+    	
         Selection s = new Selection(pcuStmtBegin.getLine(), pcuStmtBegin.getColumn());
         s.extendEnd(token.getLine(), token.getColumn() + token.getLength());
         
@@ -957,6 +967,7 @@ public class EditorParser extends JavaParser
     protected void gotMethodDeclaration(LocatableToken token,
             LocatableToken hiddenToken)
     {
+    	fieldCapture = false;
         endDecl(token); // remove placeholder
         LocatableToken start = pcuStmtBegin;
         String jdcomment = null;
@@ -979,6 +990,7 @@ public class EditorParser extends JavaParser
         beginNode(insPos);
         scopeStack.peek().insertNode(pnode, insPos - curOffset, 0);
         scopeStack.push(pnode);
+        
     }
     
     @Override
@@ -1008,6 +1020,7 @@ public class EditorParser extends JavaParser
         endTopNode(token, included);
         TypeInnerNode topNode = (TypeInnerNode) scopeStack.peek();
         topNode.methodAdded(mNode);
+        fieldCapture = false;
     }
     
     @Override
@@ -1105,6 +1118,8 @@ public class EditorParser extends JavaParser
         }
         
         scopeStack.push(lastField);
+        if (fieldCapture)
+        	fields.add(lastField);
     }
     
     @Override
@@ -1265,4 +1280,28 @@ public class EditorParser extends JavaParser
     public List<MethodNode> getMethods(){
     	return methods;
     }
+    public List<FieldNode> getFields(){
+    	return fields;
+    }
+    public List<String> getImports(){
+    	return imports;
+    }
+    
+
+	@Override
+	public int instanceVariables() {
+		return fields.size();
+	}
+
+	@Override
+	public int methodQuantity() {
+		return methods.size();
+	}
+
+	@Override
+	public int cohesionLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

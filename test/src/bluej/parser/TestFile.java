@@ -1,6 +1,21 @@
 package bluej.parser;
 
 /*/Users/Fabian/Developer/Uchile/Ingenieria de Software/Curso/BlueJ/CC4401_BlueJ/test/src/bluej/parser/ParserTest.java*/
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import bluej.debugger.gentype.Reflective;
+import bluej.parser.entity.EntityResolver;
+import bluej.parser.entity.JavaEntity;
+import bluej.parser.entity.PackageEntity;
+import bluej.parser.entity.PackageOrClass;
+import bluej.parser.entity.ParsedReflective;
+import bluej.parser.entity.TypeEntity;
+import bluej.parser.nodes.ParsedCUNode;
+import bluej.parser.nodes.ParsedTypeNode;
+import bluej.utility.JavaNames;
 
 public class TestFile {
 	private int privateInt;
@@ -30,10 +45,12 @@ public class TestFile {
 	}
 	
 	TestFile (int a){
+		int ab = 0;
 		System.out.println("Constructor2");
 	}
 	
 	public void aParameter (String param1){
+		int xd = 123;
 		System.out.println("Test1");
 		
 	}
