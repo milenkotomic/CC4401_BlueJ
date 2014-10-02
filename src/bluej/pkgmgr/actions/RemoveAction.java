@@ -21,6 +21,7 @@
  */
 package bluej.pkgmgr.actions;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -52,7 +53,7 @@ final public class RemoveAction extends PkgMgrAction
     // This flag makes sure the dialog doesn't get called twice by preventing re-entry:
     private boolean processing = false;
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         if (!processing)
         {

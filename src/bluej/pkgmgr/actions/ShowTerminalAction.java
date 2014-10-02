@@ -23,6 +23,7 @@ package bluej.pkgmgr.actions;
 
 import javax.swing.ButtonModel;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -49,7 +50,7 @@ final public class ShowTerminalAction extends PkgMgrAction
         super("menu.view.showTerminal");
     }
     
-    public ButtonModel getToggleModel(PkgMgrFrame pmf)
+    public ButtonModel getToggleModel(IPkgFrame pmf)
     {
         return new bluej.terminal.TerminalButtonModel(pmf);
     }

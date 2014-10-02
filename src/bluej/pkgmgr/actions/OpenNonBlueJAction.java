@@ -21,6 +21,7 @@
  */
 package bluej.pkgmgr.actions;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -48,7 +49,7 @@ final public class OpenNonBlueJAction extends PkgMgrAction {
         super("menu.package.openNonBlueJ");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doOpenNonBlueJ();

@@ -21,6 +21,8 @@
  */
 package bluej.pkgmgr.actions;
 
+import bluej.pkgmgr.AbstractPkgFrame;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -50,9 +52,9 @@ final public class HelpAboutAction extends PkgMgrAction {
         super("menu.help.about");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
-        pmf.menuCall();
+    	pmf.menuCall();
         pmf.aboutBlueJ();
     }
 }

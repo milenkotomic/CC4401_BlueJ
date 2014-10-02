@@ -307,7 +307,7 @@ public class TeamSettingsController
     {
         if (teamSettingsDialog == null) {
             teamSettingsDialog = new TeamSettingsDialog(this);
-            teamSettingsDialog.setLocationRelativeTo(PkgMgrFrame.getMostRecent());
+            teamSettingsDialog.setLocationRelativeTo(PkgMgrFrame.getInstance().getMostRecent());
             checkTeamSettingsDialog();
         }
         

@@ -56,7 +56,6 @@ public class FileUtility
     private static JFileChooser multiFileChooser = null;
     
 
-
     public static File getPackageName(Component parent)
     {
         JFileChooser chooser = getPackageChooser();

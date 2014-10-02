@@ -23,6 +23,7 @@ package bluej.pkgmgr.actions;
 
 import javax.swing.ButtonModel;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -48,7 +49,7 @@ final public class ShowDebuggerAction extends PkgMgrAction
         super("menu.view.showExecControls");
     }
             
-    public ButtonModel getToggleModel(PkgMgrFrame pmf)
+    public ButtonModel getToggleModel(IPkgFrame pmf)
     {
         return new bluej.debugmgr.ExecControlButtonModel(pmf);
     }

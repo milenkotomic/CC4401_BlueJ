@@ -22,6 +22,7 @@
 package bluej.pkgmgr.actions;
 
 import bluej.Config;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -46,7 +47,7 @@ final public class DeployMIDletAction extends PkgMgrAction
         putValue( SHORT_DESCRIPTION, Config.getString( "tooltip.deployMIDlet" ) );
     }
     
-    public void actionPerformed( PkgMgrFrame pmf )
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doDeployMIDlet();

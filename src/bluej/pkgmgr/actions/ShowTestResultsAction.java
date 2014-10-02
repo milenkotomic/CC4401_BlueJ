@@ -23,6 +23,7 @@ package bluej.pkgmgr.actions;
 
 import javax.swing.ButtonModel;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -54,7 +55,7 @@ final public class ShowTestResultsAction extends PkgMgrAction
         super("menu.view.showTestDisplay");
     }
     
-    public ButtonModel getToggleModel(PkgMgrFrame pmf)
+    public ButtonModel getToggleModel(IPkgFrame pmf)
     {
         return new bluej.testmgr.TestDisplayButtonModel();
     }

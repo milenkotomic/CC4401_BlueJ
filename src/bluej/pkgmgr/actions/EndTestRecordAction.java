@@ -22,6 +22,7 @@
 package bluej.pkgmgr.actions;
 
 import bluej.Config;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -55,7 +56,7 @@ final public class EndTestRecordAction extends PkgMgrAction
         putValue(SHORT_DESCRIPTION, Config.getString("tooltip.test.end"));
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.doEndTest();
     }

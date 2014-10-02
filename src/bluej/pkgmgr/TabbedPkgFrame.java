@@ -2,6 +2,7 @@ package bluej.pkgmgr;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,26 +23,36 @@ import bluej.pkgmgr.actions.QuitAction;
 
 public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
+	PkgFrameMenu menuMgr;
+	private static List<JPanel> pkgTabs;
+	private TabbedPkgFrame recentFrame = null;
 	
 	public TabbedPkgFrame(){
 		setupWindow();
-				
+		
+		menuMgr = new PkgFrameMenu();		
 		jtp = new JTabbedPane();
 		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
-			
+		
 		//Crear nueva pestaña
-		JPanel jp1 = new JPanel();
-        JLabel label1 = new JLabel();
-        
-        label1.setText("You are in area of Tab1");
-             
-        jp1.add(label1); 
-        jtp.addTab("Tab1", jp1);
+		newTab();
         
         setupMenu();
   
 	}
 
+	private void newTab(){
+		JPanel newTab = new JPanel();
+        JLabel lab = new JLabel();
+        
+        lab.setText("You are in area of Tab");
+        pkgTabs.add(newTab);
+		        
+        newTab.add(lab); 
+        jtp.addTab("Tab1", newTab);
+		
+	}
+	
 	private void setupWindow(){
 		setTitle("BlueJ");
 		
@@ -59,45 +70,49 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		JMenuBar menubar = new JMenuBar();
 		setJMenuBar(menubar);
 		
-		JMenu menu = new JMenu(Config.getString("menu.package"));
-	    int mnemonic = Config.getMnemonicKey("menu.package");
-	    menu.setMnemonic(mnemonic);
-	    menubar.add(menu);
-	        
-	    {
-	            createMenuItem(NewProjectAction.getInstance(), menu);
-	            //javaMEnewProjMenuItem = createMenuItem( NewMEprojectAction.getInstance(), menu );            
-	            createMenuItem(OpenProjectAction.getInstance(), menu);
-	            //recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
-	            //menu.add(recentProjectsMenu);
-	            createMenuItem(OpenNonBlueJAction.getInstance(), menu);
-	            //createMenuItem(closeProjectAction, menu);
-	            //createMenuItem(saveProjectAction, menu);
-	            //createMenuItem(saveProjectAsAction, menu);
-	            menu.addSeparator();
-	            
-//	            createMenuItem(importProjectAction, menu);
-//	            createMenuItem(exportProjectAction, menu);
-//	            javaMEdeployMenuItem = createMenuItem( deployMIDletAction, menu ); 
-//	            javaMEdeployMenuItem.setVisible( false ); //visible only in Java ME packages
-//	            menu.addSeparator();
-//
-//	            createMenuItem(pageSetupAction, menu);
-//	            createMenuItem(printAction, menu);
+		menuMgr.setupMenu(menubar);
+	}
+	
+	 /**
+     * Returns an array of all TabbedPkgFrame objects. It can be an empty array if
+     * none is found.
+     */
+    public static TabbedPkgFrame[] getAllFrames(){
+    
+        TabbedPkgFrame[] openFrames = new TabbedPkgFrame[pkgTabs.size()];
+        pkgTabs.toArray(openFrames);
 
-	            if (!Config.usingMacScreenMenubar()) { // no "Quit" here for Mac
-	                menu.addSeparator();
-	                createMenuItem(QuitAction.getInstance(), menu);
-	            }
-	        }
+        return openFrames;
+    }
+	
+	
+	public TabbedPkgFrame getMostRecent(){
 		
-		
-		menu = new JMenu(Config.getString("menu.view"));
-	    menu.setMnemonic(Config.getMnemonicKey("menu.view"));
-	    menubar.add(menu);
+        if (recentFrame != null) {
+            return recentFrame;
+        }
+        
+        TabbedPkgFrame[] allFrames = getAllFrames();
+
+        // If there are no frames open, yet...
+        if (allFrames.length < 1) {
+            return null;
+        }
+
+        // Assume that the most recent is the first one. Not really the best
+        // thing to do...
+        TabbedPkgFrame mostRecent = allFrames[0];
+
+        for (int i = 0; i < allFrames.length; i++) {
+            if (allFrames[i].getFocusOwner() != null) {
+                mostRecent = allFrames[i];
+            }
+        }
+        return mostRecent;
 		
 	}
 	
-
+	
+	
 
 }

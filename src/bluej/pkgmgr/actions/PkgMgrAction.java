@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import bluej.Config;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -142,7 +143,7 @@ public abstract class PkgMgrAction extends AbstractAction {
         actionPerformed(pmf);
     }
         
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         // default is to do nothing.
     }

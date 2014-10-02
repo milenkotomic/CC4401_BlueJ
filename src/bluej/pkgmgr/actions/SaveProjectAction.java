@@ -31,7 +31,19 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class SaveProjectAction extends PkgMgrAction
 {
-    public SaveProjectAction()
+	static private SaveProjectAction instance = null;
+	
+	/**Singleton method, since the action is needed once.
+	   * @return an instance of the class.
+	  */
+	 static public SaveProjectAction getInstance()
+	{
+		 if(instance == null)
+			 instance = new SaveProjectAction();
+		 return instance;
+	}
+	
+    private SaveProjectAction()
     {
         super("menu.package.save");
     }
