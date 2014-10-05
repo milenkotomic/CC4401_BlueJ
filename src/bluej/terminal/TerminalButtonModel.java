@@ -23,7 +23,8 @@ package bluej.terminal;
 
 import javax.swing.JToggleButton;
 
-import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.IPkgFrame;
+
 
 /**
  * ButtonModel for the "Show Terminal" checkBoxItem in the menu.
@@ -34,9 +35,9 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 public class TerminalButtonModel extends JToggleButton.ToggleButtonModel
 {
-    private PkgMgrFrame pmf;
+    private IPkgFrame pmf;
     
-    public TerminalButtonModel(PkgMgrFrame pmf)
+    public TerminalButtonModel(IPkgFrame pmf)
     {
         super();
         this.pmf = pmf;

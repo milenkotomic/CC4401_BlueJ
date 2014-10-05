@@ -190,10 +190,10 @@ public class PkgMgrFrame extends AbstractPkgFrame
     private static boolean testToolsShown = wantToSeeTestingTools();
     private static boolean teamToolsShown = wantToSeeTeamTools();
     private static boolean javaMEtoolsShown = wantToSeeJavaMEtools();
-    private TestTools testTools = new TestTools();
+    private TestToolsManager testTools = new TestToolsManager();
     
     /** Frame most recently having focus */
-    private static PkgMgrFrame recentFrame = null;
+    //private static PkgMgrFrame recentFrame = null;
 
     PkgFrameMenu menuMgr;
     
@@ -233,6 +233,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
     private MenuManager toolsMenuManager;
     private MenuManager viewMenuManager;
     
+    /*Parte de Team*/
     private JMenu teamMenu;
     private JMenuItem shareProjectMenuItem;
     private JMenuItem teamSettingsMenuItem;
@@ -267,7 +268,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
      * The package that this frame is working on or null for the case where
      * there is no package currently being edited (check with isEmptyFrame())
      */
-    private Package pkg = null;
+    //private Package pkg = null;
     
     /*
      * The graph editor which works on the package or null for the case where
@@ -474,37 +475,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
         return list.toArray(new PkgMgrFrame[list.size()]);
     }
 
-    /**
-     * Gets the most recently used PkgMgrFrame
-     * 
-     * @return the PkgMgrFrame that currently has the focus
-     */
-    public PkgMgrFrame getMostRecent()
-    {
-    	/*SI*/
-        if (recentFrame != null) {
-            return recentFrame;
-        }
-        
-        PkgMgrFrame[] allFrames = getAllFrames();
-
-        // If there are no frames open, yet...
-        if (allFrames.length < 1) {
-            return null;
-        }
-
-        // Assume that the most recent is the first one. Not really the best
-        // thing to do...
-        PkgMgrFrame mostRecent = allFrames[0];
-
-        for (int i = 0; i < allFrames.length; i++) {
-            if (allFrames[i].getFocusOwner() != null) {
-                mostRecent = allFrames[i];
-            }
-        }
-
-        return mostRecent;
-    }
+    
 
     /*Testing*/
     /**
@@ -513,8 +484,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
      */
     public static void updateTestingStatus()
     {
-    	/* ?-> esto debiese hacerlo una clase, no el mismo pkgframe*/
-        if (testToolsShown != wantToSeeTestingTools()) {
+    	if (testToolsShown != wantToSeeTestingTools()) {
             for (Iterator<PkgMgrFrame> i = frames.iterator(); i.hasNext();) {
               
                 PkgMgrFrame pmf = i.next();
@@ -916,15 +886,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
         return pkg;
     }
 
-    /**
-     * Return the project of the package shown by this frame.
-     */
-    public Project getProject()
-    {
-        return pkg == null ? null : pkg.getProject();
-    }
-
-    
+     
 
     /**
      * Set the window title to show the current package name.
@@ -2711,6 +2673,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
                 buttonPanel.setAlignmentX(0.5f);
             }
 
+            /*Configuracion del panel de testeo, esto no va aqui*/
             testPanel = new JPanel();
             if (!Config.isRaspberryPi()) testPanel.setOpaque(false);
             {

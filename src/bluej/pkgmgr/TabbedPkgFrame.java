@@ -25,7 +25,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
 	PkgFrameMenu menuMgr;
 	private static List<JPanel> pkgTabs;
-	private TabbedPkgFrame recentFrame = null;
+	protected TabbedPkgFrame recentFrame = null;
 	
 	public TabbedPkgFrame(){
 		setupWindow();
@@ -111,7 +111,6 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         return mostRecent;
 		
 	}
-	
 	
 	
 

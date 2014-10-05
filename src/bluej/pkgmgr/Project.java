@@ -1352,7 +1352,7 @@ public class Project implements DebuggerListener, InspectorManager
             pkg = (Package) i.next();
             pkg.reInitBreakpoints();           
         }
-        PkgMgrFrame frame = PkgMgrFrame.getInstance().getMostRecent();
+        PkgMgrFrame frame = (PkgMgrFrame)PkgMgrFrame.getInstance().getMostRecent();//Horrible cast provisorio
         if (frame != null) {
             Utility.bringToFront(frame);
         }        

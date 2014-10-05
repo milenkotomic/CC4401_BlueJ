@@ -239,7 +239,7 @@ public final class BlueJ
 
         // This is here and NOT into a BProject since it depends on user interface.
 
-        PkgMgrFrame pmf = PkgMgrFrame.getInstance().getMostRecent();
+        AbstractPkgFrame pmf = PkgMgrFrame.getInstance().getMostRecent();
         // If there is nothing at all open there is no Frame open...
         if (pmf == null)
             return null;

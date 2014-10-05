@@ -23,7 +23,8 @@ package bluej.debugmgr;
 
 import javax.swing.JToggleButton;
 
-import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.IPkgFrame;
+
 
 /**
  * ButtonModel for the "Show Debugger" checkBoxItem in the menu.
@@ -34,9 +35,9 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 public class ExecControlButtonModel extends JToggleButton.ToggleButtonModel
 {
-	private PkgMgrFrame pmf;
+	private IPkgFrame pmf;
 	
-    public ExecControlButtonModel(PkgMgrFrame pmf)
+    public ExecControlButtonModel(IPkgFrame pmf)
     {
         super();
         this.pmf = pmf;
