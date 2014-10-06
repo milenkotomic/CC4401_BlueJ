@@ -4,25 +4,30 @@ import bluej.Config;
 
 public class PkgFrameWindowTitle {
 
+	public PkgFrameWindowTitle(){
+		
+		
+	}
+		
 	 /**
      * Set the window title to show the current package name.
      */
-    private void updateWindowTitle(IPkgFrame pmf)
+    protected void updateWindowTitle(IPkgFrame pmf)
     {
-        /*a abstract*/
         if (pmf.isEmptyFrame()) {
-            setTitle("BlueJ");
+            pmf.setWindowTitle("BlueJ");
         }
         else {
-            String title = Config.getString("pkgmgr.title") + getProject().getProjectName();
+            String title = Config.getString("pkgmgr.title") + pmf.getProject().getProjectName();
 
-            if (!getPackage().isUnnamedPackage())
-                title = title + "  [" + getPackage().getQualifiedName() + "]";
+            if (!pmf.getPackage().isUnnamedPackage())
+                title = title + "  [" + pmf.getPackage().getQualifiedName() + "]";
             
-            if(getProject().isTeamProject())
+            if(pmf.getProject().isTeamProject())
                 title = title + " (" + Config.getString("team.project.marker") + ")";
 
-            setTitle(title);
+            pmf.setWindowTitle(title);
         }
     }
+  
 }

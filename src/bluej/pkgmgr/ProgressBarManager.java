@@ -1,13 +1,19 @@
 package bluej.pkgmgr;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
 import bluej.groupwork.ui.ActivityIndicator;
 
-public class PkgFrameStatusBar {
+public class ProgressBarManager {
 	
 	private ActivityIndicator progressbar; 
 	
-	public PkgFrameStatusBar(){
-		
+	public ProgressBarManager(JPanel statusArea){
+		progressbar = new ActivityIndicator();
+        progressbar.setRunning(false);
+        statusArea.add(progressbar, BorderLayout.EAST);
 	}
 	
 	/**
@@ -16,7 +22,6 @@ public class PkgFrameStatusBar {
 	
 	public void startProgress()
 	 {
-	 	/*otra clase*/
 	     progressbar.setRunning(true);
 	 }
 	
@@ -25,9 +30,11 @@ public class PkgFrameStatusBar {
 	  */
 	 public void stopProgress()
 	 {
-	 	/*otra clase*/
-	     progressbar.setRunning(false);
+		 progressbar.setRunning(false);
 	 }
 	
-
+	 
+	 
+	 
+	 
 }

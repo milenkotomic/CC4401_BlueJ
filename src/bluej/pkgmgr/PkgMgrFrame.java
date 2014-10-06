@@ -181,7 +181,13 @@ import bluej.views.MethodView;
 public class PkgMgrFrame extends AbstractPkgFrame
     implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener
 {
-    private static Font pkgMgrFont = PrefMgr.getStandardFont();
+    /*Mis nuevas variables*/
+	PkgFrameMenu menuMgr;
+	PkgFrameWindowTitle windowTitle = new PkgFrameWindowTitle();
+	private TestToolsManager testTools = new TestToolsManager();
+	private ProgressBarManager progressbar;
+		
+	private static Font pkgMgrFont = PrefMgr.getStandardFont();
 
     static final int DEFAULT_WIDTH = 560;
     static final int DEFAULT_HEIGHT = 400;
@@ -190,13 +196,11 @@ public class PkgMgrFrame extends AbstractPkgFrame
     private static boolean testToolsShown = wantToSeeTestingTools();
     private static boolean teamToolsShown = wantToSeeTeamTools();
     private static boolean javaMEtoolsShown = wantToSeeJavaMEtools();
-    private TestToolsManager testTools = new TestToolsManager();
+    
     
     /** Frame most recently having focus */
     //private static PkgMgrFrame recentFrame = null;
-
-    PkgFrameMenu menuMgr;
-    
+   
     // instance fields:
 
     /*Una clase por cada tipo de panel*/
@@ -213,15 +217,19 @@ public class PkgMgrFrame extends AbstractPkgFrame
     private AbstractButton runButton;
 
     private JLabel statusbar;
-    private ActivityIndicator progressbar;
 
     private JLabel testStatusMessage;
     private JLabel recordingLabel;
+    
+    /*Testing*/
     private AbstractButton endTestButton;
     private AbstractButton cancelTestButton;
     private JMenuItem endTestMenuItem;
     private JMenuItem cancelTestMenuItem;
-
+    private JMenuItem showTestResultsItem;
+    private List<JComponent> testItems;
+    private JMenu testingMenu;
+    
     private ClassTarget testTarget = null;
     private String testTargetMethod;
     private static AtomicInteger nextTestIdentifier = new AtomicInteger(0); 
@@ -229,7 +237,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
 
     private JMenuBar menubar = null;
     private JMenu recentProjectsMenu;
-    private JMenu testingMenu;
+    
     private MenuManager toolsMenuManager;
     private MenuManager viewMenuManager;
     
@@ -249,11 +257,10 @@ public class PkgMgrFrame extends AbstractPkgFrame
     private JMenuItem javaMEdeployMenuItem;
   
     private TeamActionGroup teamActions;
-    
-    private JMenuItem showTestResultsItem;
+       
     private List<JComponent> itemsToDisable;
     private List<Action> actionsToDisable;
-    private List<JComponent> testItems;
+    
     private MachineIcon machineIcon;
     
     /* UI actions */
@@ -263,13 +270,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
     
     /* The scroller which holds the PackageEditor we use to edit packages */
     private JScrollPane classScroller = null;
-
-    /*
-     * The package that this frame is working on or null for the case where
-     * there is no package currently being edited (check with isEmptyFrame())
-     */
-    //private Package pkg = null;
-    
+                             
     /*
      * The graph editor which works on the package or null for the case where
      * there is no package current being edited (isEmptyFrame() == true)
@@ -482,7 +483,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
      * Check whether the status of the 'Show unit test tools' preference has
      * changed, and if it has, show or hide them as requested.
      */
-    public static void updateTestingStatus()
+    public void updateTestingStatus()
     {
     	if (testToolsShown != wantToSeeTestingTools()) {
             for (Iterator<PkgMgrFrame> i = frames.iterator(); i.hasNext();) {
@@ -893,21 +894,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
      */
     private void updateWindowTitle()
     {
-        /*a abstract*/
-        if (isEmptyFrame()) {
-            setTitle("BlueJ");
-        }
-        else {
-            String title = Config.getString("pkgmgr.title") + getProject().getProjectName();
-
-            if (!getPackage().isUnnamedPackage())
-                title = title + "  [" + getPackage().getQualifiedName() + "]";
-            
-            if(getProject().isTeamProject())
-                title = title + " (" + Config.getString("team.project.marker") + ")";
-
-            setTitle(title);
-        }
+        windowTitle.updateWindowTitle(this);
     }
     
     /**
@@ -941,8 +928,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
      */
     public void startProgress()
     {
-    	/*otra clase*/
-        progressbar.setRunning(true);
+    	progressbar.startProgress();
     }
 
     /**
@@ -950,8 +936,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
      */
     public void stopProgress()
     {
-    	/*otra clase*/
-        progressbar.setRunning(false);
+    	progressbar.stopProgress();
     }
 
 
@@ -2806,6 +2791,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
         // create the bottom status area
 
         JPanel statusArea = new JPanel(new BorderLayout());
+                
         if (!Config.isRaspberryPi()) statusArea.setOpaque(false);
         {
             statusArea.setBorder(BorderFactory.createEmptyBorder(2, 0, 4, 6));
@@ -2818,9 +2804,9 @@ public class PkgMgrFrame extends AbstractPkgFrame
             testStatusMessage.setFont(pkgMgrFont);
             statusArea.add(testStatusMessage, BorderLayout.WEST);
             
-            progressbar = new ActivityIndicator();
-            progressbar.setRunning(false);
-            statusArea.add(progressbar, BorderLayout.EAST);
+            progressbar = new ProgressBarManager(statusArea);
+            
+           
         }
         contentPane.add(statusArea, BorderLayout.SOUTH);
 
@@ -3286,14 +3272,13 @@ public class PkgMgrFrame extends AbstractPkgFrame
             action.setEnabled(enable);
         }
     }
-
-     
+    
     
     /**
      * Adds shortcuts for Ctrl-TAB and Ctrl-Shift-TAB to the given pane, which move to the
      * next/previous pane of the main three (package editor, object bench, code pad) that are visible
      */
-    private void addCtrlTabShortcut(final JComponent toPane)
+    protected void addCtrlTabShortcut(final JComponent toPane)
     {
         toPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_TAB, InputEvent.CTRL_DOWN_MASK), "nextPMFPane");

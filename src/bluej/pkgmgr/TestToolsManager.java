@@ -32,4 +32,24 @@ public class TestToolsManager {
             component.setVisible(show);
         }
     }
+    
+    /*Testing*/
+    /**
+     * Check whether the status of the 'Show unit test tools' preference has
+     * changed, and if it has, show or hide them as requested.
+     */
+    public void updateTestingStatus(IPkgFrame pmf)
+    {
+    	if (testToolsShown != wantToSeeTestingTools()) {
+      
+    		if ( pmf.isJavaMEpackage() ) {
+    			pmf.showTestingTools(false);
+            }
+            else {
+            	pmf.showTestingTools(!testToolsShown);               
+            }
+    	}
+            testToolsShown = !testToolsShown;
+        
+    }
 }

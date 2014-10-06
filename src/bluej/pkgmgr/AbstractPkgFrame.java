@@ -69,6 +69,10 @@ public abstract class AbstractPkgFrame extends JFrame implements IPkgFrame{
         return mostRecent;
     }
     
+    public void setWindowTitle(String title){
+    	this.setTitle(title);
+    }
+          
     /**
      * Returns an array of all PkgMgrFrame objects. It can be an empty array if
      * none is found.

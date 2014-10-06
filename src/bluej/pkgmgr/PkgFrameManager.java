@@ -17,40 +17,7 @@ public class PkgFrameManager {
 	public PkgFrameManager(){
 		//frames = new ArrayList
 	}
-	
-	/**
-     * Open a PkgMgrFrame with no package. Packages can be installed into this
-     * frame using the methods openPackage/closePackage.
-     */
-    public IPkgFrame createFrame()
-    {
-    	/*SI*/
-        IPkgFrame frame = new PkgMgrFrame();
-        frames.add(frame);
-        BlueJEvent.addListener(frame);
-        
-        frame.addWindowFocusListener(new WindowFocusListener() {
-            
-            @Override
-            public void windowLostFocus(WindowEvent e)
-            {
-                // Nothing to do...
-            }
-            
-            @Override
-            public void windowGainedFocus(WindowEvent e)
-            {
-                Window w = e.getWindow();
-                if (w instanceof PkgMgrFrame) {
-                    // This *should* always be the case
-                    recentFrame = (PkgMgrFrame) w;
-                }
-            }
-        });
-        
-        return frame;
-    }
-
+		
     /**
      * Open a PkgMgrFrame with a package. This may create a new frame or return
      * an existing frame if this package is already being edited by a frame. If
@@ -192,4 +159,17 @@ public class PkgFrameManager {
 
         return list.toArray(new PkgMgrFrame[list.size()]);
     }
+    
+    /**
+     * Check whether the status of the 'Show unit test tools' preference has
+     * changed, and if it has, show or hide them as requested.
+     */
+    public void updateTestingStatus()
+    {
+    	for (Iterator<IPkgFrame> i = frames.iterator(); i.hasNext();) {
+               IPkgFrame pmf = i.next();
+               pmf.updateTestingStatus();
+        }
+    }
+    
 }
