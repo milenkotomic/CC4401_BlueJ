@@ -1370,27 +1370,6 @@ public class PkgMgrFrame extends JFrame
         }
         return openedProject;
     }
-    
-    /**Opens an empty window. Action performed when the "New Window" button is pressed*/
-    public void doOpenWindow(){
-    	/*Crea nueva ventana vacía*/
-    	PkgMgrFrame frame = PkgMgrFrame.createFrame();
-    	frame.setLocation(0, 0);
-
-    	/*Mostrar la ventana, una vez creada*/
-    	frame.setVisible(true);
-    }
-    
-    /** Opens an empty tab.*/
-    public void doOpenTab(){
-    	/*Por ahora, se incluyen las pestañas en una ventana aparte, que luego tendrá las funcionalidades
-    	 * de una ventana de BlueJ normal.
-    	 */
-    	TabbedPkgFrame frame = new TabbedPkgFrame();
-    	
-    	frame.setVisible(true);
-        	
-    }
        
     
     /**
@@ -3220,7 +3199,6 @@ public class PkgMgrFrame extends JFrame
         	
         }
         
-        
         addUserHelpItems(menu);
         updateRecentProjects();
 
@@ -3242,7 +3220,26 @@ public class PkgMgrFrame extends JFrame
     public void doNewIssueGitHub(){
     	System.out.println("New Issue");
     }
+    /**Opens an empty window. Action performed when the "New Window" button is pressed*/
+    public void doOpenWindow(){
+    	/*Crea nueva ventana vacía*/
+    	PkgMgrFrame frame = PkgMgrFrame.createFrame();
+    	frame.setLocation(0, 0);
 
+    	/*Mostrar la ventana, una vez creada*/
+    	frame.setVisible(true);
+    }
+    
+    /** Opens an empty tab.*/
+    public void doOpenTab(){
+    	/*Por ahora, se incluyen las pestañas en una ventana aparte, que luego tendrá las funcionalidades
+    	 * de una ventana de BlueJ normal.
+    	 */
+    	TabbedPkgFrame frame = new TabbedPkgFrame();
+    	
+    	frame.setVisible(true);
+        	
+    }
 
     /**
      * Add a new menu item to a menu.

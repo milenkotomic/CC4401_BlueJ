@@ -21,7 +21,7 @@ public class PushGitHubAction extends PkgMgrAction {
     
     private PushGitHubAction()
     {
-        super("Push");
+        super("Pushsdasda");
     }
     
     public void actionPerformed(PkgMgrFrame pmf)
