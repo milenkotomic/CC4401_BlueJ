@@ -8,6 +8,7 @@ import javax.swing.JPasswordField;
 
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.OAuthService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 
@@ -36,11 +37,15 @@ public class autentificationTest {
 		String contraseña = String.valueOf(password);
 		cliente.setCredentials(username, contraseña);
 		System.out.println(cliente.getUser());
-		
-		RepositoryService service = new RepositoryService(cliente);
+
+        OAuthService oauth = new OAuthService(cliente);
+
+        System.out.println(oauth.getAuthorizations());
+
+		/*RepositoryService service = new RepositoryService(cliente);
 		for (Repository repo : service.getRepositories())
 		  System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());		
-		
+		*/
 
 	}
 
