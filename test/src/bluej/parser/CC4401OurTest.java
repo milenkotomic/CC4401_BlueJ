@@ -100,7 +100,18 @@ public class CC4401OurTest extends junit.framework.TestCase {
         	sb.append("**************\n");
         }
         return sb.toString();
-    }   
+    }
+    public Boolean hasJavadoc(ClassInfo info) throws Exception{
+    	Boolean bool= false;
+        Properties comments = info.getComments();
+        for (int i=0;comments.get("comment"+i+".target")!=null;i++){
+        	if (comments.get("comment"+i+".text")!=null){
+        		bool = true;
+        	}
+        	
+        }
+        return bool;
+    } 
     
 
 	
