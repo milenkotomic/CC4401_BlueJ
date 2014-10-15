@@ -250,11 +250,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
     private List<JComponent> testItems;
     private MachineIcon machineIcon;
     
-    /* UI actions */
-   
-    private Action saveProjectAction = new SaveProjectAction();
-    private Action saveProjectAsAction = new SaveProjectAsAction();
-   
+    /* UI actions */ 
     private Action restartVMAction = RestartVMAction.getInstance();
     
     
@@ -3034,8 +3030,8 @@ public class PkgMgrFrame extends AbstractPkgFrame
             menu.add(recentProjectsMenu);
             createMenuItem(OpenNonBlueJAction.getInstance(), menu);
             createMenuItem(CloseProjectAction.getInstance(), menu);
-            createMenuItem(saveProjectAction, menu);
-            createMenuItem(saveProjectAsAction, menu);
+            createMenuItem(SaveProjectAction.getInstance(), menu);
+            createMenuItem(SaveProjectAsAction.getInstance(), menu);
             menu.addSeparator();
 
             createMenuItem(ImportProjectAction.getInstance(), menu);
@@ -3275,8 +3271,8 @@ public class PkgMgrFrame extends AbstractPkgFrame
     {
         actionsToDisable = new ArrayList<Action>();
         actionsToDisable.add(CloseProjectAction.getInstance());
-        actionsToDisable.add(saveProjectAction);
-        actionsToDisable.add(saveProjectAsAction);
+        actionsToDisable.add(SaveProjectAction.getInstance());
+        actionsToDisable.add(SaveProjectAsAction.getInstance());
         actionsToDisable.add(ImportProjectAction.getInstance());
         actionsToDisable.add(ExportProjectAction.getInstance());
         actionsToDisable.add(PageSetupAction.getInstance());

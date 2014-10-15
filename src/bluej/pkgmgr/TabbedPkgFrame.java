@@ -22,10 +22,13 @@ import bluej.pkgmgr.actions.QuitAction;
 
 public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
+	PkgFrameMenu menuMgr;
+	protected TabbedPkgFrame recentFrame = null;
 	
 	public TabbedPkgFrame(){
 		setupWindow();
-				
+		
+		menuMgr = new PkgFrameMenu();
 		jtp = new JTabbedPane();
 		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
 			
@@ -59,45 +62,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		JMenuBar menubar = new JMenuBar();
 		setJMenuBar(menubar);
 		
-		JMenu menu = new JMenu(Config.getString("menu.package"));
-	    int mnemonic = Config.getMnemonicKey("menu.package");
-	    menu.setMnemonic(mnemonic);
-	    menubar.add(menu);
-	        
-	    {
-	            createMenuItem(NewProjectAction.getInstance(), menu);
-	            //javaMEnewProjMenuItem = createMenuItem( NewMEprojectAction.getInstance(), menu );            
-	            createMenuItem(OpenProjectAction.getInstance(), menu);
-	            //recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
-	            //menu.add(recentProjectsMenu);
-	            createMenuItem(OpenNonBlueJAction.getInstance(), menu);
-	            //createMenuItem(closeProjectAction, menu);
-	            //createMenuItem(saveProjectAction, menu);
-	            //createMenuItem(saveProjectAsAction, menu);
-	            menu.addSeparator();
-	            
-//	            createMenuItem(importProjectAction, menu);
-//	            createMenuItem(exportProjectAction, menu);
-//	            javaMEdeployMenuItem = createMenuItem( deployMIDletAction, menu ); 
-//	            javaMEdeployMenuItem.setVisible( false ); //visible only in Java ME packages
-//	            menu.addSeparator();
-//
-//	            createMenuItem(pageSetupAction, menu);
-//	            createMenuItem(printAction, menu);
-
-	            if (!Config.usingMacScreenMenubar()) { // no "Quit" here for Mac
-	                menu.addSeparator();
-	                createMenuItem(QuitAction.getInstance(), menu);
-	            }
-	        }
-		
-		
-		menu = new JMenu(Config.getString("menu.view"));
-	    menu.setMnemonic(Config.getMnemonicKey("menu.view"));
-	    menubar.add(menu);
-		
+		menuMgr.setupMenu(menubar);
 	}
-	
-
 
 }

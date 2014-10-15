@@ -39,8 +39,16 @@ import bluej.utility.FileUtility;
  */
 final public class SaveProjectAsAction extends PkgMgrAction
 {
-		
-    public SaveProjectAsAction()
+	static private SaveProjectAsAction instance = null;
+	
+	 static public SaveProjectAsAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new SaveProjectAsAction();
+			 return instance;
+	}
+	
+    private SaveProjectAsAction()
     {
         super("menu.package.saveAs");
     }
