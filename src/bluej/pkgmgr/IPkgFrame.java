@@ -1,7 +1,5 @@
 package bluej.pkgmgr;
 
-import javax.swing.JFrame;
-
 public interface IPkgFrame {
 	/*Interface que deben cumplir todos los tipos de ventanas*/
 	
@@ -54,15 +52,5 @@ public interface IPkgFrame {
 	public void openPackage(Package pkg);
 
 	public IPkgFrame getMostRecent();
-
-	public void setWindowTitle(String string);
-
-	public boolean isJavaMEpackage();
-
-	public void showTestingTools(boolean b);
-
-	public void updateTestingStatus();
-
-	public void showTeamTools(boolean b);
 	
 }
