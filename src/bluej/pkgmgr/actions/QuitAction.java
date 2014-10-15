@@ -21,8 +21,6 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.AbstractPkgFrame;
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -52,11 +50,10 @@ final public class QuitAction extends PkgMgrAction {
         super("menu.package.quit");
     }
     
-    
-    public void actionPerformed(IPkgFrame pmf)
+    @Override
+    public void actionPerformed(PkgMgrFrame pmf)
     {
-    	pmf.menuCall(); 
+        pmf.menuCall(); 
         bluej.Main.wantToQuit();
-        	
     }
 }

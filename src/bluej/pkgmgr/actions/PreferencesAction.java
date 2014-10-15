@@ -21,8 +21,6 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.AbstractPkgFrame;
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -52,7 +50,7 @@ final public class PreferencesAction extends PkgMgrAction {
         super("menu.tools.preferences");
     }
     
-    public void actionPerformed(IPkgFrame pmf)
+    public void actionPerformed(PkgMgrFrame pmf)
     {
         pmf.menuCall();
         pmf.showPreferences();

@@ -197,7 +197,7 @@ public class Main
                 @Override
                 public void handleAbout(AppEvent.AboutEvent e)
                 {
-                    HelpAboutAction.getInstance().actionPerformed(PkgMgrFrame.getInstance().getMostRecent());
+                    HelpAboutAction.getInstance().actionPerformed(PkgMgrFrame.getMostRecent());
                 }
             });
 
@@ -205,7 +205,7 @@ public class Main
                 @Override
                 public void handlePreferences(AppEvent.PreferencesEvent e)
                 {
-                    PreferencesAction.getInstance().actionPerformed(PkgMgrFrame.getInstance().getMostRecent());
+                    PreferencesAction.getInstance().actionPerformed(PkgMgrFrame.getMostRecent());
                 }
             });
 
@@ -214,7 +214,7 @@ public class Main
                 public void handleQuitRequestWith(AppEvent.QuitEvent e, QuitResponse response)
                 {
                     macEventResponse = response;
-                    QuitAction.getInstance().actionPerformed(PkgMgrFrame.getInstance().getMostRecent());
+                    QuitAction.getInstance().actionPerformed(PkgMgrFrame.getMostRecent());
                     // response.confirmQuit() does not need to be called, since System.exit(0) is called explcitly
                     // response.cancelQuit() is called to cancel (in wantToQuit())
                 }
@@ -245,7 +245,7 @@ public class Main
     {
         int answer = 0;
         if (Project.getOpenProjectCount() > 1)
-            answer = DialogManager.askQuestion(PkgMgrFrame.getInstance().getMostRecent(), "quit-all");
+            answer = DialogManager.askQuestion(PkgMgrFrame.getMostRecent(), "quit-all");
         if (answer == 0) {
             doQuit();
         }

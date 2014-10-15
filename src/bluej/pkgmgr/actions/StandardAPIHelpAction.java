@@ -22,7 +22,6 @@
 package bluej.pkgmgr.actions;
 
 import bluej.Config;
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -53,7 +52,7 @@ final public class StandardAPIHelpAction extends PkgMgrAction {
         super("menu.help.standardApi");
     }
     
-    public void actionPerformed(IPkgFrame pmf)
+    public void actionPerformed(PkgMgrFrame pmf)
     {
         pmf.menuCall();
         pmf.showWebPage(Config.getPropString("bluej.url.javaStdLib"));

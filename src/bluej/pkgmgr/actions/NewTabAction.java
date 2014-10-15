@@ -1,6 +1,5 @@
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**Action to perform when the user chooses "new tab". When the button is pressed, 
@@ -29,10 +28,10 @@ public class NewTabAction extends PkgMgrAction {
 	 /**Specifies the action to be performed when the button is clicked.
 	  * @see bluej.pkgmgr.actions.PkgMgrAction#actionPerformed(bluej.pkgmgr.PkgMgrFrame)
 	  */
-	 public void actionPerformed(IPkgFrame pmf)
+	 public void actionPerformed(PkgMgrFrame pmf)
 	 {
 	        pmf.menuCall();
-	        pmf.doOpen();
+	        pmf.doOpenTab();
 	 }
 }
 

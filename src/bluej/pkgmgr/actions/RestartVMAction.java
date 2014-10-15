@@ -21,7 +21,6 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -53,7 +52,7 @@ final public class RestartVMAction extends PkgMgrAction
         super("workIndicator.resetMachine");
     }
     
-    public void actionPerformed(IPkgFrame pmf)
+    public void actionPerformed(PkgMgrFrame pmf)
     {
         pmf.restartDebugger();
     }

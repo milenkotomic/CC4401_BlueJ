@@ -361,7 +361,7 @@ public class UpdateAction extends AbstractAction
                             }
                             else {
                                 // TODO make the displayed file path relative to project
-                                int answer = DialogManager.askQuestion(PkgMgrFrame.getInstance().getMostRecent(),
+                                int answer = DialogManager.askQuestion(PkgMgrFrame.getMostRecent(),
                                         "team-binary-conflict", new String[] {f.getName()});
                                 if (answer == 0) {
                                     // keep local version

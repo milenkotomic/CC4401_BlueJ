@@ -22,7 +22,6 @@
 package bluej.pkgmgr.actions;
 
 import bluej.Config;
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -49,7 +48,7 @@ final public class RunTestsAction extends PkgMgrAction
         putValue(SHORT_DESCRIPTION, Config.getString("tooltip.test"));
     }
     
-    public void actionPerformed(IPkgFrame pmf)
+    public void actionPerformed(PkgMgrFrame pmf)
     {
         pmf.doTest();
     }

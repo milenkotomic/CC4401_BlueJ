@@ -21,7 +21,6 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.VersionCheckDialog;
 
@@ -54,7 +53,7 @@ final public class CheckVersionAction extends PkgMgrAction {
         super("menu.help.versionCheck");
     }
     
-    public void actionPerformed(IPkgFrame pmf)
+    public void actionPerformed(PkgMgrFrame pmf)
     {
         pmf.menuCall();
         new VersionCheckDialog(pmf);

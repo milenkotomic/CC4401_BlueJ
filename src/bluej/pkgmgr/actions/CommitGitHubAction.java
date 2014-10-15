@@ -1,7 +1,6 @@
 package bluej.pkgmgr.actions;
 
 import bluej.Config;
-import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 public class CommitGitHubAction extends PkgMgrAction {
@@ -25,7 +24,7 @@ public class CommitGitHubAction extends PkgMgrAction {
         super("Commit");
     }
     
-    public void actionPerformed(IPkgFrame pmf)
+    public void actionPerformed(PkgMgrFrame pmf)
     {
         pmf.doCommitGitHub();        
     }
