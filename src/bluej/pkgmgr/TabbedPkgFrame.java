@@ -1,7 +1,9 @@
 package bluej.pkgmgr;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Image;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -23,8 +25,11 @@ import bluej.pkgmgr.actions.QuitAction;
 public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
 	PkgFrameMenu menuMgr;
-	protected TabbedPkgFrame recentFrame = null;
+	private JLabel statusbar;
 	
+	private static List<TabbedFrameUnit> pkgTabs;
+	protected TabbedFrameUnit recentFrame = null;
+		
 	public TabbedPkgFrame(){
 		setupWindow();
 		
@@ -54,8 +59,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	    }
 	   
 	    setSize(new Dimension(695, 575));
-	    setLocation(20,20);
-	    
+	    setLocation(20,20);   
 	}
 	
 	private void setupMenu(){
@@ -65,4 +69,34 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		menuMgr.setupMenu(menubar);
 	}
 
+	public void doOpenTab(){
+		TabbedFrameUnit newTab = new TabbedFrameUnit();
+        pkgTabs.add(newTab);
+		        
+		jtp.addTab("Tab1", newTab.getTab());
+	}
+	
+	 /**
+     * Called on (almost) every menu invocation to clean up.
+     */
+    public void menuCall()
+    {
+        if (!recentFrame.isEmptyFrame())
+            recentFrame.setState();
+        clearStatus();
+    }
+	
+    /**
+     * Clear status bar of the frame
+     */
+    public void clearStatus()
+    {
+       EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                if (statusbar != null)
+                    statusbar.setText(" ");
+            }
+        });
+    }
+	
 }
