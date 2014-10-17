@@ -178,7 +178,7 @@ public class Main
                 openEmptyFrame();
             }
         }
-
+               
         Boot.getInstance().disposeSplashWindow();
         ExtensionsManager.getInstance().delegateEvent(new ApplicationEvent(ApplicationEvent.APP_READY_EVENT));
     }
@@ -340,7 +340,7 @@ public class Main
     /**
      * Open a single empty bluej window.
      */
-    private static void openEmptyFrame()
+    public static void openEmptyFrame()
     {
         PkgMgrFrame frame = PkgMgrFrame.createFrame();
         frame.setLocation(FIRST_X_LOCATION, FIRST_Y_LOCATION);

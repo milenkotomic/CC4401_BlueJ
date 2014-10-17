@@ -7,7 +7,16 @@
 *.jar
 *.war
 *.ear
+*.classpath
+*.eml
+*.lml
+*.idea*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/bin
+
+.settings/org.eclipse.core.resources.prefs.orig
+
+.classpath
+
+bluej.iml

@@ -112,6 +112,7 @@ import bluej.pkgmgr.actions.CancelTestRecordAction;
 import bluej.pkgmgr.actions.CheckExtensionsAction;
 import bluej.pkgmgr.actions.CheckVersionAction;
 import bluej.pkgmgr.actions.CloseProjectAction;
+import bluej.pkgmgr.actions.CommitGitHubAction;
 import bluej.pkgmgr.actions.CompileAction;
 import bluej.pkgmgr.actions.CompileSelectedAction;
 import bluej.pkgmgr.actions.DeployMIDletAction;
@@ -122,16 +123,21 @@ import bluej.pkgmgr.actions.HelpAboutAction;
 import bluej.pkgmgr.actions.ImportProjectAction;
 import bluej.pkgmgr.actions.NewClassAction;
 import bluej.pkgmgr.actions.NewInheritsAction;
+import bluej.pkgmgr.actions.NewIssueGitHubAction;
 import bluej.pkgmgr.actions.NewMEprojectAction;
 import bluej.pkgmgr.actions.NewPackageAction;
 import bluej.pkgmgr.actions.NewProjectAction;
+import bluej.pkgmgr.actions.NewTabAction;
 import bluej.pkgmgr.actions.NewUsesAction;
+import bluej.pkgmgr.actions.NewWindowAction;
 import bluej.pkgmgr.actions.OpenNonBlueJAction;
 import bluej.pkgmgr.actions.OpenProjectAction;
 import bluej.pkgmgr.actions.PageSetupAction;
 import bluej.pkgmgr.actions.PkgMgrAction;
 import bluej.pkgmgr.actions.PreferencesAction;
 import bluej.pkgmgr.actions.PrintAction;
+import bluej.pkgmgr.actions.PullGitHubAction;
+import bluej.pkgmgr.actions.PushGitHubAction;
 import bluej.pkgmgr.actions.QuitAction;
 import bluej.pkgmgr.actions.RebuildAction;
 import bluej.pkgmgr.actions.RemoveAction;
@@ -1364,6 +1370,7 @@ public class PkgMgrFrame extends JFrame
         }
         return openedProject;
     }
+       
     
     /**
      * Open a dialog that lets the user choose a project. The project selected
@@ -3125,6 +3132,8 @@ public class PkgMgrFrame extends JFrame
             }
         }
 
+     
+        
         menu = new JMenu(Config.getString("menu.view"));
         menu.setMnemonic(Config.getMnemonicKey("menu.view"));
         menubar.add(menu);
@@ -3153,6 +3162,7 @@ public class PkgMgrFrame extends JFrame
             }
         }
 
+              
         menu = new JMenu(Config.getString("menu.help"));
         menu.setMnemonic(Config.getMnemonicKey("menu.help"));
         menubar.add(menu);
@@ -3169,10 +3179,66 @@ public class PkgMgrFrame extends JFrame
             createMenuItem(TutorialAction.getInstance(), menu);
             createMenuItem(StandardAPIHelpAction.getInstance(), menu);
         }
+        
+                
+        menu = new JMenu("GitHub");
+        menubar.add(menu);
+        {
+            createMenuItem(PushGitHubAction.getInstance(), menu);
+            createMenuItem(PullGitHubAction.getInstance(), menu);
+            createMenuItem(CommitGitHubAction.getInstance(), menu);
+            createMenuItem(NewIssueGitHubAction.getInstance(), menu);
+        }
+        
+        menu = new JMenu("Windows");
+        menubar.add(menu);
+        {
+        	 createMenuItem(NewWindowAction.getInstance(),menu);
+             createMenuItem(NewTabAction.getInstance(),menu);
+             //menu.addSeparator();
+        	
+        }
+        
         addUserHelpItems(menu);
         updateRecentProjects();
 
         setJMenuBar(menubar);
+    }
+    
+    public void doPushGitHub(){
+    	System.out.println("Push");
+    }
+    
+    public void doPullGitHub(){
+    	System.out.println("Pull");
+    }
+
+    public void doCommitGitHub(){
+    	System.out.println("Commit");
+    }
+    
+    public void doNewIssueGitHub(){
+    	System.out.println("New Issue");
+    }
+    /**Opens an empty window. Action performed when the "New Window" button is pressed*/
+    public void doOpenWindow(){
+    	/*Crea nueva ventana vacía*/
+    	PkgMgrFrame frame = PkgMgrFrame.createFrame();
+    	frame.setLocation(0, 0);
+
+    	/*Mostrar la ventana, una vez creada*/
+    	frame.setVisible(true);
+    }
+    
+    /** Opens an empty tab.*/
+    public void doOpenTab(){
+    	/*Por ahora, se incluyen las pestañas en una ventana aparte, que luego tendrá las funcionalidades
+    	 * de una ventana de BlueJ normal.
+    	 */
+    	TabbedPkgFrame frame = new TabbedPkgFrame();
+    	
+    	frame.setVisible(true);
+        	
     }
 
     /**
