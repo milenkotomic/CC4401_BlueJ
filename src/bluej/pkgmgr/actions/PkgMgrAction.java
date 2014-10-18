@@ -30,6 +30,7 @@ import javax.swing.*;
 import bluej.Config;
 import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedPkgFrame;
 
 /**
  * This class is intended to act as a base class for actions which require
@@ -59,17 +60,19 @@ public abstract class PkgMgrAction extends AbstractAction {
      * @param event     The event for which to find the frame.
      * @return      The discovered frame (or null).
      */
-    public static PkgMgrFrame frameFromEvent(ActionEvent event)
+    public static IPkgFrame frameFromEvent(ActionEvent event)
     {
         Component jc = (Component)event.getSource();
         while( jc != null ) {            
-             //System.out.println("hello " + jc.getClass().getName());
-             //System.out.flush();
-            
+                      
             if( jc instanceof PkgMgrFrame ) {
                 break;
             }
             
+            if(jc instanceof TabbedPkgFrame){
+            	break;
+            }
+                        
             if( jc instanceof JPopupMenu ) {
                 jc = ((JPopupMenu)jc).getInvoker();
             }
@@ -77,7 +80,7 @@ public abstract class PkgMgrAction extends AbstractAction {
                 jc = jc.getParent();
             }
         }                
-        return (PkgMgrFrame)jc;
+        return (IPkgFrame)jc;
     }
     
     
@@ -139,7 +142,7 @@ public abstract class PkgMgrAction extends AbstractAction {
         
     final public void actionPerformed(ActionEvent event)
     {
-        PkgMgrFrame pmf = frameFromEvent(event);
+        IPkgFrame pmf = frameFromEvent(event);
         actionPerformed(pmf);
     }
         

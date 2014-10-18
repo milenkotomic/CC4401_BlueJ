@@ -15,9 +15,9 @@ public interface IPkgFrame {
 	public void callLibraryClass();
 	public void doTest();
 	public void restartDebugger();
-	public void doRemove();
+	public void doRemove();*/
 	public void doAddFromFile();
-	public void doPushGitHub();
+	/*public void doPushGitHub();
 	public void doPrint();
 	public void doPageSetup();
 	public void doOpen();
@@ -35,8 +35,8 @@ public interface IPkgFrame {
 	public void doDeployMIDlet();
 	public void compileSelected();
 	public void doCancelTest();
-	public void doCommitGitHub();
-	public void doClose(boolean b, boolean c);*/
+	public void doCommitGitHub();*/
+	public void doClose(boolean b, boolean c);
 	abstract void doOpenTab();
 	
 	//public Package getPackage();

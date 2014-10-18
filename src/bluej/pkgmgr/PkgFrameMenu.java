@@ -66,7 +66,7 @@ import bluej.pkgmgr.actions.UseLibraryAction;
 import bluej.pkgmgr.actions.WebsiteAction;
 
 
-public class PkgFrameMenu {
+public class PkgFrameMenu extends AbstractPkgMenu {
 
 	private List<Action> actionsToDisable;
 	private List<JComponent> itemsToDisable;
@@ -77,7 +77,6 @@ public class PkgFrameMenu {
     private JCheckBoxMenuItem showExtendsMenuItem;
     private JMenu testingMenu;
     
-
 	public PkgFrameMenu(){
 
 	}
@@ -150,57 +149,24 @@ public class PkgFrameMenu {
 			testingMenu = new JMenu(Config.getString("menu.tools.testing"));
 			testingMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
 			{
-				//  createMenuItem(RunTestsAction.getInstance(), testingMenu);
-				//    endTestMenuItem = createMenuItem(EndTestRecordAction.getInstance(), testingMenu);
-				//    cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);
-				//    endTestMenuItem.setEnabled(false);
-				//    cancelTestMenuItem.setEnabled(false);
+				
+	
+				if (!Config.usingMacScreenMenubar()) { // no "Preferences" here for
+					// Mac
+					menu.addSeparator();
+					createMenuItem(PreferencesAction.getInstance(), menu);
+				}
+	
+				// Create the menu manager that looks after extension tools menus
+				//  toolsMenuManager = new MenuManager(menu.getPopupMenu());
+	
+				// If this is the first frame create the extension tools menu now.
+				// (Otherwise, it will be created during project open.)
+				//if (frames.size() <= 1) {
+				//  toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(null));
+				//  toolsMenuManager.addExtensionMenu(null);
 			}
-			// testItems.add(testingMenu);
-			/*   menu.add(testingMenu);
-
-		            //team menu setup
-		            teamMenu = new JMenu(Config.getString("menu.tools.teamwork"));
-		            teamMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
-		            {
-		                Action checkoutAction = CheckoutAction.getInstance();
-		                createMenuItem(checkoutAction , teamMenu);
-		                shareProjectMenuItem = createMenuItem(teamActions.getImportAction(), teamMenu);               
-
-		                teamMenu.addSeparator();
-
-		                updateMenuItem = createMenuItem(teamActions.getUpdateAction(), teamMenu);
-		                updateMenuItem.setText(Config.getString("team.menu.update"));
-		                commitMenuItem = createMenuItem(teamActions.getCommitCommentAction(), teamMenu);
-		                commitMenuItem.setText(Config.getString("team.menu.commit"));
-		                statusMenuItem = createMenuItem(teamActions.getStatusAction(), teamMenu);
-		                showLogMenuItem = createMenuItem(teamActions.getShowLogAction(), teamMenu);
-
-		                teamMenu.addSeparator();
-
-		                teamSettingsMenuItem = createMenuItem(teamActions.getTeamSettingsAction(), teamMenu);
-		            }
-		            teamItems.add(teamMenu);
-		            menu.add(teamMenu);*/
-
-			if (!Config.usingMacScreenMenubar()) { // no "Preferences" here for
-				// Mac
-				menu.addSeparator();
-				createMenuItem(PreferencesAction.getInstance(), menu);
-			}
-
-			// Create the menu manager that looks after extension tools menus
-			//  toolsMenuManager = new MenuManager(menu.getPopupMenu());
-
-			// If this is the first frame create the extension tools menu now.
-			// (Otherwise, it will be created during project open.)
-			//if (frames.size() <= 1) {
-			//  toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(null));
-			//  toolsMenuManager.addExtensionMenu(null);
 		}
-
-
-
 
 		menu = new JMenu(Config.getString("menu.view"));
 		menu.setMnemonic(Config.getMnemonicKey("menu.view"));
@@ -264,8 +230,8 @@ public class PkgFrameMenu {
 			createMenuItem(NewWindowAction.getInstance(),menu);
 			createMenuItem(NewTabAction.getInstance(),menu);
 			//menu.addSeparator();
-
 		}
+		
 
 
 		//addUserHelpItems(menu);
@@ -351,5 +317,8 @@ public class PkgFrameMenu {
 		}
 	}
 
+  
+	
+	
 }
 

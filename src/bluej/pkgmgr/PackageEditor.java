@@ -56,7 +56,7 @@ public final class PackageEditor extends GraphEditor
         this.listener = listener;
     }
 
-    // notify all listeners that have registered interest for
+	// notify all listeners that have registered interest for
     // notification on this event type.
     protected void fireTargetEvent(PackageEditorEvent e)
     {

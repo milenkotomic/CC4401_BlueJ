@@ -21,6 +21,7 @@
  */
 package bluej.pkgmgr.actions;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -46,10 +47,8 @@ final public class AddClassAction extends PkgMgrAction
             instance = new AddClassAction();
         return instance;
     }
-    
-    
-    
-    public void actionPerformed(PkgMgrFrame pmf)
+       
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doAddFromFile();

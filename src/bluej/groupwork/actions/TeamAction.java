@@ -88,7 +88,7 @@ public abstract class TeamAction extends AbstractAction
      */
     public void actionPerformed(ActionEvent e)
     {
-        pkgMgrFrame = PkgMgrAction.frameFromEvent(e);
+        pkgMgrFrame = (PkgMgrFrame) PkgMgrAction.frameFromEvent(e);
         actionPerformed(pkgMgrFrame);
     }
     
