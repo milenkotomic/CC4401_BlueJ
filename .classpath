@@ -17,6 +17,6 @@
 	<classpathentry kind="lib" path="lib/httpcomponents-client-4.3.4/lib/httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/httpcomponents-client-4.3.4/lib/httpmime-4.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/java-diff-utils-1.2.jar"/>
-	<classpathentry kind="lib" path="/home/fabian/java7/jdk1.7.0_51/lib/tools.jar"/>
+	<classpathentry kind="lib" path="lib/tools.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

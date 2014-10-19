@@ -49,30 +49,53 @@ public class TestFile {
 		System.out.println("Constructor2");
 	}
 	
-	public void aParameter (String param1){
+	protected void aParameter (String param1){
 		int xd = 123;
 		System.out.println("Test1");
 		
 	}
 	
-	public void twoParameters (String param1, int param2){
+	private void twoParameters (String param1, int param2){
 		System.out.println("Test22");
 		System.out.println("Test222");
 		
 	}
+	
+	
 
 	public int threeParameters (String param1, int param2, interClass param3){
 		System.out.println("Test3");
 		System.out.println("Test3");
 		System.out.println("Test3");
+		int a = 6;
+		switch(a){
+		case 1: 
+			System.out.println("uno");
+			break;
+		case 2: 
+			System.out.println("dos");
+			break;
+		case 3: 
+			System.out.println("tres");
+			break;
+		case 4: 
+			System.out.println("cuatro");
+			break;
+		case 5: 
+			System.out.println("seis");
+			break;
+		case 6: 
+			System.out.println("siete");
+			break;
+
+		
+		}
+		
 		return 0;
 	}
 	class interClass{
 		public void noParams(){}
 		
 	}
-	
-	
-	
 	
 }

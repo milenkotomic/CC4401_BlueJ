@@ -84,6 +84,7 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
     protected List<MethodNode> methods = new ArrayList<MethodNode> ();
     protected List<FieldNode> fields = new ArrayList<FieldNode> ();
     protected List<String> imports = new ArrayList<String>();
+    protected List<String> calledMethodNames = new ArrayList<String>();
     private boolean fieldCapture =  true;
     
     
@@ -321,33 +322,33 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
     @Override
     protected void gotModifier(LocatableToken token)
     {
-        switch (token.getType()) {
+    	switch (token.getType()) {
         case JavaTokenTypes.ABSTRACT:
-            currentModifiers |= Modifier.ABSTRACT;
+            currentModifiers = Modifier.ABSTRACT;
             break;
         case JavaTokenTypes.LITERAL_private:
-            currentModifiers |= Modifier.PRIVATE;
+            currentModifiers = Modifier.PRIVATE;
             break;
         case JavaTokenTypes.LITERAL_public:
-            currentModifiers |= Modifier.PUBLIC;
+            currentModifiers = Modifier.PUBLIC;
             break;
         case JavaTokenTypes.LITERAL_protected:
-            currentModifiers |= Modifier.PROTECTED;
+            currentModifiers = Modifier.PROTECTED;
             break;
         case JavaTokenTypes.FINAL:
-            currentModifiers |= Modifier.FINAL;
+            currentModifiers = Modifier.FINAL;
             break;
         case JavaTokenTypes.LITERAL_synchronized:
-            currentModifiers |= Modifier.SYNCHRONIZED;
+            currentModifiers = Modifier.SYNCHRONIZED;
             break;
         case JavaTokenTypes.STRICTFP:
-            currentModifiers |= Modifier.STRICT;
+            currentModifiers = Modifier.STRICT;
             break;
         case JavaTokenTypes.LITERAL_native:
-            currentModifiers |= Modifier.NATIVE;
+            currentModifiers = Modifier.NATIVE;
             break;
         case JavaTokenTypes.LITERAL_static:
-            currentModifiers |= Modifier.STATIC;
+            currentModifiers = Modifier.STATIC;
             break;
         default:
         }
@@ -703,9 +704,9 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
         // If the token is an LCURLY, it will be seen as a compound statement and scope
         // handling is done by beginStmtBlockBody
         if (token.getType() != JavaTokenTypes.LCURLY) {
-            JavaParentNode loopNode = new InnerNode(scopeStack.peek());
-            loopNode.setInner(true);
-            int curOffset = getTopNodeOffset();
+        	JavaParentNode loopNode = new InnerNode(scopeStack.peek());
+        	loopNode.setInner(true);
+        	int curOffset = getTopNodeOffset();
             int insPos = lineColToPosition(token.getLine(), token.getColumn());
             beginNode(insPos);
             scopeStack.peek().insertNode(loopNode, insPos - curOffset, 0);
@@ -730,13 +731,13 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
     @Override
     protected void beginSwitchStmt(LocatableToken token)
     {
-        beginIfStmt(token);
+    	beginIfStmt(token);
     }
     
     @Override
     protected void beginSwitchBlock(LocatableToken token)
     {
-        JavaParentNode loopNode = new InnerNode(scopeStack.peek());
+    	JavaParentNode loopNode = new InnerNode(scopeStack.peek());
         loopNode.setInner(true);
         int curOffset = getTopNodeOffset();
         int insPos = lineColToPosition(token.getEndLine(), token.getEndColumn());
@@ -748,13 +749,13 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
     @Override
     protected void endSwitchBlock(LocatableToken token)
     {
-        endTopNode(token, false);
+    	endTopNode(token, false);
     }
     
     @Override
     protected void endSwitchStmt(LocatableToken token, boolean included)
     {
-        endTopNode(token, included);
+    	endTopNode(token, included);
     }
     
     @Override
@@ -980,11 +981,11 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
         int insPos = lineColToPosition(start.getLine(), start.getColumn());
 
         MethodNode pnode = new MethodNode(scopeStack.peek(), token.getText(), jdcomment);
-        methods.add(pnode);
         JavaEntity returnType = ParseUtils.getTypeEntity(pnode, currentQuerySource(), lastTypeSpec);
         pnode.setReturnType(returnType);
         pnode.setModifiers(currentModifiers);
         pnode.setTypeParams(getTparList(pnode));
+        methods.add(pnode);
         typeParams = null;
         
         beginNode(insPos);
@@ -1277,6 +1278,29 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
         gotImplements = true;
         gotExtends = false;
     }
+    
+    
+    @Override
+    protected void gotMethodCall(LocatableToken token) {
+    	calledMethodNames.add(token.getText());
+    }
+    
+    private ArrayList<MethodNode> getUnusedPrivateMethods(){
+    	ArrayList<MethodNode> res = new ArrayList<MethodNode>();
+    	for(MethodNode m:methods){
+    		if(Modifier.isPrivate(m.getModifiers())){
+    			if (!calledMethodNames.contains(m.getName())){
+    				res.add(m);
+    			}
+    		}
+    	}
+    	return res;
+    }
+    
+    public boolean hasDeadCode(){
+    	return getUnusedPrivateMethods().size() > 0;
+    }
+    
     public List<MethodNode> getMethods(){
     	return methods;
     }
@@ -1286,6 +1310,8 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
     public List<String> getImports(){
     	return imports;
     }
+    
+    
     
 
 	@Override

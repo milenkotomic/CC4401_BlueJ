@@ -80,6 +80,11 @@ public class MyParserTestOwnFile {
 		
 	}
 	
+	@Test
+	public void deadCodeTest(){
+		assertTrue(infop.hasDeadCode());
+	}
+	
 
 	
 }
