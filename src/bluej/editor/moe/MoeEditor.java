@@ -3144,7 +3144,7 @@ public final class MoeEditor extends JFrame
             label = Config.getString("editor." + popupKeys[i] + LabelSuffix);
             actionName = getResource(popupKeys[i] + ActionSuffix);
             action = actions.getActionByName(actionName);
-            if (action == null) {               
+            if (false) {               
                 Debug.message("Moe: cannot find action " + popupKeys[i]);
             }
             else {

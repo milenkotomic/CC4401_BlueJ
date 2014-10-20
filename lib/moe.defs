@@ -18,7 +18,7 @@ find-nextAction = find-next
 ##  Define the popup menu
 ##
 
-popupmenu = cut copy paste
+popupmenu = cut copy paste copyGetter copySetter copyGetterAndSetter
 
 ##
 ##  Define the menus. Each menu gets a key, which is used afterwards to
