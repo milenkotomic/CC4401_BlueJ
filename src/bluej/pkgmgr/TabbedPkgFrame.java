@@ -58,8 +58,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
-	    
-		jtp.setTabComponentAt(0, new ButtonTabComponent(jtp));
+	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp));
 		
 		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
         setupMenu();

@@ -1,5 +1,7 @@
 package bluej.pkgmgr;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 
 import bluej.Config;
 
@@ -224,13 +227,14 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		menu = new JMenu("Windows");
 		menubar.add(menu);
 		{
-			createMenuItem(NewWindowAction.getInstance(),menu);
-			createMenuItem(NewTabAction.getInstance(),menu);
+			JMenuItem newWindow = createMenuItem(NewWindowAction.getInstance(),menu);
+			newWindow.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
+						
+			JMenuItem newTab = createMenuItem(NewTabAction.getInstance(),menu);
+			newTab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
 			//menu.addSeparator();
 		}
 		
-
-
 		//addUserHelpItems(menu);
 		//updateRecentProjects();
 
@@ -238,11 +242,6 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 
 	}
 
-	protected JMenuItem createMenuItem(Action action, JMenu menu){
-		JMenuItem item = menu.add(action);
-		item.setIcon(null);
-		return item;
-	}
 
 	/**
 	 * Add a new menu item to a menu.
