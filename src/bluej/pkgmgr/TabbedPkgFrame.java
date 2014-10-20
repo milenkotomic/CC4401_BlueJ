@@ -1,5 +1,6 @@
 package bluej.pkgmgr;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -58,16 +59,12 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		
 		jtp = new JTabbedPane();
 		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
-			
+		
 		recentFrame = new TabbedFrameUnit();
 		pkgTabs.add(recentFrame);
         
 		jtp.addTab("Tab1", recentFrame.getTab());
-	    JLabel label1 = new JLabel();
-        label1.setText("You are in area of Tab1");
-             
-        recentFrame.getTab().add(label1); 
-        
+	         
         setupMenu();
         
         testToolsShown = testMenu.wantToSeeTestingTools();

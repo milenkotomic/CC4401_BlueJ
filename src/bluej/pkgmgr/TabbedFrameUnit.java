@@ -1,6 +1,9 @@
 package bluej.pkgmgr;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.FocusEvent;
@@ -8,19 +11,28 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 
 import bluej.BlueJEventListener;
+import bluej.BlueJTheme;
 import bluej.Config;
 import bluej.collect.DataCollector;
 import bluej.debugmgr.objectbench.ObjectBench;
@@ -28,16 +40,44 @@ import bluej.extmgr.ExtensionsManager;
 import bluej.extmgr.MenuManager;
 import bluej.extmgr.ToolsExtensionMenu;
 import bluej.extmgr.ViewExtensionMenu;
+import bluej.groupwork.ui.ActivityIndicator;
+import bluej.pkgmgr.actions.AddClassAction;
+import bluej.pkgmgr.actions.CancelTestRecordAction;
+import bluej.pkgmgr.actions.CloseProjectAction;
+import bluej.pkgmgr.actions.CompileAction;
+import bluej.pkgmgr.actions.CompileSelectedAction;
+import bluej.pkgmgr.actions.EndTestRecordAction;
+import bluej.pkgmgr.actions.ExportProjectAction;
+import bluej.pkgmgr.actions.GenerateDocsAction;
+import bluej.pkgmgr.actions.ImportProjectAction;
 import bluej.pkgmgr.actions.NewClassAction;
+import bluej.pkgmgr.actions.NewInheritsAction;
+import bluej.pkgmgr.actions.NewPackageAction;
+import bluej.pkgmgr.actions.NewUsesAction;
+import bluej.pkgmgr.actions.PageSetupAction;
+import bluej.pkgmgr.actions.PrintAction;
+import bluej.pkgmgr.actions.RebuildAction;
+import bluej.pkgmgr.actions.RemoveAction;
+import bluej.pkgmgr.actions.RestartVMAction;
+import bluej.pkgmgr.actions.RunTestsAction;
+import bluej.pkgmgr.actions.SaveProjectAction;
+import bluej.pkgmgr.actions.SaveProjectAsAction;
+import bluej.pkgmgr.actions.ShowDebuggerAction;
+import bluej.pkgmgr.actions.ShowInheritsAction;
+import bluej.pkgmgr.actions.ShowTerminalAction;
+import bluej.pkgmgr.actions.ShowTextEvalAction;
+import bluej.pkgmgr.actions.ShowUsesAction;
+import bluej.pkgmgr.actions.UseLibraryAction;
+import bluej.prefmgr.PrefMgr;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.utility.DialogManager;
 import bluej.utility.GradientFillPanel;
 import bluej.utility.Utility;
 
-public class TabbedFrameUnit extends JComponent  implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
+public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
 	private Package pkg = null;
 	protected JPanel tabWindow;
-	
+		
 	private TextEvaluatorMgr text; 
 	private PkgFrameTestingMenu test;
 	private PkgFrameJavaME javaME;
@@ -50,11 +90,28 @@ public class TabbedFrameUnit extends JComponent  implements BlueJEventListener, 
 	private MenuManager toolsMenuManager;
     private MenuManager viewMenuManager;
 	
+    /*Conservar para primeras pruebas*/
+    private AbstractButton imgExtendsButton;
+    private AbstractButton imgDependsButton;
+    private AbstractButton runButton;
+    private List<JComponent> testItems;
+    static final int DEFAULT_WIDTH = 560;
+    static final int DEFAULT_HEIGHT = 400;
+    private JSplitPane splitPane;
+    private MachineIcon machineIcon;
+    private JLabel statusbar;
+    private static Font pkgMgrFont = PrefMgr.getStandardFont();
+    private List<JComponent> itemsToDisable;
+    private List<Action> actionsToDisable;
+    
+    
 	public TabbedFrameUnit(){
 		tabWindow = new JPanel();
 		text = new TextEvaluatorMgr();
 		test = new PkgFrameTestingMenu();
 		javaME = new PkgFrameJavaME();
+		setupActionDisableSet();
+		itemsToDisable = new ArrayList<JComponent>();
 		
 		makeFrame();
 		//editor = new PackageEditor(pkg, this, this);
@@ -88,29 +145,222 @@ public class TabbedFrameUnit extends JComponent  implements BlueJEventListener, 
 	}
 	
 	protected void makeFrame(){
-		//setContentPane(new GradientFillPanel(getContentPane().getLayout()));
-		//JPanel toolPanel = new JPanel();
-		//toolPanel.setOpaque(false);
-		//tabWindow.add(toolPanel);
+		setFont(pkgMgrFont);
+		setContentPane(new GradientFillPanel(getContentPane().getLayout()));
+		JPanel toolPanel = new JPanel();
+		toolPanel.setOpaque(false);
+		tabWindow.add(toolPanel);
 	
+		Container contentPane = getContentPane();
+	    ((JPanel) contentPane).setBorder(BlueJTheme.generalBorderWithStatusBar);
+		
+	    JPanel mainPanel = new JPanel(new BorderLayout(5, 5));
+	    if (!Config.isRaspberryPi()) mainPanel.setOpaque(false);
+	    
+		testItems = new ArrayList<JComponent>();
+		
 		/*Panel para los botones que se encuentran al lado izquierdo*/
+		JPanel buttonPanel = createLeftPanel();      
+        tabWindow.add(buttonPanel);
+        
+        /*Panel para las opciones de testeo, en general, desactivadas por defecto*/
+        JPanel testPanel = createTestingPanel(false);    
+        testItems.add(testPanel); 
+        
+        /*Machine icon: Indicador de actividad tipo "barbero"*/
+        machineIcon = new MachineIcon();
+        machineIcon.setAlignmentX(0.5f);
+        //itemsToDisable.add(machineIcon);
+        
+        toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.Y_AXIS));
+        toolPanel.add(buttonPanel);
+        toolPanel.add(Box.createVerticalGlue());
+        //toolPanel.add(teamPanel);
+        //toolPanel.add(javaMEPanel);
+        toolPanel.add(testPanel);
+        toolPanel.add(machineIcon);
+        mainPanel.add(toolPanel, BorderLayout.WEST);
+               
+        classScroller = new JScrollPane();
+        configureClassScroller();
+        mainPanel.add(classScroller, BorderLayout.CENTER);
+                     
+        splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPanel, objbench);
+        splitPane.setBorder(null);
+        splitPane.setResizeWeight(1.0);
+        splitPane.setDividerSize(5);
+        if (!Config.isRaspberryPi()) splitPane.setOpaque(false);
+        contentPane.add(splitPane, BorderLayout.CENTER);
+        
+        /*Zona de abajo*/
+        JPanel statusArea = new JPanel(new BorderLayout());
+        if (!Config.isRaspberryPi()) statusArea.setOpaque(false);
+
+        statusArea.setBorder(BorderFactory.createEmptyBorder(2, 0, 4, 6));
+        JLabel statusbar = new JLabel(" ");
+        statusbar.setFont(pkgMgrFont);
+        statusArea.add(statusbar, BorderLayout.CENTER);
+
+        JLabel testStatusMessage = new JLabel(" ");
+        testStatusMessage.setFont(pkgMgrFont);
+        statusArea.add(testStatusMessage, BorderLayout.WEST);
+
+        ActivityIndicator progressbar = new ActivityIndicator();
+        progressbar.setRunning(false);
+        statusArea.add(progressbar, BorderLayout.EAST);
+        
+        contentPane.add(statusArea, BorderLayout.SOUTH);
+        
+        tabWindow.add(mainPanel);
+        tabWindow.add(contentPane);
+        
+        if (isEmptyFrame()) {
+            enableFunctions(false);
+        }
+        
+	}
+	
+	private JPanel createLeftPanel(){
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
 
         AbstractButton button = createButton(NewClassAction.getInstance(), false, false, 4, 4);
         buttonPanel.add(button);
+        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
+        
+        imgDependsButton = createButton(NewUsesAction.getInstance(), true, false, 4, 4);
+        buttonPanel.add(imgDependsButton);
+        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
+
+        imgExtendsButton = createButton(NewInheritsAction.getInstance(), true, false, 4, 4);
+        buttonPanel.add(imgExtendsButton);
+        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
+
+        button = createButton(CompileAction.getInstance(), false, false, 4, 4);
+        buttonPanel.add(button);
+        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
+
+        buttonPanel.setAlignmentX(0.5f);
+        
+        return buttonPanel;
+  	}
 	
-        
-        
-        
-        
-        
-        
-        tabWindow.add(buttonPanel);
+	private JPanel createTestingPanel(boolean visible){
+		JPanel testPanel = new JPanel();
 		
+		if (!Config.isRaspberryPi()) testPanel.setOpaque(false);
+	     
+		 testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.Y_AXIS));
+
+		 testPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 14, 5));
+
+		 runButton = createButton(RunTestsAction.getInstance(), false, false, 2, 4);
+		 runButton.setText(Config.getString("pkgmgr.test.run"));
+		 runButton.setAlignmentX(0.15f);
+		 testPanel.add(runButton);
+		 testPanel.add(Box.createVerticalStrut(8));
+
+		 JLabel recordingLabel = new JLabel(Config.getString("pkgmgr.test.record"), Config
+				 .getFixedImageAsIcon("record.gif"), SwingConstants.LEADING);
+		 //recordingLabel.setFont(pkgMgrFont);
+		 recordingLabel.setEnabled(visible);
+		 recordingLabel.setAlignmentX(0.15f);
+		 testPanel.add(recordingLabel);
+		 testPanel.add(Box.createVerticalStrut(3));
+
+		 Action action = EndTestRecordAction.getInstance();
+		 AbstractButton endTestButton = createButton(action, false, false, 2, 4);
+		 //make the button use a different label than the one from
+		 // action
+		 endTestButton.setText(Config.getString("pkgmgr.test.end"));
+		 endTestButton.setEnabled(visible);
+
+		 testPanel.add(endTestButton);
+		 if(!Config.isMacOSLeopard()) testPanel.add(Box.createVerticalStrut(3));
+
+		 action = CancelTestRecordAction.getInstance();
+		 AbstractButton cancelTestButton = createButton(action, false, false, 2, 4);
+		 //make the button use a different label than the one from
+		 // action
+		 cancelTestButton.setText(Config.getString("cancel"));
+		 cancelTestButton.setEnabled(visible);
+
+		 testPanel.add(cancelTestButton);
+
+		 testPanel.setAlignmentX(0.5f);
+	
+		 return testPanel;
 	}
 	
+	private void configureClassScroller(){
+		
+		classScroller.setBorder(Config.normalBorder);
+        classScroller.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        classScroller.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        classScroller.setFocusable(false);
+        classScroller.getVerticalScrollBar().setUnitIncrement(10);
+        classScroller.getHorizontalScrollBar().setUnitIncrement(20);
+        if (!Config.isRaspberryPi()) classScroller.setOpaque(false);
+        
+	}
+	
+	/**
+     * Enable/disable functionality. Enable or disable all the interface
+     * elements that should change when a project is or is not open.
+     */
+    protected void enableFunctions(boolean enable)
+    {
+        /*if (! enable) {
+            teamActions.setAllDisabled();
+        }*/
+        
+        for (Iterator<JComponent> it = itemsToDisable.iterator(); it.hasNext();) {
+            JComponent component = it.next();
+            component.setEnabled(enable);
+        }
+        for (Iterator<Action> it = actionsToDisable.iterator(); it.hasNext();) {
+            Action action = it.next();
+            action.setEnabled(enable);
+        }
+    }
+	
+    /**
+	 * Define which actions are to be disabled when no project is open
+	 */
+	private void setupActionDisableSet()
+	{
+		actionsToDisable = new ArrayList<Action>();
+
+		actionsToDisable.add(CloseProjectAction.getInstance());
+		actionsToDisable.add(SaveProjectAction.getInstance());
+		actionsToDisable.add(SaveProjectAsAction.getInstance());
+		actionsToDisable.add(ImportProjectAction.getInstance());
+		actionsToDisable.add(ExportProjectAction.getInstance());
+		actionsToDisable.add(PageSetupAction.getInstance());
+		actionsToDisable.add(PrintAction.getInstance());
+		actionsToDisable.add(NewClassAction.getInstance());
+		actionsToDisable.add(NewPackageAction.getInstance());
+		actionsToDisable.add(AddClassAction.getInstance());
+		actionsToDisable.add(RemoveAction.getInstance());
+		actionsToDisable.add(NewUsesAction.getInstance());
+		actionsToDisable.add(NewInheritsAction.getInstance());
+		actionsToDisable.add(CompileAction.getInstance());
+		actionsToDisable.add(CompileSelectedAction.getInstance());
+		actionsToDisable.add(RebuildAction.getInstance());
+		actionsToDisable.add(RestartVMAction.getInstance());
+		actionsToDisable.add(UseLibraryAction.getInstance());
+		actionsToDisable.add(GenerateDocsAction.getInstance());
+		actionsToDisable.add(ShowUsesAction.getInstance());
+		actionsToDisable.add(ShowInheritsAction.getInstance());
+		actionsToDisable.add(ShowDebuggerAction.getInstance());
+		actionsToDisable.add(ShowTerminalAction.getInstance());
+		actionsToDisable.add(ShowTextEvalAction.getInstance());
+		actionsToDisable.add(RunTestsAction.getInstance());
+	}
+
+    
+    
 	 /**
      * Create a button for the interface.
      * 

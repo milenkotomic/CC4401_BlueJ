@@ -69,7 +69,7 @@ import bluej.pkgmgr.actions.WebsiteAction;
 public class PkgFrameMenu extends AbstractPkgMenu {
 
 	private List<Action> actionsToDisable;
-	private List<JComponent> itemsToDisable;
+	
 	private JMenu recentProjectsMenu;
 	private JMenuItem javaMEnewProjMenuItem;
     private JMenuItem javaMEdeployMenuItem;
@@ -78,15 +78,13 @@ public class PkgFrameMenu extends AbstractPkgMenu {
     private JMenu testingMenu;
     
 	public PkgFrameMenu(){
-		 setupActionDisableSet();
+		 
 	}
 
 	/**
 	 * @param menubar
 	 */
 	protected void setupMenu(JMenuBar menubar){
-
-		itemsToDisable = new ArrayList<JComponent>();
 
 		JMenu menu = new JMenu(Config.getString("menu.package"));
 		int mnemonic = Config.getMnemonicKey("menu.package");
@@ -273,40 +271,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 	        return showExtendsMenuItem.isSelected();
 	}
 	
-	/**
-	 * Define which actions are to be disabled when no project is open
-	 */
-	private void setupActionDisableSet()
-	{
-		actionsToDisable = new ArrayList<Action>();
-
-		actionsToDisable.add(CloseProjectAction.getInstance());
-		actionsToDisable.add(SaveProjectAction.getInstance());
-		actionsToDisable.add(SaveProjectAsAction.getInstance());
-		actionsToDisable.add(ImportProjectAction.getInstance());
-		actionsToDisable.add(ExportProjectAction.getInstance());
-		actionsToDisable.add(PageSetupAction.getInstance());
-		actionsToDisable.add(PrintAction.getInstance());
-		actionsToDisable.add(NewClassAction.getInstance());
-		actionsToDisable.add(NewPackageAction.getInstance());
-		actionsToDisable.add(AddClassAction.getInstance());
-		actionsToDisable.add(RemoveAction.getInstance());
-		actionsToDisable.add(NewUsesAction.getInstance());
-		actionsToDisable.add(NewInheritsAction.getInstance());
-		actionsToDisable.add(CompileAction.getInstance());
-		actionsToDisable.add(CompileSelectedAction.getInstance());
-		actionsToDisable.add(RebuildAction.getInstance());
-		actionsToDisable.add(RestartVMAction.getInstance());
-		actionsToDisable.add(UseLibraryAction.getInstance());
-		actionsToDisable.add(GenerateDocsAction.getInstance());
-		actionsToDisable.add(ShowUsesAction.getInstance());
-		actionsToDisable.add(ShowInheritsAction.getInstance());
-		actionsToDisable.add(ShowDebuggerAction.getInstance());
-		actionsToDisable.add(ShowTerminalAction.getInstance());
-		actionsToDisable.add(ShowTextEvalAction.getInstance());
-		actionsToDisable.add(RunTestsAction.getInstance());
-	}
-
+	
 	/**
 	 * Enable/disable functionality. Enable or disable all the interface
 	 * elements that should change when a project is or is not open.
