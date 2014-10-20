@@ -1,5 +1,6 @@
 package bluej.github;
 
+
 import org.eclipse.egit.github.core.Commit;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -7,8 +8,12 @@ import org.eclipse.egit.github.core.client.RequestException;
 import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.OAuthService;
+import org.eclipse.egit.github.core.service.RepositoryService;
+import org.eclipse.egit.github.core.Repository;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by milenkotomic on 07-10-14.
@@ -29,9 +34,16 @@ public class GitHubConnection {
             RequestException ex = (RequestException) e;
             return ex.getStatus();
         }
-
-
     }
+
+    public List <String> getRepositories() throws IOException{
+        RepositoryService service = new RepositoryService(client);
+        ArrayList <String> repositories = new ArrayList<String>();
+        for (Repository repo : service.getRepositories())
+            repositories.add(repo.getName());
+        return repositories;
+    }
+
 
     public void createCommit(){
         Commit commit = new Commit();

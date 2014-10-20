@@ -46,12 +46,15 @@ public class IssueTest {
         }
         */
 
+
+
         GitHubConnection ghc = new GitHubConnection();
         ghc.createClient(username, contraseña);
+        System.out.println(ghc.getRepositories());
         String title = "Issue Test: Titulo y cuerpo (?)";
         String repo = "SeriesRSS";
         String desc = "Cuerpo de Issue";
-        ghc.submittIssue(title, desc, repo);µ
+        ghc.submittIssue(title, desc, repo);
 
 
     }

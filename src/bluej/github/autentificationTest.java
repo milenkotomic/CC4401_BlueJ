@@ -50,10 +50,10 @@ public class autentificationTest {
         System.out.println(gr.generateUri());
 
 
-		/*RepositoryService service = new RepositoryService(cliente);
+		RepositoryService service = new RepositoryService(cliente);
 		for (Repository repo : service.getRepositories())
 		  System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());		
-		*/
+
 
 	}
 
