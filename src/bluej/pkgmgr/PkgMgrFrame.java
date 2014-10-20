@@ -3202,7 +3202,8 @@ public class PkgMgrFrame extends JFrame
     }
     
     public void doNewIssueGitHub(){
-    	System.out.println("New Issue");
+    	LoginDialog loginDlg = new LoginDialog(this);
+        loginDlg.setVisible(true);
     }
 
     /**
