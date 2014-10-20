@@ -1,5 +1,6 @@
 package bluej.pkgmgr;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -56,8 +57,10 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		recentFrame = new TabbedFrameUnit();
 		pkgTabs.add(recentFrame);	
 		
-		jtp.addTab("Tab1", recentFrame.getTab());
+		jtp.addTab("BlueJ", recentFrame.getTab());
 	    
+		jtp.setTabComponentAt(0, new ButtonTabComponent(jtp));
+		
 		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
         setupMenu();
         
@@ -86,15 +89,15 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 
 	public TabbedFrameUnit createFrame(Package pkg){
 		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg);
-		pkgTabs.add(tfu);
 				
+		pkgTabs.add(tfu);
 		return tfu;
 	}
 	
 	public TabbedFrameUnit createFrame(){
 		TabbedFrameUnit tfu = new TabbedFrameUnit();
-		pkgTabs.add(tfu);
-				
+		
+		pkgTabs.add(tfu);	
 		return tfu;
 
 	}
@@ -184,7 +187,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		TabbedFrameUnit newTab = new TabbedFrameUnit();
         pkgTabs.add(newTab);
 		        
-		jtp.addTab("Tab1", newTab.getTab());
+		jtp.addTab("BlueJ", newTab.getTab());
+		jtp.setTabComponentAt(jtp.indexOfComponent(newTab.getTab()), new ButtonTabComponent(jtp));
 	}
     
     public void doOpenWindow(){
