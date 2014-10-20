@@ -54,7 +54,7 @@ public class IssueTest {
         String title = "Issue Test: Titulo y cuerpo (?)";
         String repo = "SeriesRSS";
         String desc = "Cuerpo de Issue";
-        ghc.submittIssue(title, desc, repo);
+        ghc.submitIssue(title, desc, repo);
 
 
     }

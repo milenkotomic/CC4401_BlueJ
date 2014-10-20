@@ -51,7 +51,7 @@ public class GitHubConnection {
 
     }
 
-    public void submittIssue(String title, String repository) throws IOException{
+    public void submitIssue(String title, String repository) throws IOException{
         Issue is = new Issue();
         is.setTitle(title);
         IssueService i = new IssueService(client);
@@ -59,7 +59,7 @@ public class GitHubConnection {
         System.out.println(createdIssue);
     }
 
-    public void submittIssue(String title, String description, String repository) throws IOException{
+    public void submitIssue(String title, String description, String repository) throws IOException{
         Issue is = new Issue();
         is.setTitle(title);
         is.setBody(description);
