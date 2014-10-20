@@ -71,9 +71,9 @@ public class CC4401OurTest extends junit.framework.TestCase {
     
     
     public void testCC4401() throws Exception{
-    	System.out.println(javadocReport(getFile("GameBuilder.dat")));
-    	System.out.println(javadocReport(getFile("A.dat")));
-    	System.out.println(javadocReport(getFile("B.dat")));
+    	System.out.println(hasJavadoc(getFile("GameBuilder.dat")));
+    	//System.out.println(javadocReport(getFile("A.dat")));
+    	//System.out.println(javadocReport(getFile("B.dat")));
     }
     public String javadocReport(File file) throws Exception{
     	ClassInfo info = InfoParser.parse(file);
@@ -83,6 +83,15 @@ public class CC4401OurTest extends junit.framework.TestCase {
     	ClassInfo info = InfoParser.parse(new StringReader(text), new ClassLoaderResolver(getClass().getClassLoader()), null);
     	return javadocReport(info);
     }
+    public ArrayList<Boolean> hasJavadoc(File file) throws Exception{
+    	ClassInfo info = InfoParser.parse(file);
+    	return hasJavadoc(info);
+    }
+    public ArrayList<Boolean> hasJavadoc(String text) throws Exception{
+    	ClassInfo info = InfoParser.parse(new StringReader(text), new ClassLoaderResolver(getClass().getClassLoader()), null);
+    	return hasJavadoc(info);
+    }
+    
     public String javadocReport(ClassInfo info) throws Exception{
     	StringBuilder sb=new StringBuilder();
         Properties comments = info.getComments();
@@ -100,7 +109,22 @@ public class CC4401OurTest extends junit.framework.TestCase {
         	sb.append("**************\n");
         }
         return sb.toString();
-    }   
+    }
+    public ArrayList<Boolean> hasJavadoc(ClassInfo info) throws Exception{
+    	ArrayList<Boolean> listofBoolean = new ArrayList<Boolean>();
+    	
+        Properties comments = info.getComments();
+        for (int i=0;comments.get("comment"+i+".target")!=null;i++){
+        	if (comments.get("comment"+i+".text")!=null){
+        		listofBoolean.add(true);
+        	}
+        	else
+        	listofBoolean.add(false);
+        		
+        	
+        }
+        return listofBoolean;
+    } 
     
 
 	
