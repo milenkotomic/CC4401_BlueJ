@@ -78,7 +78,7 @@ public class TextEvaluatorMgr {
      */
     private void addTextEvaluatorPane()
     {
-        classScroller.setPreferredSize(classScroller.getSize()); // memorize
+        //classScroller.setPreferredSize(classScroller.getSize()); // memorize
                                                                  // current size
         if (textEvaluator == null) {
             textEvaluator = new TextEvalArea(this, pkgMgrFont);

@@ -78,7 +78,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
     private JMenu testingMenu;
     
 	public PkgFrameMenu(){
-
+		 setupActionDisableSet();
 	}
 
 	/**
@@ -263,6 +263,16 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		return item;
 	}
 
+	public boolean isShowUses()
+	{
+	        return showUsesMenuItem.isSelected();
+	}
+
+	public boolean isShowExtends()
+	{
+	        return showExtendsMenuItem.isSelected();
+	}
+	
 	/**
 	 * Define which actions are to be disabled when no project is open
 	 */
