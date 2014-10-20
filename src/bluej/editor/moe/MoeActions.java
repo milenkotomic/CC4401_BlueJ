@@ -1005,6 +1005,91 @@ public final class MoeActions
             lastActionWasCut = true;
         }
     }
+    
+    // --------------------------------------------------------------------
+    
+    class CopyGetterAction extends MoeAbstractAction{
+		public CopyGetterAction() {
+			super("copy-getter");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getActionByName("copy-to-clipboard").actionPerformed(e);
+			Clipboard c =getTextComponent(e).getToolkit().getSystemClipboard();
+			Transferable content = c.getContents(this);
+			String clipContent;
+			try {
+				clipContent = (String) (content.getTransferData(DataFlavor.stringFlavor));
+				String[] args=clipContent.split(" ");
+				String type=args[0];
+				String var=args[1];
+				clipContent=createGetter(type,var);
+			}
+			catch (Exception exc) {
+				clipContent="";
+			}
+			StringSelection contents = new StringSelection(clipContent);
+			c.setContents(contents, contents);
+		}
+    }
+
+    // --------------------------------------------------------------------
+    
+    class CopySetterAction extends MoeAbstractAction{
+		public CopySetterAction() {
+			super("copy-setter");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getActionByName("copy-to-clipboard").actionPerformed(e);
+			Clipboard c =getTextComponent(e).getToolkit().getSystemClipboard();
+			Transferable content = c.getContents(this);
+			String clipContent;
+			try {
+				clipContent = (String) (content.getTransferData(DataFlavor.stringFlavor));
+				String[] args=clipContent.split(" ");
+				String type=args[0];
+				String var=args[1];
+				clipContent=createSetter(type,var);
+			}
+			catch (Exception exc) {
+				clipContent="";
+			}
+			StringSelection contents = new StringSelection(clipContent);
+			c.setContents(contents, contents);
+		}	
+    }
+
+    // --------------------------------------------------------------------
+    
+    class CopyGetterAndSetterAction extends MoeAbstractAction{
+		public CopyGetterAndSetterAction() {
+			super("copy-getter-and-setter");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getActionByName("copy-to-clipboard").actionPerformed(e);
+			Clipboard c =getTextComponent(e).getToolkit().getSystemClipboard();
+			Transferable content = c.getContents(this);
+			String clipContent;
+			try {
+				clipContent = (String) (content.getTransferData(DataFlavor.stringFlavor));
+				String[] args=clipContent.split(" ");
+				String type=args[0];
+				String var=args[1];
+				clipContent=createGetter(type,var)+createSetter(type,var);
+			}
+			catch (Exception exc) {
+				clipContent="";
+			}
+			StringSelection contents = new StringSelection(clipContent);
+			c.setContents(contents, contents);
+		}
+    	
+    }
 
     // --------------------------------------------------------------------
 
@@ -2194,7 +2279,10 @@ public final class MoeActions
                 new IndentAction(),
                 new DeIndentAction(),
                 new NewLineAction(),
-                new CopyLineAction(), 
+                new CopyLineAction(),
+                new CopyGetterAction(),
+                new CopySetterAction(),
+                new CopyGetterAndSetterAction(),
                 new CutLineAction(), 
                 new CutEndOfLineAction(), 
                 new CutWordAction(),
@@ -2591,6 +2679,23 @@ public final class MoeActions
         }
 
     }
+    
+    protected String createGetter(String type, String var) {
+		StringBuilder sb=new StringBuilder();
+		String newVar=var.substring(0, 1).toUpperCase()+var.substring(1);
+		sb.append("public "+type+" get"+newVar+"(){\n");
+		sb.append("\treturn this."+var+";\n");
+		sb.append("}\n");
+		return sb.toString();
+	}
+    protected String createSetter(String type, String var) {
+		StringBuilder sb=new StringBuilder();
+		String newVar=var.substring(0, 1).toUpperCase()+var.substring(1);
+		sb.append("public void set"+newVar+"("+type+" "+var+"){\n");
+		sb.append("\tthis."+var+"="+var+";\n");
+		sb.append("}\n");
+		return sb.toString();
+	}
    
     private static String getNodeContents(MoeSyntaxDocument doc, NodeAndPosition<ParsedNode> nap)
     {

@@ -4,7 +4,7 @@
 ##  Define the toolbar
 ##
 
-toolbar = compile undo cut copy paste find close
+toolbar = compile undo cut copy paste find close add-javadoc
 
 # actions for toolbar commands (only needed when it differs from command name)
 
@@ -12,6 +12,9 @@ openAction = open-file
 cutAction = cut-to-clipboard
 copyAction = copy-to-clipboard
 pasteAction = paste-from-clipboard
+copyGetterAction = copy-getter
+copySetterAction = copy-setter
+copyGetterAndSetterAction = copy-getter-and-setter
 find-nextAction = find-next
 
 ##
