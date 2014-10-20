@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -33,8 +34,10 @@ import bluej.pkgmgr.actions.OpenNonBlueJAction;
 import bluej.pkgmgr.actions.OpenProjectAction;
 import bluej.pkgmgr.actions.QuitAction;
 import bluej.prefmgr.PrefMgr;
+import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.DialogManager;
 import bluej.utility.FileUtility;
+import bluej.utility.Utility;
 
 public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
@@ -63,6 +66,9 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		recentFrame = new TabbedFrameUnit();
 		pkgTabs.add(recentFrame);
         
+		
+		
+		
 		jtp.addTab("Tab1", recentFrame.getTab());
 	         
         setupMenu();
@@ -184,6 +190,48 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		        
 		jtp.addTab("Tab1", newTab.getTab());
 	}
+    
+    /**
+     * Preferences menu was chosen.
+     */
+    public void showPreferences()
+    {
+        PrefMgrDialog.showDialog();
+    }
+
+    /**
+     * About menu was chosen.
+     */
+    public void aboutBlueJ()
+    {
+        AboutBlue about = new AboutBlue(this, bluej.Boot.BLUEJ_VERSION);
+        about.setVisible(true);
+    }
+
+    /**
+     * Copyright menu item was chosen.
+     */
+    public void showCopyright()
+    {
+        JOptionPane.showMessageDialog(this, new String[]{
+                Config.getString("menu.help.copyright.line0"), " ",
+                Config.getString("menu.help.copyright.line1"), Config.getString("menu.help.copyright.line2"),
+                Config.getString("menu.help.copyright.line3"), Config.getString("menu.help.copyright.line4"),
+                },
+                Config.getString("menu.help.copyright.title"), JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * showWebPage - show a page in a web browser and display a message in the
+     * status bar.
+     */
+    public void showWebPage(String url)
+    {
+        if (Utility.openWebBrowser(url))
+            setStatus(Config.getString("pkgmgr.webBrowserMsg"));
+        else
+            setStatus(Config.getString("pkgmgr.webBrowserError"));
+    }
     
     /**
      * Perform a user initiated close of this frame/package.

@@ -1,17 +1,30 @@
 package bluej.pkgmgr;
 
-public interface IPkgFrame {
+public interface IPkgFrame{
 	/*Interface que deben cumplir todos los tipos de ventanas*/
 	
 	public void menuCall();
 		
 	/*Llamadas a metodos cuando se apretan botones*/
 	
-	/*public void showPreferences();
+	/*Project*/
+	public void doClose(boolean b, boolean c);
+	
+	/*Tools*/
+	public void showPreferences();
+	
+	
+	/*Help*/
 	public void aboutBlueJ();
-	public void doOpenWindow();
+	public void showCopyright();
+	public void showWebPage(String url);
+	
+	/*Windows*/
+	abstract void doOpenTab();
+	
+	/*public void doOpenWindow();
 	public void updateShowUsesInPackage();
-	public void showWebPage(String propString);
+	
 	public void callLibraryClass();
 	public void doTest();
 	public void restartDebugger();
@@ -36,8 +49,9 @@ public interface IPkgFrame {
 	public void compileSelected();
 	public void doCancelTest();
 	public void doCommitGitHub();*/
-	public void doClose(boolean b, boolean c);
-	abstract void doOpenTab();
+	
+	
+	
 	
 	//public Package getPackage();
 	//public void clearStatus();

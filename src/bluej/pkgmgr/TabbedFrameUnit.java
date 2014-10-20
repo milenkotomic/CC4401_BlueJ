@@ -93,7 +93,7 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
     /*Conservar para primeras pruebas*/
     private AbstractButton imgExtendsButton;
     private AbstractButton imgDependsButton;
-    private AbstractButton runButton;
+    
     private List<JComponent> testItems;
     static final int DEFAULT_WIDTH = 560;
     static final int DEFAULT_HEIGHT = 400;
@@ -164,7 +164,7 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
         tabWindow.add(buttonPanel);
         
         /*Panel para las opciones de testeo, en general, desactivadas por defecto*/
-        JPanel testPanel = createTestingPanel(false);    
+        JPanel testPanel = test.createTestingPanel(false);    
         testItems.add(testPanel); 
         
         /*Machine icon: Indicador de actividad tipo "barbero"*/
@@ -246,52 +246,7 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
         return buttonPanel;
   	}
 	
-	private JPanel createTestingPanel(boolean visible){
-		JPanel testPanel = new JPanel();
-		
-		if (!Config.isRaspberryPi()) testPanel.setOpaque(false);
-	     
-		 testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.Y_AXIS));
-
-		 testPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 14, 5));
-
-		 runButton = createButton(RunTestsAction.getInstance(), false, false, 2, 4);
-		 runButton.setText(Config.getString("pkgmgr.test.run"));
-		 runButton.setAlignmentX(0.15f);
-		 testPanel.add(runButton);
-		 testPanel.add(Box.createVerticalStrut(8));
-
-		 JLabel recordingLabel = new JLabel(Config.getString("pkgmgr.test.record"), Config
-				 .getFixedImageAsIcon("record.gif"), SwingConstants.LEADING);
-		 //recordingLabel.setFont(pkgMgrFont);
-		 recordingLabel.setEnabled(visible);
-		 recordingLabel.setAlignmentX(0.15f);
-		 testPanel.add(recordingLabel);
-		 testPanel.add(Box.createVerticalStrut(3));
-
-		 Action action = EndTestRecordAction.getInstance();
-		 AbstractButton endTestButton = createButton(action, false, false, 2, 4);
-		 //make the button use a different label than the one from
-		 // action
-		 endTestButton.setText(Config.getString("pkgmgr.test.end"));
-		 endTestButton.setEnabled(visible);
-
-		 testPanel.add(endTestButton);
-		 if(!Config.isMacOSLeopard()) testPanel.add(Box.createVerticalStrut(3));
-
-		 action = CancelTestRecordAction.getInstance();
-		 AbstractButton cancelTestButton = createButton(action, false, false, 2, 4);
-		 //make the button use a different label than the one from
-		 // action
-		 cancelTestButton.setText(Config.getString("cancel"));
-		 cancelTestButton.setEnabled(visible);
-
-		 testPanel.add(cancelTestButton);
-
-		 testPanel.setAlignmentX(0.5f);
 	
-		 return testPanel;
-	}
 	
 	private void configureClassScroller(){
 		
