@@ -58,6 +58,8 @@ public class TestFile {
 	private void twoParameters (String param1, int param2){
 		System.out.println("Test22");
 		System.out.println("Test222");
+		int a = 1 + 1;
+		
 		
 	}
 	
