@@ -85,6 +85,17 @@ public class MyParserTestOwnFile {
 		assertTrue(infop.hasDeadCode());
 	}
 	
+	@Test
+	public void manyParametersTest(){
+		assertTrue(infop.manyParameters(2).size() == 1);
+	}
+	
+	@Test
+	public void complexMethodsTest(){
+		assertTrue(infop.complexMethods(10).size() == 1);
+	}
+	
+	
 
 	
 }

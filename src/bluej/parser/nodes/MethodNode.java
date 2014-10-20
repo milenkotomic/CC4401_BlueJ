@@ -54,6 +54,7 @@ public class MethodNode extends JavaParentNode
     private List<TparEntity> typeParams = null;
     private boolean isVarArgs = false;
     private int modifiers = 0;
+    private int statements;
     
     /**
      * Construct a MethodNode representing a constructor or method.
@@ -67,6 +68,7 @@ public class MethodNode extends JavaParentNode
         this.name = name;
         this.javadoc = javadoc;
         setCommentAttached(javadoc != null);
+        statements = 0;
     }
 
     /**
@@ -265,5 +267,13 @@ public class MethodNode extends JavaParentNode
             }
         }
         return super.getExpressionType(pos, nodePos, defaultType, document);
+    }
+    
+    public void setStatements(int s){
+    	statements = s;
+    }
+    
+    public int getStatements(){
+    	return statements;
     }
 }

@@ -1358,8 +1358,8 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 						 || token.getType() == JavaTokenTypes.RCURLY) {
 					 tokenStream.pushBack(token);
 					 if (methodBodyCapture){
-					 System.out.println(counter + "@" + actualMethod.getName());
-					 methodBodyCapture = false;}
+						 actualMethod.setStatements(counter);
+						 methodBodyCapture = false;}
 					 return;
 				 }
 				 beginElement(token);
@@ -1380,6 +1380,17 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 				 }
 			 }
 		 }
+
+		@Override
+		public ArrayList<MethodNode> complexMethods(int threshold) {
+			 ArrayList<MethodNode> result = new ArrayList<MethodNode>();
+			 for(MethodNode mn:methods){
+				 if(mn.getStatements() > threshold){
+					 result.add(mn);
+				 }
+			 }
+			 return result;
+		}
 
 
 }
