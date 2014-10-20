@@ -9,7 +9,8 @@ public interface CodeSmellsDetector {
 	public int methodQuantity();	//clases largas con muchos metodos
 	public int cohesionLevel();		//clases largas con mucha cohesion.
 	public boolean hasDeadCode();	//dead code
-	public ArrayList<MethodNode>manyParameters(int threshold) ;
+	public ArrayList<MethodNode>manyParameters(int threshold);
 	public ArrayList<MethodNode>complexMethods(int threshold);
+	public int switchStmts();
 
 }

@@ -95,6 +95,10 @@ public class MyParserTestOwnFile {
 		assertTrue(infop.complexMethods(10).size() == 1);
 	}
 	
+	@Test
+	public void switchCounterTest(){
+		assertTrue(infop.switchStmts() == 1);
+	}
 	
 
 	

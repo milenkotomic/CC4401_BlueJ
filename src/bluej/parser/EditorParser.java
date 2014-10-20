@@ -88,6 +88,7 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 	private boolean fieldCapture =  true;
 	private boolean methodBodyCapture = false;
 	private MethodNode actualMethod = null;
+	private int switchStmtCounter = 0;
 
 
 
@@ -733,6 +734,7 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 	@Override
 	protected void beginSwitchStmt(LocatableToken token)
 	{
+		switchStmtCounter++;
 		beginIfStmt(token);
 	}
 
@@ -1390,6 +1392,11 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 				 }
 			 }
 			 return result;
+		}
+
+		@Override
+		public int switchStmts() {
+			return switchStmtCounter;
 		}
 
 
