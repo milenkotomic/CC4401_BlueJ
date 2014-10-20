@@ -6,8 +6,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -16,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -29,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import bluej.BlueJEventListener;
@@ -70,17 +75,19 @@ import bluej.pkgmgr.actions.ShowUsesAction;
 import bluej.pkgmgr.actions.UseLibraryAction;
 import bluej.prefmgr.PrefMgr;
 import bluej.testmgr.record.InvokerRecord;
+import bluej.utility.Debug;
 import bluej.utility.DialogManager;
 import bluej.utility.GradientFillPanel;
 import bluej.utility.Utility;
 
-public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
+public class TabbedFrameUnit extends JFrame implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
 	private Package pkg = null;
 	protected JPanel tabWindow;
 		
-	private TextEvaluatorMgr text; 
-	private PkgFrameTestingMenu test;
-	private PkgFrameJavaME javaME;
+	private TextEvaluatorMgr text = new TextEvaluatorMgr(); 
+	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
+	private PkgFrameJavaME javaME = new PkgFrameJavaME();
+	private PkgFrameLeftPanel leftPanel = new PkgFrameLeftPanel();
 	
 	private JScrollPane classScroller = null;
 	private NoProjectMessagePanel noProjectMessagePanel = new NoProjectMessagePanel();
@@ -90,16 +97,11 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
 	private MenuManager toolsMenuManager;
     private MenuManager viewMenuManager;
 	
-    /*Conservar para primeras pruebas*/
-    private AbstractButton imgExtendsButton;
-    private AbstractButton imgDependsButton;
-    
-    private List<JComponent> testItems;
+    /*Conservar para primeras pruebas*/   
     static final int DEFAULT_WIDTH = 560;
     static final int DEFAULT_HEIGHT = 400;
     private JSplitPane splitPane;
     private MachineIcon machineIcon;
-    private JLabel statusbar;
     private static Font pkgMgrFont = PrefMgr.getStandardFont();
     private List<JComponent> itemsToDisable;
     private List<Action> actionsToDisable;
@@ -107,9 +109,6 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
     
 	public TabbedFrameUnit(){
 		tabWindow = new JPanel();
-		text = new TextEvaluatorMgr();
-		test = new PkgFrameTestingMenu();
-		javaME = new PkgFrameJavaME();
 		setupActionDisableSet();
 		itemsToDisable = new ArrayList<JComponent>();
 		
@@ -121,10 +120,7 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
 	public TabbedFrameUnit(Package p){
 		pkg = p;
 		tabWindow = new JPanel();
-		text = new TextEvaluatorMgr();
-		test = new PkgFrameTestingMenu();
-		javaME = new PkgFrameJavaME();
-		
+				
 		editor = new PackageEditor(pkg, this, this);
 	}
 	
@@ -156,17 +152,18 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
 		
 	    JPanel mainPanel = new JPanel(new BorderLayout(5, 5));
 	    if (!Config.isRaspberryPi()) mainPanel.setOpaque(false);
-	    
-		testItems = new ArrayList<JComponent>();
-		
+	    		
 		/*Panel para los botones que se encuentran al lado izquierdo*/
-		JPanel buttonPanel = createLeftPanel();      
+		JPanel buttonPanel = leftPanel.createLeftPanel();      
         tabWindow.add(buttonPanel);
         
         /*Panel para las opciones de testeo, en general, desactivadas por defecto*/
         JPanel testPanel = test.createTestingPanel(false);    
-        testItems.add(testPanel); 
         
+        
+        /*Panel para actividades asociadas a un paquete java ME*/
+        JPanel javaMEPanel = javaME.createJavaMEPanel();    
+                
         /*Machine icon: Indicador de actividad tipo "barbero"*/
         machineIcon = new MachineIcon();
         machineIcon.setAlignmentX(0.5f);
@@ -176,7 +173,7 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
         toolPanel.add(buttonPanel);
         toolPanel.add(Box.createVerticalGlue());
         //toolPanel.add(teamPanel);
-        //toolPanel.add(javaMEPanel);
+        toolPanel.add(javaMEPanel);
         toolPanel.add(testPanel);
         toolPanel.add(machineIcon);
         mainPanel.add(toolPanel, BorderLayout.WEST);
@@ -218,33 +215,20 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
             enableFunctions(false);
         }
         
+        //if (!testToolsShown) {
+            test.showTestingTools(false);
+        //}
+
+        // hide Java ME tools if not wanted
+        //if (! javaMEtoolsShown) {
+        	//javaME.showJavaMEtools(false);
+        //}
+            
+        javaMEPanel.setVisible(false);          
+        
 	}
 	
-	private JPanel createLeftPanel(){
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-
-        AbstractButton button = createButton(NewClassAction.getInstance(), false, false, 4, 4);
-        buttonPanel.add(button);
-        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
-        
-        imgDependsButton = createButton(NewUsesAction.getInstance(), true, false, 4, 4);
-        buttonPanel.add(imgDependsButton);
-        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
-
-        imgExtendsButton = createButton(NewInheritsAction.getInstance(), true, false, 4, 4);
-        buttonPanel.add(imgExtendsButton);
-        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
-
-        button = createButton(CompileAction.getInstance(), false, false, 4, 4);
-        buttonPanel.add(button);
-        if(!Config.isMacOSLeopard()) buttonPanel.add(Box.createVerticalStrut(3));
-
-        buttonPanel.setAlignmentX(0.5f);
-        
-        return buttonPanel;
-  	}
+	
 	
 	
 	
@@ -312,51 +296,8 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
 		actionsToDisable.add(ShowTerminalAction.getInstance());
 		actionsToDisable.add(ShowTextEvalAction.getInstance());
 		actionsToDisable.add(RunTestsAction.getInstance());
-	}
-
+	}   
     
-    
-	 /**
-     * Create a button for the interface.
-     * 
-     * @param action
-     *            the Action abstraction dictating text, icon, tooltip, action.
-     * @param notext
-     *            set true if the action text should not appear (icon only).
-     * @param toggle
-     *            true if this is a toggle button, false otherwise
-     * @param hSpacing
-     *            horizontal margin (left, right)
-     * @param vSpacing
-     *            vertical margin (top, bottom)
-     * @return the new button
-     */
-    private AbstractButton createButton(Action action, boolean notext, boolean toggle, int hSpacing, int vSpacing)
-    {
-        AbstractButton button;
-        if (toggle) {
-            button = new JToggleButton(action);
-        }
-        else {
-            button = new JButton(action);
-        }
-        //button.setFont(pkgMgrFont);
-        Utility.changeToMacButton(button);
-        button.setFocusable(false); // buttons shouldn't get focus
-
-        if (notext)
-            button.setText(null);
-
-        Dimension pref = button.getMinimumSize();
-        pref.width = Integer.MAX_VALUE;
-        button.setMaximumSize(pref);
-        if(!Config.isMacOSLeopard()) {
-            button.setMargin(new Insets(vSpacing, hSpacing, vSpacing, hSpacing));
-        }
-
-        return button;
-    }
-	
 		
 	 /**
      * Toggle the state of the "show uses arrows" switch.
@@ -404,7 +345,174 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
         return pkg;
     }
 
+    /**
+     * Displays the package in the frame for editing
+     */
+    public void openPackage(Package pkg)
+    {
+        if (pkg == null) {
+            throw new NullPointerException();
+        }
+
+        // if we are already editing a package, close it and
+        // open the new one
+        if (this.pkg != null) {
+            closePackage();
+        }
+
+        this.pkg = pkg;
+
+        if(! Config.isGreenfoot()) {
+            this.editor = new PackageEditor(pkg, this, this);
+            editor.getAccessibleContext().setAccessibleName(Config.getString("pkgmgr.graphEditor.title"));
+            editor.setFocusable(true);
+            //editor.setTransferHandler(new FileTransferHandler(this));
+            editor.addMouseListener(this); // This mouse listener MUST be before
+            editor.addFocusListener(this); //  the editor's listener itself!
+            editor.startMouseListening();
+            pkg.setEditor(this.editor);
+            addCtrlTabShortcut(editor);
+            
+            classScroller.setViewportView(editor);
+            
+            // fetch some properties from the package that interest us
+            Properties p = pkg.getLastSavedProperties();
+            
+            try {
+                String width_str = p.getProperty("package.editor.width", Integer.toString(DEFAULT_WIDTH));
+                String height_str = p.getProperty("package.editor.height", Integer.toString(DEFAULT_HEIGHT));
+                
+                classScroller.setPreferredSize(new Dimension(Integer.parseInt(width_str), Integer.parseInt(height_str)));
+                
+                String objectBench_height_str = p.getProperty("objectbench.height");
+                String objectBench_width_str = p.getProperty("objectbench.width");
+                if (objectBench_height_str != null && objectBench_width_str != null) {
+                    objbench.setPreferredSize(new Dimension(Integer.parseInt(objectBench_width_str),
+                            Integer.parseInt(objectBench_height_str)));
+                }
+                
+                String x_str = p.getProperty("package.editor.x", "30");
+                String y_str = p.getProperty("package.editor.y", "30");
+                
+                int x = Integer.parseInt(x_str);
+                int y = Integer.parseInt(y_str);
+                
+                if (x > (Config.screenBounds.width - 80))
+                    x = Config.screenBounds.width - 80;
+                
+                if (y > (Config.screenBounds.height - 80))
+                    y = Config.screenBounds.height - 80;
+                
+                setLocation(x, y);
+            } catch (NumberFormatException e) {
+                Debug.reportError("Could not read preferred project screen position");
+            }
+            
+            String uses_str = p.getProperty("package.showUses", "true");
+            String extends_str = p.getProperty("package.showExtends", "true");
+            
+            //showUsesMenuItem.setSelected(uses_str.equals("true"));
+            //showExtendsMenuItem.setSelected(extends_str.equals("true"));
+            
+            //updateShowUsesInPackage();
+            //updateShowExtendsInPackage();
+            
+            pack();
+            editor.revalidate();
+            editor.requestFocus();
+            
+            enableFunctions(true); // changes menu items
+            updateWindow();
+            setVisible(true);
+            
+            //updateTextEvalBackground(isEmptyFrame());
+                    
+            this.toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
+            this.toolsMenuManager.addExtensionMenu(pkg.getProject());
+
+            this.viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
+            this.viewMenuManager.addExtensionMenu(pkg.getProject());
+        
+            //teamActions = pkg.getProject().getTeamActions();
+            //resetTeamActions();             
+           
+            // In Java-ME packages, we display Java-ME controls in the
+            // test panel. We are just using the real estate of the test panel.
+            // The rest of the testing tools (menus, etc) are always hidden.
+            if (getProject().isJavaMEProject()) {
+            	javaME.showJavaMEcontrols(true);
+                test.showTestingTools(false);
+            }
+            else {
+                test.showTestingTools(test.wantToSeeTestingTools());
+            }                
+        }
+        
+        DataCollector.packageOpened(pkg);
+
+        ExtensionsManager.getInstance().packageOpened(pkg);
+    }
     
+    /**
+     * Adds shortcuts for Ctrl-TAB and Ctrl-Shift-TAB to the given pane, which move to the
+     * next/previous pane of the main three (package editor, object bench, code pad) that are visible
+     */
+    private void addCtrlTabShortcut(final JComponent toPane)
+    {
+        toPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_TAB, InputEvent.CTRL_DOWN_MASK), "nextPMFPane");
+        toPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_TAB, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK), "prevPMFPane");
+        toPane.getActionMap().put("nextPMFPane", new AbstractAction() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                movePaneFocus(toPane, +1);
+            }
+        });
+        toPane.getActionMap().put("prevPMFPane", new AbstractAction() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                movePaneFocus(toPane, -1);
+            }
+        });
+    }
+    
+    /**
+     * Moves focus from given pane to prev (-1)/next (+1) pane.
+     */
+    private void movePaneFocus(final JComponent fromPane, int direction)
+    {
+        List<JComponent> visiblePanes = new ArrayList<JComponent>();
+        if (editor != null)
+        {
+            // editor is null if no package is open
+            visiblePanes.add(editor);
+        }
+        // Object bench is always present, even if no package open:
+        visiblePanes.add(objbench);
+        /*if (showingTextEvaluator)
+        {
+            visiblePanes.add(textEvaluator.getFocusableComponent());
+        }*/
+        
+        for (int i = 0; i < visiblePanes.size(); i++)
+        {
+            if (visiblePanes.get(i) == fromPane)
+            {
+                int destination = i + direction;
+                // Wrap around:
+                if (destination >= visiblePanes.size()) destination = 0;
+                if (destination < 0) destination = visiblePanes.size() - 1;
+                
+                visiblePanes.get(destination).requestFocusInWindow();
+            }
+        }
+    }
+
     
     /**
      * Save this package. Don't ask questions - just do it.
@@ -454,6 +562,8 @@ public class TabbedFrameUnit extends JFrame  implements BlueJEventListener, Mous
     	//updateWindowTitle();
    	
     }  
+    
+    
     
 	/**
      * Closes the current package.

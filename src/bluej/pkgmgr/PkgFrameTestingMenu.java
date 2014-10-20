@@ -147,6 +147,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(cancelTestButton);
 
 		 testPanel.setAlignmentX(0.5f);
+		 testItems.add(testPanel); 
 	
 		 return testPanel;
 	}

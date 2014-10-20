@@ -70,7 +70,6 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 
 	private List<Action> actionsToDisable;
 	
-	private JMenu recentProjectsMenu;
 	private JMenuItem javaMEnewProjMenuItem;
     private JMenuItem javaMEdeployMenuItem;
     private JCheckBoxMenuItem showUsesMenuItem;
@@ -84,7 +83,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 	/**
 	 * @param menubar
 	 */
-	protected void setupMenu(JMenuBar menubar){
+	protected void setupMenu(JMenuBar menubar, JMenu recentProjectsMenu){
 
 		JMenu menu = new JMenu(Config.getString("menu.package"));
 		int mnemonic = Config.getMnemonicKey("menu.package");
@@ -92,9 +91,9 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		menubar.add(menu);
 		{
 			createMenuItem(NewProjectAction.getInstance(), menu);
-			javaMEnewProjMenuItem = createMenuItem(NewMEprojectAction.getInstance(), menu);            
+			javaMEnewProjMenuItem = createMenuItem(NewMEprojectAction.getInstance(), menu); 
+			javaMEnewProjMenuItem.setVisible(false); 
 			createMenuItem(OpenProjectAction.getInstance(), menu);
-			recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
 			menu.add(recentProjectsMenu);
 			createMenuItem(OpenNonBlueJAction.getInstance(), menu);
 			createMenuItem(CloseProjectAction.getInstance(), menu);
@@ -105,7 +104,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 			createMenuItem(ImportProjectAction.getInstance(), menu);
 			createMenuItem(ExportProjectAction.getInstance(), menu);
 			javaMEdeployMenuItem = createMenuItem( DeployMIDletAction.getInstance(), menu ); 
-			javaMEdeployMenuItem.setVisible( false ); 
+			javaMEdeployMenuItem.setVisible(false); 
 			menu.addSeparator();
 
 			createMenuItem(PageSetupAction.getInstance(), menu);

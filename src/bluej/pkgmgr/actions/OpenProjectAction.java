@@ -22,7 +22,8 @@
 package bluej.pkgmgr.actions;
 
 
-import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.IPkgFrame;
+
 
 /**
  * User chooses "open existing project". Allows for opening a blueJ project
@@ -51,7 +52,7 @@ final public class OpenProjectAction extends PkgMgrAction {
         super("menu.package.open");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doOpen();

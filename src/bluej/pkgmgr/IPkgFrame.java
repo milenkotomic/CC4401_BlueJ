@@ -8,21 +8,24 @@ public interface IPkgFrame{
 	/*Llamadas a metodos cuando se apretan botones*/
 	
 	/*Project*/
-	public void doClose(boolean b, boolean c);
+	public boolean doNewProject(boolean isJavaME);
+	public void doOpen();
+	public void doOpenNonBlueJ();
+	public void doClose(boolean keepLastFrame, boolean doSave);
 	
 	/*Tools*/
 	public void showPreferences();
-	
-	
+		
 	/*Help*/
 	public void aboutBlueJ();
 	public void showCopyright();
 	public void showWebPage(String url);
 	
 	/*Windows*/
-	abstract void doOpenTab();
+	public void doOpenTab();
+	public void doOpenWindow();
 	
-	/*public void doOpenWindow();
+	/*
 	public void updateShowUsesInPackage();
 	
 	public void callLibraryClass();
@@ -33,10 +36,10 @@ public interface IPkgFrame{
 	/*public void doPushGitHub();
 	public void doPrint();
 	public void doPageSetup();
-	public void doOpen();
-	public void doOpenNonBlueJ();
+	
+	
 	public void doNewUses();
-	public boolean doNewProject(boolean b);
+	
 	public void doCreateNewPackage();
 	public void doNewIssueGitHub();
 	public void doNewInherits();
@@ -49,12 +52,12 @@ public interface IPkgFrame{
 	public void compileSelected();
 	public void doCancelTest();
 	public void doCommitGitHub();*/
+
+	/*Herramientas opcionales*/
+	/*public void updateTestingStatus();
+	public void updateTeamStatus();
+	public void updateJavaMEstatus();*/
 	
-	
-	
-	
-	//public Package getPackage();
-	//public void clearStatus();
 
 	
 	
