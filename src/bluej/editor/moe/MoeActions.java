@@ -806,19 +806,13 @@ public final class MoeActions
         {
             super ("add-javadoc");
         }
-
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            MoeEditor editor = getEditor(e);
-            //this method should not be actioned if the editor is not displaying source code
-            if (!editor.containsSourceCode()){
-                return;
-            }
-            int caretPos = editor.getCurrentTextPane().getCaretPosition();
-            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+        private void createjavadoc(MoeEditor editor, int caretPos, NodeAndPosition<ParsedNode> node){
+        	
+            
+            
             while (node != null && node.getNode().getNodeType() != ParsedNode.NODETYPE_METHODDEF) {
                 node = node.getNode().findNodeAt(caretPos, node.getPosition());
+                
             }
             if (node == null || !(node.getNode() instanceof MethodNode)) {
                 editor.writeMessage(Config.getString("editor.addjavadoc.notAMethod"));
@@ -858,7 +852,7 @@ public final class MoeActions
                     newComment.append(indent).append(" *\n");
 
                     for (String s: methodNode.getParamNames()) {
-                        newComment.append(indent).append(" * @param ").append(s).append(" ");
+                        newComment.append(indent).append(" * @param ").append(s).append("  ");
                         newComment.append(Config.getString("editor.addjavadoc.parameter")).append("\n");
                     }
                     
@@ -878,7 +872,26 @@ public final class MoeActions
                     editor.getCurrentTextPane().setCaretPosition((caretPos + newComment.length()));
                     editor.undoManager.endCompoundEdit();
                 }
+            
             }
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            MoeEditor editor = getEditor(e);
+            
+            //this method should not be actioned if the editor is not displaying source code
+            if (!editor.containsSourceCode()){
+                return;
+            }
+            int caretPos=0;
+           caretPos = editor.getCurrentTextPane().getCaretPosition();
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            createjavadoc(editor, caretPos,node);
+         
+           
+            
         }
     }
 
