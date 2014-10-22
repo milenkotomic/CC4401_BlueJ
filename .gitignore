@@ -14,9 +14,27 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
 
 .settings/org.eclipse.core.resources.prefs.orig
 
 .classpath
 
 bluej.iml
+=======
+*.idea*
+
+#IntelliJ files
+*.eml
+*.iml
+
+.classpath
+
+
+*.dat
+
+bin/bluej/greenfootsplash.jpg
+
+bin/bluej/splash.jpg
+/bin/
+>>>>>>> github_feature
