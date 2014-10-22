@@ -3185,6 +3185,7 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
             createMenuItem(WebsiteAction.getInstance(), menu);
             createMenuItem(TutorialAction.getInstance(), menu);
             createMenuItem(StandardAPIHelpAction.getInstance(), menu);
+            
         }
         
                 

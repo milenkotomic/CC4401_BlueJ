@@ -1,6 +1,7 @@
 package bluej.pkgmgr.actions;
 
 import bluej.Config;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 public class PullGitHubAction extends PkgMgrAction {
@@ -24,7 +25,7 @@ public class PullGitHubAction extends PkgMgrAction {
         super("Pull");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.doPullGitHub();        
     }

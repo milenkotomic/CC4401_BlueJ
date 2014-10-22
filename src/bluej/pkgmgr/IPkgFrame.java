@@ -21,6 +21,12 @@ public interface IPkgFrame{
 	public void showCopyright();
 	public void showWebPage(String url);
 	
+	/*Github*/
+	public void doNewIssueGitHub();
+	public void doPushGitHub();
+	public void doCommitGitHub();
+	public void doPullGitHub();
+	
 	/*Windows*/
 	public void doOpenTab();
 	public void doOpenWindow();
@@ -33,7 +39,7 @@ public interface IPkgFrame{
 	public void restartDebugger();
 	public void doRemove();*/
 	public void doAddFromFile();
-	/*public void doPushGitHub();
+	/*
 	public void doPrint();
 	public void doPageSetup();
 	
@@ -41,7 +47,7 @@ public interface IPkgFrame{
 	public void doNewUses();
 	
 	public void doCreateNewPackage();
-	public void doNewIssueGitHub();
+	
 	public void doNewInherits();
 	public void doCreateNewClass();
 	public void doImport();
@@ -51,7 +57,9 @@ public interface IPkgFrame{
 	public void doDeployMIDlet();
 	public void compileSelected();
 	public void doCancelTest();
-	public void doCommitGitHub();*/
+	*/
+
+
 
 	/*Herramientas opcionales*/
 	/*public void updateTestingStatus();
