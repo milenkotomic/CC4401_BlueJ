@@ -242,7 +242,6 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 
 	}
 
-
 	/**
 	 * Add a new menu item to a menu.
 	 */
