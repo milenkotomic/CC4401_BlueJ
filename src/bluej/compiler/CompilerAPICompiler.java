@@ -39,6 +39,7 @@ import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
 import bluej.Config;
+import bluej.parser.JavadocDetector;
 
 /**
  * A compiler implementation using the Compiler API introduced in Java 6.
@@ -71,7 +72,13 @@ public class CompilerAPICompiler extends Compiler
     public boolean compile(final File[] sources, final CompileObserver observer,
             final boolean internal, List<String> userOptions, Charset fileCharset) 
     {
-        boolean result = true;
+    	JavadocDetector jd=new JavadocDetector();
+    	for (int i=0;i<sources.length;i++){
+    		try {
+				jd.javadocReport(sources[i]);
+			} catch (Exception e) {			}
+    	}
+    	boolean result = true;
         JavaCompiler jc = ToolProvider.getSystemJavaCompiler();
         List<String> optionsList = new ArrayList<String>();
         
@@ -81,12 +88,14 @@ public class CompilerAPICompiler extends Compiler
                     "The compiler does not appear to be available."));
             return false;
         }
+
         
         DiagnosticListener<JavaFileObject> diagListener = new DiagnosticListener<JavaFileObject>() {
             @Override
             public void report(Diagnostic<? extends JavaFileObject> diag)
             {
                 String src = null;
+                
                 if (diag.getSource() != null)
                 {
                     // With JDK 6, diag.getSource().getName()  apparently just returns the base
@@ -135,7 +144,6 @@ public class CompilerAPICompiler extends Compiler
                         // Chinese version of above
                         return;
                     }
-                    System.out.println(message); 
                     diagType = bluej.compiler.Diagnostic.WARNING;
                     long beginCol = diag.getColumnNumber();
                     long endCol = diag.getEndPosition() - diag.getPosition() + beginCol;

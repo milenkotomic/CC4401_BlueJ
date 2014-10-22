@@ -34,6 +34,7 @@ import bluej.utility.Queue;
  */
 class CompilerThread extends Thread
 {
+	
     private Queue jobs;
     private boolean busy = true;
 
@@ -42,7 +43,9 @@ class CompilerThread extends Thread
      */
     public CompilerThread()
     {
+    	
         super(Config.getString("compiler.thread.title"));
+       
         jobs = new Queue();
     }
 

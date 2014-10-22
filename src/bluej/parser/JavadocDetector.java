@@ -1,25 +1,14 @@
 package bluej.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 
-import javax.swing.text.BadLocationException;
-
-import bluej.editor.moe.MoeSyntaxDocument;
 import bluej.parser.entity.ClassLoaderResolver;
-import bluej.parser.entity.EntityResolver;
-import bluej.parser.entity.PackageResolver;
-import bluej.parser.nodes.ParsedCUNode;
 import bluej.parser.symtab.ClassInfo;
-import bluej.parser.symtab.Selection;
-public class CC4401OurTest extends junit.framework.TestCase {
+public class JavadocDetector {
 	
     /**
      * Get a data or result file from our hidden stash..
