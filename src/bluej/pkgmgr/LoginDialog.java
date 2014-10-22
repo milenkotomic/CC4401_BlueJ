@@ -18,13 +18,16 @@ import bluej.github.GitHubConnection;
 public class LoginDialog extends JDialog {
  
     private JTextField tfUsername;
+    private JTextField tftest;
     private JPasswordField pfPassword;
     private JLabel lbUsername;
     private JLabel lbPassword;
+    private JLabel lbtest;
     private JLabel lbicon;
     private JButton btnLogin;
     private JButton btnCancel;
     private boolean succeeded;
+    private boolean cancelled;
  
     public LoginDialog(Frame parent) {
         super(parent, "Login", true);
@@ -57,6 +60,7 @@ public class LoginDialog extends JDialog {
         cs.gridy = 1;
         cs.gridwidth = 2;
         panel.add(pfPassword, cs);
+        
         panel.setBorder(new LineBorder(Color.GRAY));
  
         btnLogin = new JButton("Login");
@@ -72,7 +76,7 @@ public class LoginDialog extends JDialog {
                              "Login Error",
                              JOptionPane.INFORMATION_MESSAGE);
             		 // reset username and password
-                     tfUsername.setText("");
+                     //tfUsername.setText("");
                      pfPassword.setText("");
                      succeeded = false;            		
             	}
@@ -90,6 +94,7 @@ public class LoginDialog extends JDialog {
         btnCancel.addActionListener(new ActionListener() {
  
             public void actionPerformed(ActionEvent e) {
+            	cancelled = true;
                 dispose();
             }
         });
@@ -127,5 +132,13 @@ public class LoginDialog extends JDialog {
      */
     public boolean isSucceeded() {
         return succeeded;
+    }
+    
+    /**
+     * 
+     * @return True if user cancelled the operation
+     */
+    public boolean isCancelled() {
+        return cancelled;
     }
 }

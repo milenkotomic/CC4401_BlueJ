@@ -3205,14 +3205,55 @@ public class PkgMgrFrame extends JFrame
     public void doNewIssueGitHub(){
     	LoginDialog loginDlg = new LoginDialog(this);
         loginDlg.setVisible(true);
+       
         //until user enters valid input, busy waiting...
-        while(!loginDlg.isSucceeded());
+        while(!loginDlg.isSucceeded()){
+        	//user cancels operation
+        	if(loginDlg.isCancelled()) return;
+        }
+        
         String username = loginDlg.getUsername();
         String password = loginDlg.getPassword();
-        GitHubConnection ghc = new GitHubConnection();
-        System.out.println(""+ghc.createClient(username, password));
         
+        GitHubConnection ghc = new GitHubConnection();
+        //if bad credentials
+        if (200 != ghc.createClient(username, password)){
+        	JOptionPane.showMessageDialog(null, "Incorrect username or password.\n Please retry.", "Error", JOptionPane.ERROR_MESSAGE);
+        	
+        }
+        else{
+        	NewIssueDialog newIssDlg = new NewIssueDialog(this);
+        	newIssDlg.setVisible(true);
+        	
+        	//until user enters valid input, busy waiting...
+            while(!newIssDlg.isSucceeded()){
+            	//user cancels operation
+            	if(newIssDlg.isCancelled()) return;
+            }
+            
+            String repo = newIssDlg.getRepo();
+            String title = newIssDlg.getTitle();
+            String descr = newIssDlg.getDescription();
+            
+            try{
+            	List<String> repos = ghc.getRepositories();
+            	if (!repos.contains(repo)){
+            		JOptionPane.showMessageDialog(null, "No '"+repo+"' repository found", "Error", JOptionPane.ERROR_MESSAGE);
+                	return;
+            	}
+            	ghc.submitIssue(title, descr, repo);        	
+            }
+            catch (Exception e){
+            	JOptionPane.showMessageDialog(null, "Unexpected error. The operation was aborted", "Error", JOptionPane.ERROR_MESSAGE);
+            	return;            	
+            }
+            
+            JOptionPane.showMessageDialog(null, "The operation was completed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            	
+        }
+       
     }
+        
 
     /**
      * Add a new menu item to a menu.
