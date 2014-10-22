@@ -52,7 +52,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		testMenu = new PkgFrameTestingMenu();
 		
 		jtp = new JTabbedPane();
-		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
+		getContentPane().add(jtp); //Incluye las pestaï¿½as en el JPanel actual, sin esto, no se ve nada!
 		
 		recentFrame = new TabbedFrameUnit();
 		pkgTabs.add(recentFrame);	
@@ -66,6 +66,11 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         testToolsShown = testMenu.wantToSeeTestingTools();
   
 	}
+
+    public void doNewIssueGitHub(){}
+    public void doCommitGitHub(){}
+    public void doPullGitHub(){}
+    public void doPushGitHub(){}
 
 	private void setupWindow(){
 		setTitle("BlueJ");
