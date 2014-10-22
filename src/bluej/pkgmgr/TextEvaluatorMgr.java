@@ -28,14 +28,14 @@ public class TextEvaluatorMgr {
             return;
 
         if (show) {
-            addTextEvaluatorPane();
+            //addTextEvaluatorPane();
             textEvaluator.requestFocus();
         }
         else {
             removeTextEvaluatorPane();
-            editor.requestFocus();
+            //editor.requestFocus();
         }
-        pack();
+        //pack();
         showingTextEvaluator = show;
     }
 
@@ -72,10 +72,8 @@ public class TextEvaluatorMgr {
             textEvaluator.updateBackground(emptyFrame);
         }
     }
+/*
 
-    /**
-     * Add the text evaluation pane in the lower area of the frame.
-     */
     private void addTextEvaluatorPane()
     {
         //classScroller.setPreferredSize(classScroller.getSize()); // memorize
@@ -97,6 +95,6 @@ public class TextEvaluatorMgr {
         showingTextEvaluator = true;
     }
 
-    
+    */
     
 }

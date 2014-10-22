@@ -84,7 +84,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	private Package pkg = null;
 	protected JPanel tabWindow;
 		
-	private TextEvaluatorMgr text = new TextEvaluatorMgr(); 
+	private TextEvaluatorMgr text = new TextEvaluatorMgr();
 	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
 	private PkgFrameJavaME javaME = new PkgFrameJavaME();
 	private PkgFrameLeftPanel leftPanel = new PkgFrameLeftPanel();

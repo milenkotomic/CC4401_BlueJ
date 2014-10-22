@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import bluej.editor.moe.MoeEditor;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.TabbedFrameUnit;
 
@@ -118,6 +119,15 @@ public class BlueJEvent
     {
         listeners.remove(frame);
     }
-    
+
+    /**
+     * Remove a listener object from the known listener set.
+     */
+    public static void removeListener(MoeEditor frame)
+    {
+        listeners.remove(frame);
+    }
+
+
 }
 
