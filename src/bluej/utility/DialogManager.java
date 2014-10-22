@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import bluej.Config;
+import bluej.pkgmgr.TabbedFrameUnit;
 
 /**
  * The dialog manager is a utility class to simplyfy communication with 
@@ -413,6 +414,19 @@ public class DialogManager
             child.setLocation(p_topleft.x + 20, p_topleft.y + 20);
         }
     }
+    
+    /**
+     * tileWindow - position the child at 20, 20 offset of parent
+     *  location
+     */
+    public static void tileWindow(TabbedFrameUnit child, Window parent)
+    {
+        if(parent.isShowing()) {
+            Point p_topleft = parent.getLocationOnScreen();
+            child.setLocation(p_topleft.x + 20, p_topleft.y + 20);
+        }
+    }
+    
     
     /**
      * Allows the user to specify the number of buttons in question dialog. 

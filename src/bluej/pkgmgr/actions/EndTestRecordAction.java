@@ -34,6 +34,7 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class EndTestRecordAction extends PkgMgrAction
 {
+	
     static private EndTestRecordAction instance = null;
     
     /**

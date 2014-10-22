@@ -34,7 +34,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class NewInheritsAction extends PkgMgrAction
 {
-    public NewInheritsAction()
+	static private NewInheritsAction instance = null;
+	
+	static public NewInheritsAction getInstance()
+    {
+        if(instance == null)
+            instance = new NewInheritsAction();
+        return instance;
+    }
+	
+	private NewInheritsAction()
     {
         super("menu.edit.newInherits");
         putValue(SMALL_ICON, Config.getImageAsIcon("image.build.extends"));

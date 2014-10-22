@@ -21,7 +21,11 @@ public class PushGitHubAction extends PkgMgrAction {
     
     private PushGitHubAction()
     {
+<<<<<<< HEAD
         super("Pushsdasda");
+=======
+        super("Push");
+>>>>>>> origin/windows_features_new
     }
     
     public void actionPerformed(PkgMgrFrame pmf)

@@ -60,9 +60,9 @@ final public class VersionCheckDialog extends EscapeDialog
     /**
      * Create a new version check dialogue and make it visible.
      */
-    public VersionCheckDialog(PkgMgrFrame parent)
+    public VersionCheckDialog(IPkgFrame parent)
     {
-        super(parent, dialogTitle, true);
+        super((JFrame)parent, dialogTitle, true);
         makeDialog();
         setVisible(true);
     }

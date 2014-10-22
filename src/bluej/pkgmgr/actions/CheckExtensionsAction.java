@@ -21,7 +21,10 @@
  */
 package bluej.pkgmgr.actions;
 
+import javax.swing.JFrame;
+
 import bluej.extmgr.ExtensionsManager;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -53,9 +56,9 @@ public final class CheckExtensionsAction extends PkgMgrAction {
         super("menu.help.extensions");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
-        ExtensionsManager.getInstance().showHelp(pmf);
+        ExtensionsManager.getInstance().showHelp((JFrame)pmf);
     }
 }

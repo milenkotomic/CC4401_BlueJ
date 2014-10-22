@@ -34,7 +34,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class ShowDebuggerAction extends PkgMgrAction
 {
-    public ShowDebuggerAction()
+	static private ShowDebuggerAction instance = null;
+	
+	 static public ShowDebuggerAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new ShowDebuggerAction();
+			 return instance;
+	}
+	
+	private ShowDebuggerAction()
     {
         super("menu.view.showExecControls");
     }

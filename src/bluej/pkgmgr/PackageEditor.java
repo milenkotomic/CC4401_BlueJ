@@ -56,7 +56,7 @@ public final class PackageEditor extends GraphEditor
         this.listener = listener;
     }
 
-    // notify all listeners that have registered interest for
+	// notify all listeners that have registered interest for
     // notification on this event type.
     protected void fireTargetEvent(PackageEditorEvent e)
     {
@@ -139,9 +139,9 @@ public final class PackageEditor extends GraphEditor
     private JPopupMenu createMenu()
     {
         JPopupMenu menu = new JPopupMenu();
-        Action newClassAction = new NewClassAction();
+        Action newClassAction = NewClassAction.getInstance();
         addMenuItem(menu, newClassAction);
-        Action newPackageAction = new NewPackageAction();
+        Action newPackageAction = NewPackageAction.getInstance();
         addMenuItem(menu, newPackageAction);
 
         Package bluejPackage = (Package) getGraph();

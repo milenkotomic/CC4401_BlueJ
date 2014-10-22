@@ -33,11 +33,20 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class RemoveAction extends PkgMgrAction
 {
-    public RemoveAction()
+	static private RemoveAction instance = null;
+	
+	private RemoveAction()
     {
         super("menu.edit.remove");
     }
 
+    static public RemoveAction getInstance()
+   	{
+   		 if(instance == null)
+   			 instance = new RemoveAction();
+   		 return instance;
+   	}
+    
     // There is a bug on Mac OS X/Java 7 where this remove action
     // gets called twice (because the cmd+backspace key is processed twice)
     // This flag makes sure the dialog doesn't get called twice by preventing re-entry:

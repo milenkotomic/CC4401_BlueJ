@@ -31,7 +31,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class DeployMIDletAction extends PkgMgrAction
 {
-    public DeployMIDletAction()
+	static private DeployMIDletAction instance = null;
+	
+	static public DeployMIDletAction getInstance()
+    {
+        if(instance == null)
+            instance = new DeployMIDletAction();
+        return instance;
+    }
+	
+	private DeployMIDletAction()
     {
         super( "menu.package.deploy.MIDlet" );
         putValue( SHORT_DESCRIPTION, Config.getString( "tooltip.deployMIDlet" ) );

@@ -33,7 +33,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class RunTestsAction extends PkgMgrAction
 {
-    public RunTestsAction()
+	static private RunTestsAction instance = null;
+	
+	 static public RunTestsAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new RunTestsAction();
+			 return instance;
+	}
+	
+	 private RunTestsAction()
     {
         super("menu.tools.run");
         putValue(SHORT_DESCRIPTION, Config.getString("tooltip.test"));

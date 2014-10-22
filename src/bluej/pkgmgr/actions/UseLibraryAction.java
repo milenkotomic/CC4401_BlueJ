@@ -30,12 +30,22 @@ import bluej.pkgmgr.PkgMgrFrame;
  * @author Davin McCall
  * @version $Id: UseLibraryAction.java 6215 2009-03-30 13:28:25Z polle $
  */
-public class UseLibraryAction extends PkgMgrAction
-{
-    public UseLibraryAction()
+public class UseLibraryAction extends PkgMgrAction {
+	
+	static private UseLibraryAction instance = null;
+		
+    private UseLibraryAction()
     {
         super("menu.tools.callLibrary");
     }
+    
+    static public UseLibraryAction getInstance()
+    {
+        if(instance == null)
+            instance = new UseLibraryAction();
+        return instance;
+    }
+    
     
     public void actionPerformed(PkgMgrFrame pmf)
     {

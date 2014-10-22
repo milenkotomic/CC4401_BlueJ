@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class AbstractPkgFrame extends JFrame {
+public abstract class AbstractPkgFrame extends JFrame implements IPkgFrame{
 
 	 /**
      * Add a new menu item to a menu.
@@ -16,5 +16,7 @@ public class AbstractPkgFrame extends JFrame {
         item.setIcon(null);
         return item;
     }
+    
+
 		
 }

@@ -34,7 +34,16 @@ import bluej.pkgmgr.PkgMgrFrame;
 
 final public class NewUsesAction extends PkgMgrAction
 {
-    public NewUsesAction()
+	static private NewUsesAction instance = null;
+	
+	 static public NewUsesAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new NewUsesAction();
+			 return instance;
+	}
+	 
+	 private NewUsesAction()
     {
         super("menu.edit.newUses");
         putValue(SMALL_ICON, Config.getImageAsIcon("image.build.depends"));

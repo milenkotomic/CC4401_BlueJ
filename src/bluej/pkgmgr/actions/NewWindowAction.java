@@ -1,4 +1,5 @@
 package bluej.pkgmgr.actions;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**Action to perform when the user chooses "new window". When the button is pressed, 
@@ -28,7 +29,7 @@ final public class NewWindowAction extends PkgMgrAction {
 	 /**Specifies the action to be performed when the button is clicked.
 	  * @see bluej.pkgmgr.actions.PkgMgrAction#actionPerformed(bluej.pkgmgr.PkgMgrFrame)
 	  */
-	 public void actionPerformed(PkgMgrFrame pmf)
+	 public void actionPerformed(IPkgFrame pmf)
 	 {
 	        pmf.menuCall();
 	        pmf.doOpenWindow();

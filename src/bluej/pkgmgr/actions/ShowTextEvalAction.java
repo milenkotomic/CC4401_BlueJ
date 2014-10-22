@@ -31,11 +31,21 @@ import bluej.pkgmgr.PkgMgrFrame;
 
 final public class ShowTextEvalAction extends PkgMgrAction
 {
-    public ShowTextEvalAction()
+	static private ShowTextEvalAction instance = null;
+	
+	 static public ShowTextEvalAction getInstance()
+		{
+			 if(instance == null)
+				 instance = new ShowTextEvalAction();
+			 return instance;
+		}
+	
+    private ShowTextEvalAction()
     {
         super("menu.view.showTextEval");
     }
     
+       
     public ButtonModel getToggleModel(PkgMgrFrame pmf)
     {
         return new bluej.debugmgr.texteval.TextEvalButtonModel(pmf);

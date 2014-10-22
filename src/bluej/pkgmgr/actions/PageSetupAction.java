@@ -31,7 +31,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class PageSetupAction extends PkgMgrAction
 {
-    public PageSetupAction()
+	static private PageSetupAction instance = null;
+	
+	static public PageSetupAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new PageSetupAction();
+			 return instance;
+	}
+	
+	private PageSetupAction()
     {
         super("menu.package.pageSetup");
     }

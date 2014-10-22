@@ -21,7 +21,8 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.IPkgFrame;
+
 
 /**
  * User chooses "open non-BlueJ". This allows them to choose a directory to
@@ -48,7 +49,7 @@ final public class OpenNonBlueJAction extends PkgMgrAction {
         super("menu.package.openNonBlueJ");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doOpenNonBlueJ();

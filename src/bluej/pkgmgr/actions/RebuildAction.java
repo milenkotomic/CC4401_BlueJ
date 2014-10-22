@@ -33,7 +33,16 @@ import bluej.pkgmgr.PkgMgrFrame;
 
 final public class RebuildAction extends PkgMgrAction
 {
-    public RebuildAction()
+	static private RebuildAction instance = null;
+	
+	 static public RebuildAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new RebuildAction();
+			 return instance;
+	}
+	
+	 private RebuildAction()
     {
         super("menu.tools.rebuild");
     }

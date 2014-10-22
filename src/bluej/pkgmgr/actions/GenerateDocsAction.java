@@ -33,7 +33,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class GenerateDocsAction extends PkgMgrAction
 {
-    public GenerateDocsAction()
+	static private GenerateDocsAction instance = null;
+	
+	static public GenerateDocsAction getInstance()
+    {
+        if(instance == null)
+            instance = new GenerateDocsAction();
+        return instance;
+    }
+	
+	private GenerateDocsAction()
     {
         super("menu.tools.generateDoc");
     }

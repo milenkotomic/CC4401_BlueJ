@@ -31,7 +31,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class ShowInheritsAction extends PkgMgrAction
 {
-    public ShowInheritsAction()
+	static private ShowInheritsAction instance = null;
+	
+	 static public ShowInheritsAction getInstance()
+	{
+			 if(instance == null)
+				 instance = new ShowInheritsAction();
+			 return instance;
+	}
+	
+	 private ShowInheritsAction()
     {
         super("menu.view.showInherits");
     }

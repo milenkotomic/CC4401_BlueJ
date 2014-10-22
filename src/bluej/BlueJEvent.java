@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
+
 /**
   * Class to handle (throw and deliver) BlueJ events. Event are defined
   * for things that might be caused by low level parts of the system which
@@ -103,9 +106,17 @@ public class BlueJEvent
     /**
      * Remove a listener object from the known listener set.
      */
-    public static void removeListener(BlueJEventListener listener)
+    public static void removeListener(PkgMgrFrame frame)
     {
-        listeners.remove(listener);
+        listeners.remove(frame);
+    }
+    
+    /**
+     * Remove a listener object from the known listener set.
+     */
+    public static void removeListener(TabbedFrameUnit frame)
+    {
+        listeners.remove(frame);
     }
     
 }

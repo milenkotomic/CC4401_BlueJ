@@ -32,7 +32,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class NewPackageAction extends PkgMgrAction
 {
-    public NewPackageAction()
+	static private NewPackageAction instance = null;
+	
+	 static public NewPackageAction getInstance()
+	 {
+			 if(instance == null)
+				 instance = new NewPackageAction();
+			 return instance;
+	 }
+	
+	 private NewPackageAction()
     {
         super("menu.edit.newPackage");
     }

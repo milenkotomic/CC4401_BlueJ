@@ -31,7 +31,16 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 final public class CompileSelectedAction extends PkgMgrAction
 {
-    public CompileSelectedAction()
+	static private CompileSelectedAction instance = null;
+	
+	static public CompileSelectedAction getInstance()
+    {
+        if(instance == null)
+            instance = new CompileSelectedAction();
+        return instance;
+    }
+	
+	private CompileSelectedAction()
     {
         super("menu.tools.compileSelected");
     }
