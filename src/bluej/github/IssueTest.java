@@ -52,7 +52,7 @@ public class IssueTest {
         ghc.createClient(username, contraseña);
         System.out.println(ghc.getRepositories());
         String title = "Issue Test: Titulo y cuerpo (?)";
-        String repo = "SeriesRSS";
+        String repo = "TestRepository";
         String desc = "Cuerpo de Issue";
         ghc.submitIssue(title, desc, repo);
 

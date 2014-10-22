@@ -1,9 +1,20 @@
 package bluej.pkgmgr;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
- 
+
+import org.eclipse.egit.github.core.client.GitHubClient;
+
+import bluej.github.GitHubConnection;
+
+/**
+ * User interface dialog that validates GitHub credentials for logging in   
+ * 
+ * @author ekauffmann
+ * 
+ */
 public class LoginDialog extends JDialog {
  
     private JTextField tfUsername;
@@ -51,29 +62,30 @@ public class LoginDialog extends JDialog {
         btnLogin = new JButton("Login");
         
         //Do something when clicked to login
-        /*btnLogin.addActionListener(new ActionListener() {
+        btnLogin.addActionListener(new ActionListener() {
  
             public void actionPerformed(ActionEvent e) {
-                if (Login.authenticate(getUsername(), getPassword())) {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
-                            "Hi " + getUsername() + "! You have successfully logged in.",
-                            "Login",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    succeeded = true;
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
-                            "Invalid username or password",
-                            "Login",
-                            JOptionPane.ERROR_MESSAGE);
-                    // reset username and password
-                    tfUsername.setText("");
-                    pfPassword.setText("");
-                    succeeded = false;
- 
-                }
+            	//if null input in any field, try again
+            	if(getUsername().equals("") || getPassword().equals("")){
+            		 JOptionPane.showMessageDialog(LoginDialog.this,
+                             "Please try again and fill both 'username' and 'password' fields",
+                             "Login Error",
+                             JOptionPane.INFORMATION_MESSAGE);
+            		 // reset username and password
+                     tfUsername.setText("");
+                     pfPassword.setText("");
+                     succeeded = false;            		
+            	}
+            	
+          
+            	else{
+            		succeeded = true;
+            		dispose();
+            	}
             }
-        });*/
+        });
+         
+        
         btnCancel = new JButton("Cancel");
         btnCancel.addActionListener(new ActionListener() {
  
@@ -93,14 +105,26 @@ public class LoginDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
  
+    /**
+     * 
+     * @return username entered by the client 
+     */
     public String getUsername() {
         return tfUsername.getText().trim();
     }
- 
+    
+    /**
+     * 
+     * @return password entered by the client
+     */
     public String getPassword() {
         return new String(pfPassword.getPassword());
     }
  
+    /**
+     * 
+     * @return True if username and password inputs are not ""
+     */
     public boolean isSucceeded() {
         return succeeded;
     }

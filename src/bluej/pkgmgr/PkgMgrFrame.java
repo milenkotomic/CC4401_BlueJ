@@ -104,6 +104,7 @@ import bluej.extmgr.ExtensionsManager;
 import bluej.extmgr.MenuManager;
 import bluej.extmgr.ToolsExtensionMenu;
 import bluej.extmgr.ViewExtensionMenu;
+import bluej.github.GitHubConnection;
 import bluej.groupwork.actions.CheckoutAction;
 import bluej.groupwork.actions.TeamActionGroup;
 import bluej.groupwork.ui.ActivityIndicator;
@@ -3204,6 +3205,13 @@ public class PkgMgrFrame extends JFrame
     public void doNewIssueGitHub(){
     	LoginDialog loginDlg = new LoginDialog(this);
         loginDlg.setVisible(true);
+        //until user enters valid input, busy waiting...
+        while(!loginDlg.isSucceeded());
+        String username = loginDlg.getUsername();
+        String password = loginDlg.getPassword();
+        GitHubConnection ghc = new GitHubConnection();
+        System.out.println(""+ghc.createClient(username, password));
+        
     }
 
     /**
