@@ -569,6 +569,133 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		           setStatus(Config.getString("pkgmgr.error.open"));
 		   }
 	}
+
+
+	@Override
+	public void updateShowUsesInPackage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void callLibraryClass() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doTest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void restartDebugger() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doRemove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doPrint() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doPageSetup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doNewUses() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doCreateNewPackage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doNewInherits() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doCreateNewClass() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doImport() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void generateProjectDocumentation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doExport() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doEndTest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doDeployMIDlet() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void compileSelected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doCancelTest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateShowExtendsInPackage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Project getProject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Package getPackage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
 

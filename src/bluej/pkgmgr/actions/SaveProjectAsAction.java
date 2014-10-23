@@ -23,7 +23,10 @@ package bluej.pkgmgr.actions;
 
 import java.io.File;
 
+import javax.swing.JFrame;
+
 import bluej.Config;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.Package;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.Project;
@@ -53,16 +56,16 @@ final public class SaveProjectAsAction extends PkgMgrAction
         super("menu.package.saveAs");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         saveAs(pmf, pmf.getProject());
     }
     
-    public void saveAs(PkgMgrFrame frame, Project project)
+    public void saveAs(IPkgFrame pmf2, Project project)
     {
         // get a file name to save under
-        File newName = FileUtility.getDirName(frame,
+        File newName = FileUtility.getDirName((JFrame)pmf2,
                 Config.getString("pkgmgr.saveAs.title"),
                 Config.getString("pkgmgr.saveAs.buttonLabel"), false, true);
 
@@ -77,15 +80,15 @@ final public class SaveProjectAsAction extends PkgMgrAction
                 break;
 
             case FileUtility.DEST_EXISTS_NOT_DIR:
-                DialogManager.showError(frame, "directory-exists-file");
+                DialogManager.showError((JFrame)pmf2, "directory-exists-file");
                 return;
             case FileUtility.DEST_EXISTS_NON_EMPTY:
-                DialogManager.showError(frame, "directory-exists-non-empty");
+                DialogManager.showError((JFrame)pmf2, "directory-exists-non-empty");
                 return;
 
             case FileUtility.SRC_NOT_DIRECTORY:
             case FileUtility.COPY_ERROR:
-                DialogManager.showError(frame, "cannot-save-project");
+                DialogManager.showError((JFrame)pmf2, "cannot-save-project");
                 return;
             }
 

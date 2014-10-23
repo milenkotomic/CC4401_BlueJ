@@ -31,15 +31,15 @@ public interface IPkgFrame{
 	public void doOpenTab();
 	public void doOpenWindow();
 	
-	/*
+
 	public void updateShowUsesInPackage();
 	
 	public void callLibraryClass();
 	public void doTest();
 	public void restartDebugger();
-	public void doRemove();*/
+	public void doRemove();
 	public void doAddFromFile();
-	/*
+	
 	public void doPrint();
 	public void doPageSetup();
 	
@@ -57,7 +57,15 @@ public interface IPkgFrame{
 	public void doDeployMIDlet();
 	public void compileSelected();
 	public void doCancelTest();
-	*/
+	
+
+	public void updateShowExtendsInPackage();
+
+	public Project getProject();
+
+	public Package getPackage();
+
+	public void clearStatus();
 
 
 
