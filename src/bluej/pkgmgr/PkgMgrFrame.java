@@ -2386,6 +2386,11 @@ public class PkgMgrFrame extends AbstractPkgFrame
         }
     }
 
+    public void rebuild(){
+    	this.getPackage().rebuild();
+    }
+    
+    
     /**
      * User function "Use Library Class...". Pop up the dialog that allows users
      * to invoke library classes.

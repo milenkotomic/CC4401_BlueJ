@@ -6,12 +6,16 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -44,7 +48,11 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	
 	private static List<TabbedFrameUnit> pkgTabs = new ArrayList<TabbedFrameUnit>();
 	protected TabbedFrameUnit recentFrame = null;
-		
+	
+	public TabbedFrameUnit getLastFrame(){
+		return recentFrame;
+	}
+	
 	public TabbedPkgFrame(){
 		setupWindow();
 		
@@ -553,8 +561,99 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
    public void doNewInherits(){
 	   recentFrame.doNewInherits();
    }
-      
    
+   /**
+    * Toggle the state of the "show uses arrows" switch.
+    */
+   public void updateShowUsesInPackage()
+   {
+      recentFrame.updateShowUses(menuMgr.isShowUses());
+   }
+
+   public void updateShowExtendsInPackage()
+   {
+	   recentFrame.updateShowExtends(menuMgr.isShowExtends());
+   }
+   
+   //Variable inicializada de forma lazy, ¿vale la pena?
+   private ProjectPrintDialog projectPrintDialog = null;
+   /**
+    * Implementation of the "print" user function
+    */
+   public void doPrint()
+   {
+       if (projectPrintDialog == null)
+    	   projectPrintDialog = new ProjectPrintDialog(this);
+
+       if (projectPrintDialog.display()) {
+         //  PackagePrintManager printManager = new PackagePrintManager(this.getPackage(), getPageFormat(),
+           //        projectPrintDialog);
+           //printManager.start();
+       }
+   }
+   
+   
+   private PageFormatMgr pageFormatMgr = null;
+   /**
+    * Creates a page setup dialog to alter page dimensions.
+    *  
+    */
+   public void doPageSetup()
+   {
+	if(pageFormatMgr == null)
+		pageFormatMgr = new PageFormatMgr();
+	   
+	pageFormatMgr.doPageSetup();
+      
+   }
+    
+   /**
+    * Import into a new project or import into the current project.
+    */
+   public void doImport()
+   {
+       // prompt for the directory to import from
+       File importDir = FileUtility.getDirName(this, Config.getString("pkgmgr.importPkg.title"), Config
+               .getString("pkgmgr.importPkg.buttonLabel"), true, false);
+
+       if (importDir == null)
+           return;
+
+       if (!importDir.isDirectory())
+           return;
+
+       // if we are an empty then we shouldn't go on (we shouldn't get
+       // here)
+       if (recentFrame.isEmptyFrame())
+           return;
+
+       // recursively copy files from import directory to package directory
+       recentFrame.importProjectDir(importDir, true);
+   }
+   
+   private ExportManager exporter = null;
+   /**
+    * Implementation of the "Export" user function
+    */
+   public void doExport()
+   {
+       if (exporter == null) {
+          // exporter = new ExportManager(this);
+       }
+       exporter.export();
+   }
+   
+   public void rebuild(){
+	   recentFrame.rebuild();
+   }
+   
+   public void generateProjectDocumentation(){
+	   recentFrame.generateProjectDocumentation();
+   }
+   
+   public void restartDebugger(){
+	   recentFrame.restartDebugger();
+   }
    /**
     * Display a message in the status bar of the frame
     */

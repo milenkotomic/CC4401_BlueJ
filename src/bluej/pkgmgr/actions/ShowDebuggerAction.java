@@ -23,7 +23,9 @@ package bluej.pkgmgr.actions;
 
 import javax.swing.ButtonModel;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedPkgFrame;
 
 /**
  * Action to toggle display of debugger. This action provides a ButtonModel
@@ -48,8 +50,12 @@ final public class ShowDebuggerAction extends PkgMgrAction
         super("menu.view.showExecControls");
     }
             
-    public ButtonModel getToggleModel(PkgMgrFrame pmf)
+    public ButtonModel getToggleModel(IPkgFrame pmf)
     {
-        return new bluej.debugmgr.ExecControlButtonModel(pmf);
+    	
+    	if(pmf instanceof PkgMgrFrame)
+    		return new bluej.debugmgr.ExecControlButtonModel((PkgMgrFrame)pmf);
+    	
+    	return new bluej.debugmgr.ExecControlButtonModelTFU((TabbedPkgFrame)pmf);
     }
 }

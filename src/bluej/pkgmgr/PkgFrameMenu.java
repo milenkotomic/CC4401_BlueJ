@@ -83,7 +83,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 	public PkgFrameMenu(){
 		 
 	}
-
+	
 	/**
 	 * @param menubar
 	 */

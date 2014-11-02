@@ -30,6 +30,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -85,6 +86,7 @@ import bluej.prefmgr.PrefMgr;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.utility.Debug;
 import bluej.utility.DialogManager;
+import bluej.utility.FileUtility;
 import bluej.utility.GradientFillPanel;
 import bluej.utility.JavaNames;
 import bluej.utility.Utility;
@@ -308,23 +310,33 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		actionsToDisable.add(RunTestsAction.getInstance());
 	}   
     
-		
-	 /**
-     * Toggle the state of the "show uses arrows" switch.
-     */
-   /* public void updateShowUsesInPackage()
-    {
-        pkg.setShowUses(isShowUses());
-        editor.repaint();
-    }
+	public File[] importProjectDir(File dir, boolean showFailureDialog)
+	{
+	       // recursively copy files from import directory to package directory
+	       File[] fails = FileUtility.recursiveCopyFile(dir, getPackage().getPath());
 
-    public void updateShowExtendsInPackage()
-    {
-        pkg.setShowExtends(isShowExtends());
-        editor.repaint();
-    }*/
+	       // if we have any files which failed the copy, we show them now
+	       if (fails != null && showFailureDialog) {
+	           JDialog importFailedDlg = new ImportFailedDialog(this, fails);
+	           importFailedDlg.setVisible(true);
+	       }
+
+	       // add bluej.pkg files through the imported directory structure
+	       List<File> dirsToConvert = Import.findInterestingDirectories(getPackage().getPath());
+	       Import.convertDirectory(dirsToConvert);
+
+	       // reload all the packages (which discovers classes which may have
+	       // been added by the import)
+	       getProject().reloadAll();
+	       
+	       return fails;
+	}
 	
-	 /**
+	public void rebuild(){
+		this.getPackage().rebuild();
+	}
+	
+	/**
      * Return the project of the package shown by this frame.
      */
     public Project getProject()
@@ -555,6 +567,21 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     }
     
     /**
+     * Toggle the state of the "show uses arrows" switch.
+     */
+    public void updateShowUses(boolean valueToUpdate)
+    {
+    	pkg.setShowUses(valueToUpdate);
+    	editor.repaint();
+    }
+    
+    public void updateShowExtends(boolean valueToUpdate)
+    {
+    	pkg.setShowExtends(valueToUpdate);
+    	editor.repaint();
+    }
+      
+    /**
      * Displays the package in the frame for editing
      */
     public void openPackage(Package pkg)
@@ -772,7 +799,28 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
    	
     }  
     
+    /**
+     * User function "Generate Documentation...".
+     */
+    public void generateProjectDocumentation()
+    {
+        String message = pkg.generateDocumentation();
+        if (message.length() != 0) {
+            DialogManager.showText(this, message);
+        }
+    }
     
+    /**
+     * Restart the debugger VM associated with this project.
+     */
+    public void restartDebugger()
+    {
+        if (!isEmptyFrame())
+        {
+            getProject().restartVM();
+            DataCollector.restartVM(getProject());
+        }
+    }
     
 	/**
      * Closes the current package.
