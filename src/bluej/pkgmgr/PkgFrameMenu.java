@@ -17,6 +17,7 @@ import javax.swing.KeyStroke;
 
 import bluej.Config;
 
+import bluej.extmgr.MenuManager;
 import bluej.pkgmgr.actions.AddClassAction;
 
 import bluej.pkgmgr.actions.CheckExtensionsAction;
@@ -86,7 +87,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 	/**
 	 * @param menubar
 	 */
-	protected void setupMenu(JMenuBar menubar, JMenu recentProjectsMenu){
+	protected MenuManager setupMenu(JMenuBar menubar, JMenu recentProjectsMenu){
 
 		JMenu menu = new JMenu(Config.getString("menu.package"));
 		int mnemonic = Config.getMnemonicKey("menu.package");
@@ -158,7 +159,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 				}
 	
 				// Create the menu manager that looks after extension tools menus
-				//  toolsMenuManager = new MenuManager(menu.getPopupMenu());
+				
 	
 				// If this is the first frame create the extension tools menu now.
 				// (Otherwise, it will be created during project open.)
@@ -168,6 +169,8 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 			}
 		}
 
+		MenuManager toolsMenuManager = new MenuManager(menu.getPopupMenu());
+		
 		menu = new JMenu(Config.getString("menu.view"));
 		menu.setMnemonic(Config.getMnemonicKey("menu.view"));
 		menubar.add(menu);
@@ -238,7 +241,8 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		//addUserHelpItems(menu);
 		//updateRecentProjects();
 
-		// setJMenuBar(menubar);       
+		// setJMenuBar(menubar);     
+		return toolsMenuManager;
 
 	}
 

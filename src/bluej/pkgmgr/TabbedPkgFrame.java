@@ -182,6 +182,14 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
            
     /*ACTIONS*/
         
+    public void doCreateNewClass(){
+    	recentFrame.doCreateNewClass();
+    }
+    
+    public void doCreateNewPackage(){
+    	recentFrame.doCreateNewPackage();
+    }
+    
     public void doOpenTab(){
 		TabbedFrameUnit newTab = new TabbedFrameUnit();
         pkgTabs.add(newTab);
@@ -189,7 +197,6 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		jtp.addTab("BlueJ", newTab.getTab());
 		jtp.setTabComponentAt(jtp.indexOfComponent(newTab.getTab()), new ButtonTabComponent(jtp));
 	}
-    
     public void doOpenWindow(){
     	TabbedPkgFrame frame = new TabbedPkgFrame();
      	frame.setVisible(true);
@@ -363,7 +370,10 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         recentFrame.importFromFile(classes);
     }
     
-	
+	public void doRemove(){
+		recentFrame.doRemove();
+	}
+    
 	 /**
     * Check whether the status of the 'Show unit test tools' preference has
     * changed, and if it has, show or hide them as requested.
@@ -398,14 +408,14 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        if (openProj == null)
            return false;
        else {
-           Package initialPkg = openProj.getPackage(openProj.getInitialPackageName());
+    	   Package initialPkg = openProj.getPackage(openProj.getInitialPackageName());
 
            TabbedFrameUnit pmf = findFrame(initialPkg);
 
            if (pmf == null) {
                if (recentFrame.isEmptyFrame()) {
                    pmf = recentFrame;
-                   //pmf.openPackage(initialPkg);
+                   pmf.openPackage(initialPkg);
                }
                else {
                    pmf = createFrame(initialPkg);
@@ -450,7 +460,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        if (projectPath != null) {
            if (projectPath.isDirectory() || Project.isProject(projectPath.toString())) {
                if(openProject(projectPath.getAbsolutePath())) {
-                   openedProject = true;
+                  openedProject = true;
                }
            }
            else {
@@ -463,7 +473,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
            // Close newly created frame if it was never used.
            closeFrame(pmf);
        }
-       return openedProject;
+       
+      return openedProject;
    }
    
    /**
@@ -535,6 +546,14 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        }
    }
    
+   public void doNewUses(){
+	   recentFrame.doNewUses();
+   }
+   
+   public void doNewInherits(){
+	   recentFrame.doNewInherits();
+   }
+      
    
    /**
     * Display a message in the status bar of the frame

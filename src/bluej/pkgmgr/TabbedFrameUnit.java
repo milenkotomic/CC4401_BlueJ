@@ -1,10 +1,12 @@
 package bluej.pkgmgr;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -15,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -40,6 +43,7 @@ import bluej.BlueJEventListener;
 import bluej.BlueJTheme;
 import bluej.Config;
 import bluej.collect.DataCollector;
+import bluej.debugmgr.ObjectBenchTFU;
 import bluej.debugmgr.objectbench.ObjectBench;
 import bluej.extmgr.ExtensionsManager;
 import bluej.extmgr.MenuManager;
@@ -73,11 +77,16 @@ import bluej.pkgmgr.actions.ShowTerminalAction;
 import bluej.pkgmgr.actions.ShowTextEvalAction;
 import bluej.pkgmgr.actions.ShowUsesAction;
 import bluej.pkgmgr.actions.UseLibraryAction;
+import bluej.pkgmgr.dependency.Dependency;
+import bluej.pkgmgr.target.ClassTarget;
+import bluej.pkgmgr.target.Target;
+import bluej.pkgmgr.target.role.UnitTestClassRole;
 import bluej.prefmgr.PrefMgr;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.utility.Debug;
 import bluej.utility.DialogManager;
 import bluej.utility.GradientFillPanel;
+import bluej.utility.JavaNames;
 import bluej.utility.Utility;
 
 public class TabbedFrameUnit extends JFrame implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
@@ -92,7 +101,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	private JScrollPane classScroller = null;
 	private NoProjectMessagePanel noProjectMessagePanel = new NoProjectMessagePanel();
 	private PackageEditor editor = null;
-	private ObjectBench objbench;
+	private ObjectBenchTFU objbench;
 	
 	private MenuManager toolsMenuManager;
     private MenuManager viewMenuManager;
@@ -111,7 +120,8 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		tabWindow = new JPanel();
 		setupActionDisableSet();
 		itemsToDisable = new ArrayList<JComponent>();
-		
+		objbench = new ObjectBenchTFU(this);
+				
 		makeFrame();
 		//editor = new PackageEditor(pkg, this, this);
 		
@@ -346,6 +356,205 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     }
 
     /**
+     * Implementation of the "New Class" user function.
+     */
+    public void doCreateNewClass()
+    {
+        NewClassDialog dlg = new NewClassDialog(this, isJavaMEpackage());
+        boolean okay = dlg.display();
+
+        if (okay) {
+            String name = dlg.getClassName();
+            String template = dlg.getTemplateName();
+
+            createNewClass(name, template, true);
+        }
+    }
+    
+    public boolean createNewClass(String name, String template, boolean showErr)
+    {
+        // check whether name is already used
+        if (pkg.getTarget(name) != null) {
+            DialogManager.showError(this, "duplicate-name");
+            return false;
+        }
+
+        //check if there already exists a class in a library with that name 
+        String[] conflict=new String[1];
+        Class<?> c = pkg.loadClass(pkg.getQualifiedName(name));
+        if (c != null){
+            if (! Package.checkClassMatchesFile(c, new File(getPackage().getPath(), name + ".class"))) {
+                conflict[0]=Package.getResourcePath(c);
+                if (DialogManager.askQuestion(this, "class-library-conflict", conflict) == 0) {
+                    return false;
+                }
+            }
+        }
+
+        ClassTarget target = null;
+        target = new ClassTarget(pkg, name, template);
+
+        if ( template != null ) { 
+            boolean success = target.generateSkeleton(template);
+            if (! success)
+                return false;
+        }
+
+        pkg.findSpaceForVertex(target);
+        pkg.addTarget(target);
+
+        if (editor != null) {
+            editor.revalidate();
+            editor.scrollRectToVisible(target.getBounds());
+            editor.repaint();
+        }
+
+        if (target.getRole() instanceof UnitTestClassRole) {
+            pkg.compileQuiet(target);
+        }
+        
+        DataCollector.addClass(pkg, target.getSourceFile());
+        
+        return true;
+    }
+    
+    /**
+     * Prompts the user with a dialog asking for the name of a package to
+     * create. Package name can be fully qualified in which case all
+     * intermediate packages will also be created as necessary.
+     */
+    public void doCreateNewPackage()
+    {
+        NewPackageDialog dlg = new NewPackageDialog(this);
+        boolean okay = dlg.display();
+        
+        if (!okay)
+            return;
+        
+        String name = dlg.getPackageName();
+
+        if (name.length() == 0)
+            return;
+
+        createNewPackage(name, true);
+    }
+    
+    public boolean createNewPackage(String name, boolean showErrDialog)
+    {
+        String fullName;
+
+        // if the name is fully qualified then we leave it as is but
+        // if it is not we assume they want to create a package in the
+        // current package
+        if (name.indexOf('.') > -1) {
+            fullName = name;
+        }
+        else {
+            fullName = getPackage().getQualifiedName(name);
+        }
+
+        // check whether name is already used for a class or package
+        // in the parent package
+        String prefix = JavaNames.getPrefix(fullName);
+        String base = JavaNames.getBase(fullName);
+
+        Package basePkg = getProject().getPackage(prefix);
+        if (basePkg != null) {
+            if (basePkg.getTarget(base) != null) {
+                if (showErrDialog)
+                    DialogManager.showError(this, "duplicate-name");
+                return false;
+            }
+        }
+
+        getProject().createPackageDirectory(fullName);
+
+        // check that everything has gone well and instruct all affected
+        // packages to reload (to make them notice the new sub packages)
+        Package newPackage = getProject().getPackage(fullName);
+
+        if (newPackage == null) {
+            Debug.reportError("creation of new package failed unexpectedly");
+            // TODO propagate a more informative exception
+            return false;
+        }
+        
+        newPackage = newPackage.getParent();
+        while (newPackage != null) {
+            newPackage.reload();
+            newPackage = newPackage.getParent();
+        }
+        
+        return true;
+    }
+
+    public void doRemove()
+    {
+        Component permanentFocusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
+        if (permanentFocusOwner == editor || Arrays.asList(editor.getComponents()).contains(permanentFocusOwner)) { // focus in diagram
+            if (!(doRemoveTargets() || doRemoveDependency())) {
+                DialogManager.showError(this, "no-class-selected");
+            }
+        }
+        else if (permanentFocusOwner == objbench || objbench.getObjects().contains(permanentFocusOwner)) { // focus in object bench
+            objbench.removeSelectedObject(pkg.getId());
+        }
+        else {
+            // ignore the command - focus is probably in text eval area
+        }
+    }
+    
+    private boolean doRemoveTargets()
+    {
+        Target[] targets = pkg.getSelectedTargets();
+        if (targets.length <= 0) {
+            return false;
+        }
+        if (askRemoveClass()) {
+            for (int i = 0; i < targets.length; i++) {
+                targets[i].remove();
+            }
+        }
+        return true;
+    }
+
+    private boolean doRemoveDependency()
+    {
+        Dependency dependency = pkg.getSelectedDependency();
+        if (dependency == null) {
+            return false;
+        }
+        dependency.remove();
+        return true;
+    }
+
+    public boolean askRemoveClass()
+    {
+        int response = DialogManager.askQuestion(this, "really-remove-class");
+        return response == 0;
+    }
+    
+    /**
+     * The user function to add a uses arrow to the diagram was invoked.
+     */
+    public void doNewUses()
+    {
+        pkg.setState(Package.S_CHOOSE_USES_FROM);
+        //setStatus(Config.getString("pkgmgr.chooseUsesFrom"));
+        pkg.getEditor().clearSelection();
+    }
+
+    /**
+     * The user function to add an inherits arrow to the dagram was invoked.
+     */
+    public void doNewInherits()
+    {
+        pkg.setState(Package.S_CHOOSE_EXT_FROM);
+        //setStatus(Config.getString("pkgmgr.chooseInhFrom"));
+        editor.clearSelection();
+    }
+    
+    /**
      * Displays the package in the frame for editing
      */
     public void openPackage(Package pkg)
@@ -427,11 +636,11 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             
             //updateTextEvalBackground(isEmptyFrame());
                     
-            this.toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
-            this.toolsMenuManager.addExtensionMenu(pkg.getProject());
+            //this.toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
+            //this.toolsMenuManager.addExtensionMenu(pkg.getProject());
 
-            this.viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
-            this.viewMenuManager.addExtensionMenu(pkg.getProject());
+            //this.viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
+            //this.viewMenuManager.addExtensionMenu(pkg.getProject());
         
             //teamActions = pkg.getProject().getTeamActions();
             //resetTeamActions();             
@@ -581,8 +790,8 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             classScroller.setBorder(Config.normalBorder);
             editor.removeMouseListener(this);
             editor.removeFocusListener(this);
-            toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
-            viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
+            //toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
+            //viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
             
             objbench.removeAllObjects(getProject().getUniqueId());
             text.clearTextEval();

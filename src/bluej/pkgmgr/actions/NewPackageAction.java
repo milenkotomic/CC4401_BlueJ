@@ -21,7 +21,7 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.IPkgFrame;
 
 /**
  * "New Package" command. Allows the user to create a new sub-package with a
@@ -46,7 +46,7 @@ final public class NewPackageAction extends PkgMgrAction
         super("menu.edit.newPackage");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doCreateNewPackage();

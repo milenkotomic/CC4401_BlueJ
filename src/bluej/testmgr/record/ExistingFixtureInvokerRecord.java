@@ -116,7 +116,7 @@ public class ExistingFixtureInvokerRecord extends InvokerRecord
      * @return a String representing the test method src
      */
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent)
     {
         return null;
     }

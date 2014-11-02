@@ -80,7 +80,7 @@ public class ObjectInspectInvokerRecord extends InvokerRecord
     }
 
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent)
     {
         return null;
     }

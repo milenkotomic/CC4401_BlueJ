@@ -137,7 +137,7 @@ public class MethodInvokerRecord extends VoidMethodInvokerRecord
      * @see bluej.testmgr.record.VoidMethodInvokerRecord#toTestMethod(bluej.pkgmgr.PkgMgrFrame)
      */
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent)
     {
         StringBuffer sb = new StringBuffer();
         sb.append(toTestMethodInit(pmf, secondIndent));

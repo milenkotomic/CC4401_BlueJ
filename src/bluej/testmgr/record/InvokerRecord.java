@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import bluej.debugger.DebuggerObject;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
 
 /**
  * Records a single user interaction with the object
@@ -116,9 +117,9 @@ public abstract class InvokerRecord
      * 
      * @return a String representing the test method src
      */
-    public abstract String toTestMethod(PkgMgrFrame pmf, String secondIndent);
+    public abstract String toTestMethod(String secondIndent);
 
-    /**
+       /**
      * Construct an expression. This is an open expression which is not ended by
      * by semicolon or line breaks. It is typically used by other InvokerRecords
      * to created "chained" invocation records. The returned string should not

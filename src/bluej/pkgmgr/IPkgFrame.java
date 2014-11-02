@@ -4,7 +4,8 @@ public interface IPkgFrame{
 	/*Interface que deben cumplir todos los tipos de ventanas*/
 	
 	public void menuCall();
-		
+	public void clearStatus();	
+	
 	/*Llamadas a metodos cuando se apretan botones*/
 	
 	/*Project*/
@@ -12,6 +13,14 @@ public interface IPkgFrame{
 	public void doOpen();
 	public void doOpenNonBlueJ();
 	public void doClose(boolean keepLastFrame, boolean doSave);
+	
+	/*Edit*/
+	public void doCreateNewClass();
+	public void doCreateNewPackage();
+	public void doAddFromFile();
+	public void doRemove();
+	public void doNewInherits();
+	public void doNewUses();
 	
 	/*Tools*/
 	public void showPreferences();
@@ -31,19 +40,19 @@ public interface IPkgFrame{
 	public void callLibraryClass();
 	public void doTest();
 	public void restartDebugger();
-	public void doRemove();*/
-	public void doAddFromFile();
+	*/
+	
 	/*public void doPushGitHub();
 	public void doPrint();
 	public void doPageSetup();
 	
 	
-	public void doNewUses();
 	
-	public void doCreateNewPackage();
+	
+	
 	public void doNewIssueGitHub();
-	public void doNewInherits();
-	public void doCreateNewClass();
+	
+	
 	public void doImport();
 	public void generateProjectDocumentation();
 	public void doExport();

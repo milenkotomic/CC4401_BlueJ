@@ -58,7 +58,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
     private List<ObjectWrapper> objects;
     private ObjectWrapper selectedObject;
     private PkgMgrFrame pkgMgrFrame;
-    
+       
     // All invocations done since our last reset.
     private List<InvokerRecord> invokerRecords;
    
@@ -74,6 +74,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
         this.pkgMgrFrame = pkgMgrFrame;
         updateAccessibleName();
     }
+     
     
     /**
      * Updates the accessible name for screen readers, based on the number
@@ -565,7 +566,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
         while(it.hasNext()) {
             InvokerRecord ir = it.next();
 
-            String testMethod = ir.toTestMethod(pkgMgrFrame, secondIndent);
+            String testMethod = ir.toTestMethod(secondIndent);
             if (testMethod != null) {
                 sb.append(testMethod);
             }
@@ -700,5 +701,6 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
 
             }
         }
-    }
+
+     }
 }

@@ -22,6 +22,7 @@
 package bluej.testmgr.record;
 
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
 
 public class ArrayElementInspectorRecord extends InvokerRecord
 {
@@ -59,8 +60,9 @@ public class ArrayElementInspectorRecord extends InvokerRecord
     }
 
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent)
     {
         return null;
     }
+
 }
