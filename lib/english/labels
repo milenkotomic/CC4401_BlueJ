@@ -170,9 +170,8 @@ editor.undoLabel = Undo
 editor.cutLabel = Cut
 editor.copyLabel = Copy
 editor.pasteLabel = Paste
-editor.copyGetterLabel = Copy getter
-editor.copySetterLabel = Copy setter
-editor.copyGetterAndSetterLabel = Copy getter and setter
+editor.create-getterLabel = Create getter
+editor.create-setterLabel = Create setter
 editor.closeLabel = Close
 editor.page-setupLabel = Page Setup...
 

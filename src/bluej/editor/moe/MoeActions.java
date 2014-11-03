@@ -1,21 +1,17 @@
 /*
  This file is part of the BlueJ program. 
  Copyright (C) 1999-2010,2011,2012,2013  Michael Kolling and John Rosenberg 
-
  This program is free software; you can redistribute it and/or 
  modify it under the terms of the GNU General Public License 
  as published by the Free Software Foundation; either version 2 
  of the License, or (at your option) any later version. 
-
  This program is distributed in the hope that it will be useful, 
  but WITHOUT ANY WARRANTY; without even the implied warranty of 
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
  GNU General Public License for more details. 
-
  You should have received a copy of the GNU General Public License 
  along with this program; if not, write to the Free Software 
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA. 
-
  This file is subject to the Classpath exception as provided in the  
  LICENSE.txt file that accompanied this code.
  */
@@ -71,6 +67,7 @@ import bluej.debugger.gentype.JavaType;
 import bluej.editor.moe.MoeIndent.AutoIndentInformation;
 import bluej.parser.entity.JavaEntity;
 import bluej.parser.nodes.CommentNode;
+import bluej.parser.nodes.FieldNode;
 import bluej.parser.nodes.MethodNode;
 import bluej.parser.nodes.NodeTree.NodeAndPosition;
 import bluej.parser.nodes.ParsedNode;
@@ -1021,89 +1018,75 @@ public final class MoeActions
     
     // --------------------------------------------------------------------
     
-    class CopyGetterAction extends MoeAbstractAction{
-		public CopyGetterAction() {
-			super("copy-getter");
+    abstract class AbstractCreateGetterSetterAction extends MoeAbstractAction{
+		public AbstractCreateGetterSetterAction(String name) {
+			super(name);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			getActionByName("copy-to-clipboard").actionPerformed(e);
-			Clipboard c =getTextComponent(e).getToolkit().getSystemClipboard();
-			Transferable content = c.getContents(this);
-			String clipContent;
-			try {
-				clipContent = (String) (content.getTransferData(DataFlavor.stringFlavor));
-				String[] args=clipContent.split(" ");
-				String type=args[0];
-				String var=args[1];
-				clipContent=createGetter(type,var);
-			}
-			catch (Exception exc) {
-				clipContent="";
-			}
-			StringSelection contents = new StringSelection(clipContent);
-			c.setContents(contents, contents);
+			MoeEditor editor = getEditor(e);
+            
+            //this method should not be actioned if the editor is not displaying source code
+            if (!editor.containsSourceCode()){
+                return;
+            }
+            int caretPos=0;
+            caretPos = editor.getCurrentTextPane().getCaretPosition();
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            write(editor, caretPos,node);
 		}
+		public void write(MoeEditor editor, int caretPos,
+				NodeAndPosition<ParsedNode> node) {
+			while (node != null && node.getNode().getNodeType() != ParsedNode.NODETYPE_FIELD) {
+                node = node.getNode().findNodeAt(caretPos, node.getPosition());
+                
+            }
+            if (node == null || !(node.getNode() instanceof FieldNode)) {
+                editor.writeMessage(Config.getString("editor.addjavadoc.notAMethod"));
+            } 
+            else {
+                FieldNode fieldNode = ((FieldNode)node.getNode());
+                int column=editor.getLineColumnFromOffset(node.getPosition()).getColumn();
+                String var=fieldNode.getName();
+                String type=fieldNode.getFieldType().getName();
+                String create=create(type,var,column-1);
+                editor.undoManager.beginCompoundEdit();
+                editor.getCurrentTextPane().setCaretPosition(node.getPosition());
+                editor.getCurrentTextPane().replaceSelection(create);
+                editor.getCurrentTextPane().setCaretPosition((caretPos + create.length()));
+                editor.undoManager.endCompoundEdit();
+            }        
+        }
+		abstract String create(String type, String var, int column);
     }
 
     // --------------------------------------------------------------------
     
-    class CopySetterAction extends MoeAbstractAction{
-		public CopySetterAction() {
-			super("copy-setter");
+    class CreateGetterAction extends AbstractCreateGetterSetterAction{
+    	public CreateGetterAction() {
+			super("create-getter");
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			getActionByName("copy-to-clipboard").actionPerformed(e);
-			Clipboard c =getTextComponent(e).getToolkit().getSystemClipboard();
-			Transferable content = c.getContents(this);
-			String clipContent;
-			try {
-				clipContent = (String) (content.getTransferData(DataFlavor.stringFlavor));
-				String[] args=clipContent.split(" ");
-				String type=args[0];
-				String var=args[1];
-				clipContent=createSetter(type,var);
-			}
-			catch (Exception exc) {
-				clipContent="";
-			}
-			StringSelection contents = new StringSelection(clipContent);
-			c.setContents(contents, contents);
-		}	
+		String create(String type, String var, int column) {
+			return createGetter(type,var,column);
+		}
     }
-
+    
     // --------------------------------------------------------------------
     
-    class CopyGetterAndSetterAction extends MoeAbstractAction{
-		public CopyGetterAndSetterAction() {
-			super("copy-getter-and-setter");
+    class CreateSetterAction extends AbstractCreateGetterSetterAction{
+		public CreateSetterAction() {
+			super("create-setter");
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			getActionByName("copy-to-clipboard").actionPerformed(e);
-			Clipboard c =getTextComponent(e).getToolkit().getSystemClipboard();
-			Transferable content = c.getContents(this);
-			String clipContent;
-			try {
-				clipContent = (String) (content.getTransferData(DataFlavor.stringFlavor));
-				String[] args=clipContent.split(" ");
-				String type=args[0];
-				String var=args[1];
-				clipContent=createGetter(type,var)+createSetter(type,var);
-			}
-			catch (Exception exc) {
-				clipContent="";
-			}
-			StringSelection contents = new StringSelection(clipContent);
-			c.setContents(contents, contents);
+		String create(String type, String var, int column) {
+			return createSetter(type,var,column);
 		}
-    	
     }
-
+    
     // --------------------------------------------------------------------
 
     class CutLineAction extends MoeAbstractAction
@@ -2293,9 +2276,8 @@ public final class MoeActions
                 new DeIndentAction(),
                 new NewLineAction(),
                 new CopyLineAction(),
-                new CopyGetterAction(),
-                new CopySetterAction(),
-                new CopyGetterAndSetterAction(),
+                new CreateGetterAction(),
+                new CreateSetterAction(),
                 new CutLineAction(), 
                 new CutEndOfLineAction(), 
                 new CutWordAction(),
@@ -2491,7 +2473,10 @@ public final class MoeActions
         keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_C, SHORTCUT_MASK), actions.get(DefaultEditorKit.copyAction));
         keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_X, SHORTCUT_MASK), actions.get(DefaultEditorKit.cutAction));
         keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_V, SHORTCUT_MASK), actions.get(DefaultEditorKit.pasteAction));
-
+        
+        keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, SHORTCUT_MASK), actions.get("create-getter"));
+        keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, SHORTCUT_MASK), actions.get("create-setter"));
+        
         // F2, F3, F4
         keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), actions.get("copy-line"));
         keymap.addActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), actions.get(DefaultEditorKit.pasteAction));
@@ -2693,20 +2678,38 @@ public final class MoeActions
 
     }
     
-    protected String createGetter(String type, String var) {
+    protected String createGetter(String type, String var, int indent) {
 		StringBuilder sb=new StringBuilder();
 		String newVar=var.substring(0, 1).toUpperCase()+var.substring(1);
 		sb.append("public "+type+" get"+newVar+"(){\n");
+		for (int i=0;i<indent;i++){
+			sb.append(' ');
+		}
 		sb.append("\treturn this."+var+";\n");
+		for (int i=0;i<indent;i++){
+			sb.append(' ');
+		}
 		sb.append("}\n");
+		for (int i=0;i<indent;i++){
+			sb.append(' ');
+		}
 		return sb.toString();
 	}
-    protected String createSetter(String type, String var) {
+    protected String createSetter(String type, String var, int indent) {
 		StringBuilder sb=new StringBuilder();
 		String newVar=var.substring(0, 1).toUpperCase()+var.substring(1);
 		sb.append("public void set"+newVar+"("+type+" "+var+"){\n");
+		for (int i=0;i<indent;i++){
+			sb.append(' ');
+		}
 		sb.append("\tthis."+var+"="+var+";\n");
+		for (int i=0;i<indent;i++){
+			sb.append(' ');
+		}
 		sb.append("}\n");
+		for (int i=0;i<indent;i++){
+			sb.append(' ');
+		}
 		return sb.toString();
 	}
    
