@@ -61,6 +61,7 @@ import javax.swing.text.Keymap;
 import javax.swing.text.TextAction;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import javax.swing.JPanel;
 
 import bluej.Config;
 import bluej.debugger.gentype.JavaType;
@@ -71,6 +72,7 @@ import bluej.parser.nodes.FieldNode;
 import bluej.parser.nodes.MethodNode;
 import bluej.parser.nodes.NodeTree.NodeAndPosition;
 import bluej.parser.nodes.ParsedNode;
+import bluej.parser.nodes.ParsedTypeNode;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.Debug;
@@ -1087,6 +1089,56 @@ public final class MoeActions
 		}
     }
     
+    // --------------------------------------------------------------------
+    
+    class DetectCodeSmellAction extends MoeAbstractAction{
+    	public DetectCodeSmellAction() {
+			super("detect-codesmell");
+		}
+		public String detect(String path) {
+			return "Aquí van los code-smells detectados";
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			MoeEditor editor = getEditor(e);
+            
+            //this method should not be actioned if the editor is not displaying source code
+            if (!editor.containsSourceCode()){
+                return;
+            }
+            int caretPos=0;
+            caretPos = editor.getCurrentTextPane().getCaretPosition();
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            path(editor, caretPos,node);
+		}
+		
+		public void path(MoeEditor editor, int caretPos,NodeAndPosition<ParsedNode> node) {
+			while (node != null && node.getNode().getNodeType() != ParsedNode.NODETYPE_TYPEDEF) {
+                node = node.getNode().findNodeAt(caretPos, node.getPosition());
+                
+            }
+            if (node == null || !(node.getNode() instanceof ParsedTypeNode)) {
+                editor.writeMessage(Config.getString("Not in a Class"));
+            } 
+            else {
+                ParsedTypeNode fieldNode = ((ParsedTypeNode)node.getNode());
+                String var= fieldNode.getName();
+                String path=editor.getFilename();
+                JPanel frame= new JPanel();
+                JOptionPane.showMessageDialog(frame,
+                	    "Path: "+ path +
+                	    "\n Class to analize: "+ var+
+                	    "\n Detections:\n"+ detect(path),
+                	    "Code Smell Detector",
+                	    JOptionPane.PLAIN_MESSAGE);
+            }
+		}
+    }
+		
+    	
+    
+    
+
     // --------------------------------------------------------------------
 
     class CutLineAction extends MoeAbstractAction
@@ -2278,6 +2330,7 @@ public final class MoeActions
                 new CopyLineAction(),
                 new CreateGetterAction(),
                 new CreateSetterAction(),
+                new DetectCodeSmellAction(),
                 new CutLineAction(), 
                 new CutEndOfLineAction(), 
                 new CutWordAction(),

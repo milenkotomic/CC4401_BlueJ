@@ -3904,4 +3904,7 @@ public final class MoeEditor extends JFrame
             }
         }
     }
+    public String getFilename(){
+    	return filename;
+    }
 }

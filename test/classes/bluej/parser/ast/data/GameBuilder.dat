@@ -1,0 +1,92 @@
+package cc3002.pclike.pacman;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
+
+import cc3002.pclike.elements.*;
+import cc3002.pclike.map.*;
+
+/**
+ * Clase del constructor del juego Pacman.
+ * @author eljotape
+ *
+ */
+public class GameBuilder {
+	private PCMap map;
+	private int n;
+	private int m;
+	private Pacman pacman;
+	/**
+	 * Crea un juego con un mapa de (_n) x (_m).
+	 * @param _n dimension en el eje X del mapa.
+	 * @param _m dimension en el eje Y del mapa.
+	 */
+	public GameBuilder(int _n,int _m){
+		n=_n;
+		m=_m;
+		map=new PCMap(n,m);
+		pacman=Pacman.getPacman();
+	}
+	/**
+	 * Agrega un Pac-Dot en la posicion (x,y) y le avisa a Pacman que debe comerselo.
+	 * @param x Posicion en el eje X donde agregar el PacDot.
+	 * @param y Posicion en el eje Y donde agregar el PacDot.
+	 */
+	public void addPacDotOn(int x,int y){
+		map.getBox(x,y).add(PacDot.getPacDot());
+		pacman.add1ToPacDotsForEating();
+	}
+	/**
+	 * Establece la posicion de PacMan en (x,y).
+	 * @param x Posición en el eje X de Pacman.
+	 * @param y Posicion en el eje Y de Pacman.
+	 */
+	public void addPacmanOn(int x,int y){
+		addActorOn(pacman,x,y);
+	}
+	
+	/**
+	 * Establece la posicion de un fantasma en (x,y) y lo agrega como observador de Pacman.
+	 * @param x Posicion en el eje X del fantasma.
+	 * @param y Posicion en el eje Y del fantasma.
+	 */
+	 
+	public void addGhostOn(Ghost ghost, int x,int y){
+		pacman.addObserver(ghost);
+		addActorOn(ghost,x,y);
+		(new Thread(ghost)).start();
+	}
+	
+	/**
+	 * Agrega una porcion de muro en (x,y)
+	 * @param x Posicion en el eje X del muro.
+	 * @param y Posicion en el eje Y del muro.
+	 */
+	public void addWall(int x,int y){
+		addBlockOn(x, y);
+	}
+	/**
+	 * Liga el mapa con una ventana luego muestra esa ventana.
+	 */
+	public void buildAndOpen(){
+		PCPanel panel=new PCPanel();
+		pacman.addObserver(panel);
+		map.loadBoxes();
+		JFrame frame=map.openInWindow();
+		frame.add(panel, BorderLayout.NORTH);
+		frame.setFocusable(true);
+		frame.setResizable(false);
+		frame.setSize(map.getPreferredSize());
+		frame.addKeyListener(pacman);
+		map.updateUI();
+	}
+	protected void addActorOn(PCActor actor, int x,int y){
+		actor.setInicialBox(map.getBox(x,y));
+		actor.moveTo(map.getBox(x,y));
+	}
+	private void addBlockOn(int x,int y){
+		PCBlock block =new PCBlock(x,y);
+		map.setBox(x,y,block);
+	}
+}

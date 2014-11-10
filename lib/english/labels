@@ -173,6 +173,7 @@ editor.pasteLabel = Paste
 editor.create-getterLabel = Create getter
 editor.create-setterLabel = Create setter
 editor.closeLabel = Close
+editor.detect-codesmellLabel = Detect Code Smell
 editor.page-setupLabel = Page Setup...
 
 # menu labels (MUST be defined)
