@@ -14,10 +14,12 @@ public interface IPkgFrame{
 	public void doOpen();
 	public void doOpenNonBlueJ();
 	public void doClose(boolean keepLastFrame, boolean doSave);
+	public void doSaveProject();
+	public void doSaveAs(IPkgFrame target);
 	public void doImport();
-	
-	public void doPrint();
+	public void doExport();
 	public void doPageSetup();
+	public void doPrint();
 	
 	/*Edit*/
 	public void doCreateNewClass();
@@ -28,11 +30,13 @@ public interface IPkgFrame{
 	public void doNewUses();
 	
 	/*Tools*/
+	public void doCompile();
+	public void compileSelected();
 	public void rebuild(); //Falta mucho aqui!
 	public void restartDebugger(); //Mismo problema anterior!
+	public void callLibraryClass();
 	public void generateProjectDocumentation();
 	public void showPreferences();
-	
 	
 	/*View*/
 	public void updateShowUsesInPackage();
@@ -50,30 +54,29 @@ public interface IPkgFrame{
 	
 	
 	
+	
+	
+	
 	/*
 	
 	
-	public void callLibraryClass();
+	
 	public void doTest();
 	
 	*/
 	
 	/*public void doPushGitHub();
 	public void doNewIssueGitHub();
-		public void doExport();
+	public void doCommitGitHub();	
 	
 	
 	
 	public void doEndTest();
 	public void doDeployMIDlet();
-	public void compileSelected();
+	
 	public void doCancelTest();
-	public void doCommitGitHub();*/
+	*/
 
-	/*Herramientas opcionales*/
-	/*public void updateTestingStatus();
-	public void updateTeamStatus();
-	public void updateJavaMEstatus();*/
 	
 	
 }

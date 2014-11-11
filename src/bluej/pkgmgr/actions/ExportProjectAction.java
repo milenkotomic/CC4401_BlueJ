@@ -47,7 +47,7 @@ final public class ExportProjectAction extends PkgMgrAction
         super("menu.package.export");
     }
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.doExport();

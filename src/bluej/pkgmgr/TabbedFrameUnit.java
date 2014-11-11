@@ -799,6 +799,10 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
    	
     }  
     
+    public void saveProject(){
+    	getProject().saveAll();
+    }
+    
     /**
      * User function "Generate Documentation...".
      */
@@ -864,6 +868,74 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         }
     }
 	
+    public void doSaveAs(TabbedFrameUnit frame)
+    {
+      Project project = getProject();
+        	// get a file name to save under
+        File newName = FileUtility.getDirName(frame,
+                Config.getString("pkgmgr.saveAs.title"),
+                Config.getString("pkgmgr.saveAs.buttonLabel"), false, true);
+
+        if (newName != null) {
+            project.saveAll();
+
+            int result = FileUtility.copyDirectory(project.getProjectDir(),
+                    newName);
+
+            switch (result) {
+            case FileUtility.NO_ERROR:
+                break;
+
+            case FileUtility.DEST_EXISTS_NOT_DIR:
+                DialogManager.showError(frame, "directory-exists-file");
+                return;
+            case FileUtility.DEST_EXISTS_NON_EMPTY:
+                DialogManager.showError(frame, "directory-exists-non-empty");
+                return;
+
+            case FileUtility.SRC_NOT_DIRECTORY:
+            case FileUtility.COPY_ERROR:
+                DialogManager.showError(frame, "cannot-save-project");
+                return;
+            }
+
+            PkgMgrFrame.closeProject(project);
+
+            // open new project
+            Project openProj = Project.openProject(newName.getAbsolutePath(), null);
+
+            if (openProj != null) {
+                Package pkg = openProj.getPackage("");
+                PkgMgrFrame pmf = PkgMgrFrame.createFrame(pkg);
+                pmf.setVisible(true);
+            } else {
+                Debug.message("Save as: could not open package under new name");
+            }
+        }
+    } 
+    
+    public void doCompile(){
+    	getPackage().compile();
+    }
+    
+    public void compileSelected()
+    {
+        Target[] targets = pkg.getSelectedTargets();
+        if (targets.length > 0) {
+            for (int i = 0; i < targets.length; i++) {
+                if (targets[i] instanceof ClassTarget) {
+                    ClassTarget t = (ClassTarget) targets[i];
+
+                    if (t.hasSourceCode())
+                        pkg.compile(t);
+                }
+            }
+        }
+        else {
+            DialogManager.showError(this, "no-class-selected-compile");
+        }
+    }
+    
     /**
      * Add the given set of Java source files as classes to this package.
      */

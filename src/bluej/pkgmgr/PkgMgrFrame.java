@@ -3399,7 +3399,61 @@ public class PkgMgrFrame extends AbstractPkgFrame
             }
         });
     }
+      
+    public void doSaveProject(){
+    	getProject().saveAll();
+    }
     
+    public void doSaveAs(IPkgFrame f)
+    {
+      Project project = getProject();
+      PkgMgrFrame frame = (PkgMgrFrame) f;
+    	// get a file name to save under
+        File newName = FileUtility.getDirName(frame,
+                Config.getString("pkgmgr.saveAs.title"),
+                Config.getString("pkgmgr.saveAs.buttonLabel"), false, true);
+
+        if (newName != null) {
+            project.saveAll();
+
+            int result = FileUtility.copyDirectory(project.getProjectDir(),
+                    newName);
+
+            switch (result) {
+            case FileUtility.NO_ERROR:
+                break;
+
+            case FileUtility.DEST_EXISTS_NOT_DIR:
+                DialogManager.showError(frame, "directory-exists-file");
+                return;
+            case FileUtility.DEST_EXISTS_NON_EMPTY:
+                DialogManager.showError(frame, "directory-exists-non-empty");
+                return;
+
+            case FileUtility.SRC_NOT_DIRECTORY:
+            case FileUtility.COPY_ERROR:
+                DialogManager.showError(frame, "cannot-save-project");
+                return;
+            }
+
+            PkgMgrFrame.closeProject(project);
+
+            // open new project
+            Project openProj = Project.openProject(newName.getAbsolutePath(), null);
+
+            if (openProj != null) {
+                Package pkg = openProj.getPackage("");
+                PkgMgrFrame pmf = PkgMgrFrame.createFrame(pkg);
+                pmf.setVisible(true);
+            } else {
+                Debug.message("Save as: could not open package under new name");
+            }
+        }
+    }
+    
+    public void doCompile(){
+    	getPackage().compile();
+    }
     /**
      * Moves focus from given pane to prev (-1)/next (+1) pane.
      */

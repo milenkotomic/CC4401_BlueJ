@@ -26,6 +26,8 @@ import javax.swing.JTabbedPane;
 import bluej.BlueJEvent;
 import bluej.BlueJTheme;
 import bluej.Config;
+import bluej.debugmgr.LibraryCallDialog;
+import bluej.debugmgr.LibraryCallDialogTFU;
 import bluej.extmgr.MenuManager;
 import bluej.pkgmgr.PkgMgrFrame.ProjectOpener;
 import bluej.prefmgr.PrefMgr;
@@ -631,16 +633,31 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        recentFrame.importProjectDir(importDir, true);
    }
    
-   private ExportManager exporter = null;
+   private ExportManagerTFU exporter = null;
    /**
     * Implementation of the "Export" user function
     */
    public void doExport()
-   {
-       if (exporter == null) {
-          // exporter = new ExportManager(this);
-       }
-       exporter.export();
+   {  
+	   exporter = new ExportManagerTFU(recentFrame);
+	   exporter.export();
+	   setStatus(Config.getString("pkgmgr.exported.jar"));
+   }
+   
+   public void doSaveProject(){
+   		recentFrame.saveProject();
+   }
+   
+   public void doSaveAs(IPkgFrame target){
+	   recentFrame.doSaveAs(recentFrame);
+   }
+   
+   public void doCompile(){
+	   recentFrame.doCompile();
+   }
+   
+   public void compileSelected(){
+	   recentFrame.compileSelected();
    }
    
    public void rebuild(){
@@ -654,6 +671,15 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
    public void restartDebugger(){
 	   recentFrame.restartDebugger();
    }
+   
+   private LibraryCallDialogTFU libraryCallDialog = null;
+  
+   public void callLibraryClass()
+   {
+       libraryCallDialog = new LibraryCallDialogTFU(recentFrame);
+       libraryCallDialog.setVisible(true);
+   }
+   
    /**
     * Display a message in the status bar of the frame
     */
@@ -667,8 +693,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        });
        
    }
-   
-   
+      
 	class ProjectOpener implements ActionListener{
 	
 		public ProjectOpener()
