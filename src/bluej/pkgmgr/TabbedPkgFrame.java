@@ -22,6 +22,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import bluej.BlueJEvent;
 import bluej.BlueJTheme;
@@ -62,6 +64,14 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		testMenu = new PkgFrameTestingMenu();
 		
 		jtp = new JTabbedPane();
+		jtp.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	            int index = jtp.getSelectedIndex();
+	            TabbedFrameUnit tfu = findTFUbyIndex(index);
+	            recentFrame = tfu;
+	        }
+	    });
+				
 		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
 		
 		recentFrame = new TabbedFrameUnit();
@@ -136,8 +146,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	     }	 
 		 return null;
 	}
-	
-	
+		
 	 /**
      * Called on (almost) every menu invocation to clean up.
      */
@@ -192,7 +201,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
      */
     private void updateWindow()
     {
-        recentFrame.updateWindow();
+    	updateWindowTitle(recentFrame);
+    	recentFrame.updateWindow();
       
     }
   
@@ -317,6 +327,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
             
             if (recentFrame.isEmptyFrame()) {
                 recentFrame.openPackage(unNamedPkg);
+                updateWindowTitle(recentFrame);
             }
             else {
                 TabbedFrameUnit pmf = createFrame(unNamedPkg);
@@ -443,18 +454,28 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
                if (recentFrame.isEmptyFrame()) {
                    pmf = recentFrame;
                    pmf.openPackage(initialPkg);
-               }
+                   updateWindowTitle(pmf);
+              }
                else {
                    pmf = createFrame(initialPkg);
                    DialogManager.tileWindow(pmf, this);
                }
            }
 
-           //pmf.setVisible(true);
-
            return true;
        }
    }
+   
+   /**
+    * Set the window title to show the current package name.
+    */
+   private void updateWindowTitle(TabbedFrameUnit tfu)
+   {
+       String title = tfu.getTabTitle();
+       int index = jtp.indexOfComponent(tfu.getTab());
+       jtp.setTitleAt(index, title);
+       
+   }  
    
    /**
     * Open a dialog that lets the user choose a project. The project selected
@@ -500,7 +521,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
            // Close newly created frame if it was never used.
            closeFrame(pmf);
        }
-       
+      
       return openedProject;
    }
    

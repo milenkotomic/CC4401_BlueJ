@@ -794,10 +794,25 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     		classScroller.setViewportView(noProjectMessagePanel);
     		repaint();
     	}	
-    	
-    	//updateWindowTitle();
    	
     }  
+    protected String getTabTitle(){
+    	
+    	if (isEmptyFrame()) {
+    		 return "BlueJ";
+    	}
+    	else {
+    		String title = Config.getString("pkgmgr.title") + getProject().getProjectName();
+
+    		if (!getPackage().isUnnamedPackage())
+    			title = title + "  [" + getPackage().getQualifiedName() + "]";
+
+    		if(getProject().isTeamProject())
+    			title = title + " (" + Config.getString("team.project.marker") + ")";
+
+    		return title;
+    	}
+    } 
     
     public void saveProject(){
     	getProject().saveAll();
