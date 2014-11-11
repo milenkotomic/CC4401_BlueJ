@@ -68,7 +68,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
-	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp));
+	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp,this));
 		
 		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
         setupMenu();
@@ -110,6 +110,33 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		return tfu;
 
 	}
+	
+	protected void removeFrame(int index){	
+		
+        if (index != -1) {
+        	if(frameCount() != 1){
+        			closeFrame(findTFUbyIndex(index));
+        			jtp.remove(index);     	
+        	}
+        	else{
+        		doClose(false,true);
+        	}
+        
+        }
+		
+	}
+	
+	private TabbedFrameUnit findTFUbyIndex(int index){
+		 for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+	            TabbedFrameUnit pmf = i.next();
+
+	            int k = jtp.indexOfComponent(pmf.getTab());
+	            if (k == index)
+	                return pmf;
+	     }	 
+		 return null;
+	}
+	
 	
 	 /**
      * Called on (almost) every menu invocation to clean up.
@@ -168,26 +195,16 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         recentFrame.updateWindow();
       
     }
-    
-       
-    
-    /**
-     * Remove a frame from the set of currently open PkgMgrFrames. The
-     * PkgMgrFrame must not be editing a package when this function is called.
-     */
+  
     public static void closeFrame(TabbedFrameUnit frame)
     {
-        if (!frame.isEmptyFrame())
-            throw new IllegalArgumentException();
+    	if(frame != null){
+	   		pkgTabs.remove(frame);
+	
+	        BlueJEvent.removeListener(frame);
+	        PrefMgr.setFlag(PrefMgr.SHOW_TEXT_EVAL, frame.isTextEvalVisible());
+    	}    
 
-        pkgTabs.remove(frame);
-
-        BlueJEvent.removeListener(frame);
-        PrefMgr.setFlag(PrefMgr.SHOW_TEXT_EVAL, frame.isTextEvalVisible());
-
-        // frame should be garbage collected but we will speed it
-        // on its way
-        //pkgTabs.dispose();
     }
            
     /*ACTIONS*/
@@ -205,7 +222,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         pkgTabs.add(newTab);
 		        
 		jtp.addTab("BlueJ", newTab.getTab());
-		jtp.setTabComponentAt(jtp.indexOfComponent(newTab.getTab()), new ButtonTabComponent(jtp));
+		jtp.setTabComponentAt(jtp.indexOfComponent(newTab.getTab()), new ButtonTabComponent(jtp,this));
 	}
     public void doOpenWindow(){
     	TabbedPkgFrame frame = new TabbedPkgFrame();

@@ -147,7 +147,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	public JPanel getTab(){
 		return tabWindow;
 	}
-	
+
 	public boolean isTextEvalVisible(){
 		return text.isTextEvalVisible();
 	}

@@ -21,7 +21,7 @@
  */
 package bluej.pkgmgr.actions;
 
-import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.IPkgFrame;
 
 /**
  * "Use library class" command. Allow the user to instantiate an object
@@ -47,7 +47,7 @@ public class UseLibraryAction extends PkgMgrAction {
     }
     
     
-    public void actionPerformed(PkgMgrFrame pmf)
+    public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
         pmf.callLibraryClass();

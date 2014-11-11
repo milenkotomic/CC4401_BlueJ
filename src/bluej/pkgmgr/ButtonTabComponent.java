@@ -9,14 +9,16 @@ import java.awt.event.*;
 /** Tab title with close button to be used in tabbedpanes. */ 
 public class ButtonTabComponent extends JPanel {
     private final JTabbedPane pane;
+    private final TabbedPkgFrame frame;
 
-    public ButtonTabComponent(final JTabbedPane pane) {
+    public ButtonTabComponent(final JTabbedPane pane, final TabbedPkgFrame frame) {
         
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
         if (pane == null) {
             throw new NullPointerException("TabbedPane is null");
         }
         this.pane = pane;
+        this.frame = frame;
         setOpaque(false);
         
        JLabel label = new JLabel() {
@@ -58,10 +60,7 @@ public class ButtonTabComponent extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            int i = pane.indexOfTabComponent(ButtonTabComponent.this);
-            if (i != -1) {
-                pane.remove(i);
-            }
+            frame.removeFrame(pane.indexOfTabComponent(ButtonTabComponent.this));
         }
 
         public void updateUI() {
