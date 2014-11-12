@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -23,12 +22,10 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -36,27 +33,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
 
 import bluej.BlueJEventListener;
 import bluej.BlueJTheme;
 import bluej.Config;
 import bluej.collect.DataCollector;
 import bluej.debugmgr.ObjectBenchTFU;
-import bluej.debugmgr.objectbench.ObjectBench;
+import bluej.debugmgr.texteval.TextEvalAreaTFU;
 import bluej.extmgr.ExtensionsManager;
 import bluej.extmgr.MenuManager;
-import bluej.extmgr.ToolsExtensionMenu;
-import bluej.extmgr.ViewExtensionMenu;
 import bluej.groupwork.ui.ActivityIndicator;
 import bluej.pkgmgr.actions.AddClassAction;
-import bluej.pkgmgr.actions.CancelTestRecordAction;
 import bluej.pkgmgr.actions.CloseProjectAction;
 import bluej.pkgmgr.actions.CompileAction;
 import bluej.pkgmgr.actions.CompileSelectedAction;
-import bluej.pkgmgr.actions.EndTestRecordAction;
 import bluej.pkgmgr.actions.ExportProjectAction;
 import bluej.pkgmgr.actions.GenerateDocsAction;
 import bluej.pkgmgr.actions.ImportProjectAction;
@@ -89,13 +80,12 @@ import bluej.utility.DialogManager;
 import bluej.utility.FileUtility;
 import bluej.utility.GradientFillPanel;
 import bluej.utility.JavaNames;
-import bluej.utility.Utility;
 
 public class TabbedFrameUnit extends JFrame implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
 	private Package pkg = null;
 	protected JPanel tabWindow;
 		
-	private TextEvaluatorMgr text = new TextEvaluatorMgr(); 
+	private TextEvaluatorMgr text = null;
 	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
 	private PkgFrameJavaME javaME = new PkgFrameJavaME();
 	private PkgFrameLeftPanel leftPanel = new PkgFrameLeftPanel();
@@ -123,6 +113,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		setupActionDisableSet();
 		itemsToDisable = new ArrayList<JComponent>();
 		objbench = new ObjectBenchTFU(this);
+		text = new TextEvaluatorMgr(new TextEvalAreaTFU(this,pkgMgrFont),objbench);
 				
 		makeFrame();
 		//editor = new PackageEditor(pkg, this, this);
@@ -151,6 +142,21 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	public boolean isTextEvalVisible(){
 		return text.isTextEvalVisible();
 	}
+
+	public void showHideTextEval(boolean show){
+		boolean b = text.showHideTextEval(show);
+		if(b)
+			editor.requestFocus();
+	}
+	
+	public void clearTextEval(){
+		text.clearTextEval();
+	}
+	
+	public ObjectBenchTFU getObjectBench()
+	{
+		return objbench;
+	}
 	
 	protected void makeFrame(){
 		setFont(pkgMgrFont);
@@ -171,8 +177,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         
         /*Panel para las opciones de testeo, en general, desactivadas por defecto*/
         JPanel testPanel = test.createTestingPanel(false);    
-        
-        
+                
         /*Panel para actividades asociadas a un paquete java ME*/
         JPanel javaMEPanel = javaME.createJavaMEPanel();    
                 
@@ -236,13 +241,19 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         	//javaME.showJavaMEtools(false);
         //}
             
-        javaMEPanel.setVisible(false);          
+        javaMEPanel.setVisible(false); 
+        textEvalConfig();
         
 	}
 	
-	
-	
-	
+	private void textEvalConfig(){
+		if (PrefMgr.getFlag(PrefMgr.SHOW_TEXT_EVAL)) {
+			classScroller.setPreferredSize(classScroller.getSize()); 
+			itemsToDisable.add(text.getTextEval());
+			addCtrlTabShortcut(text.getTextEval().getFocusableComponent());
+			splitPane.setBottomComponent(text.addTextEvaluatorPane());
+		}
+	}
 	
 	private void configureClassScroller(){
 		

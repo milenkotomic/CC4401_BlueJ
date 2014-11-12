@@ -32,7 +32,7 @@ public interface IPkgFrame{
 	/*Tools*/
 	public void doCompile();
 	public void compileSelected();
-	public void rebuild(); //Falta mucho aqui!
+	public void rebuild(); 
 	public void restartDebugger(); //Mismo problema anterior!
 	public void callLibraryClass();
 	public void generateProjectDocumentation();
@@ -50,6 +50,11 @@ public interface IPkgFrame{
 	/*Windows*/
 	public void doOpenTab();
 	public void doOpenWindow();
+	
+	
+	/*Text Evaluator Functions*/
+	public boolean isTextEvalVisible();
+	public void showHideTextEval(boolean b);
 	
 	
 	

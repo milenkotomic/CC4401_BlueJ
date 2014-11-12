@@ -731,7 +731,65 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        });
        
    }
-      
+    
+   public static TabbedFrameUnit[] getAllProjectFrames(Project proj)
+   {
+       return getAllProjectFrames(proj, "");
+   }
+
+   /**
+    * Find all PkgMgrFrames which are currently editing a particular project,
+    * and which are below a certain point in the package heirarchy.
+    * 
+    * @param proj
+    *            the project whose packages to look for
+    * @param pkgPrefix
+    *            the package name of a package to look for it and all its
+    *            children ie if passed java.lang we would return frames for
+    *            java.lang, and java.lang.reflect if they exist
+    * 
+    * @return an array of open PkgMgrFrame objects which are currently editing
+    *         a package from this project and which have the package prefix
+    *         specified, or null if none exist
+    */
+   public static TabbedFrameUnit[] getAllProjectFrames(Project proj, String pkgPrefix)
+   {
+       List<TabbedFrameUnit> list = new ArrayList<TabbedFrameUnit>();
+       String pkgPrefixWithDot = pkgPrefix + ".";
+
+       for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+           TabbedFrameUnit pmf = i.next();
+
+           if (!pmf.isEmptyFrame() && pmf.getProject() == proj) {
+
+               String fullName = pmf.getPackage().getQualifiedName();
+
+               // we either match against the package prefix with a
+               // dot added (this stops false matches against similarly
+               // named package ie java.lang and java.language) or we
+               // match the full name against the package prefix
+               if (fullName.startsWith(pkgPrefixWithDot))
+                   list.add(pmf);
+               else if (fullName.equals(pkgPrefix) || (pkgPrefix.length() == 0))
+                   list.add(pmf);
+           }
+       }
+
+       if (list.isEmpty())
+           return null;
+
+       return list.toArray(new TabbedFrameUnit[list.size()]);
+   }
+  
+	public boolean isTextEvalVisible() {
+		return recentFrame.isTextEvalVisible();
+	}
+
+	public void showHideTextEval(boolean b) {
+		recentFrame.showHideTextEval(b);
+		
+	}
+   
 	class ProjectOpener implements ActionListener{
 	
 		public ProjectOpener()
@@ -745,6 +803,9 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		           setStatus(Config.getString("pkgmgr.error.open"));
 		   }
 	}
+
+
+	
     
 }
 
