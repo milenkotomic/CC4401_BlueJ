@@ -124,13 +124,10 @@ public class PkgFrameTeamMenu extends AbstractPkgMenu {
 		teamActions.setAllDisabled();
 	}
 	
-	
-    
     /**
      * Show or hide the teamwork tools.
      */
-    public void showTeamTools(boolean show)
-    {
+    public void showTeamTools(boolean show){
         for (Iterator<JComponent> it = teamItems.iterator(); it.hasNext();) {
             JComponent component = it.next();
             component.setVisible(show);

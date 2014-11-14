@@ -43,6 +43,7 @@ import bluej.BlueJTheme;
 import bluej.Config;
 import bluej.collect.DataCollector;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedPkgFrame;
 
 /**
  * A PrefPanel subclass to allow the user to interactively edit
@@ -314,6 +315,10 @@ public class MiscPrefPanel extends JPanel
             PkgMgrFrame.updateTestingStatus();
             PkgMgrFrame.updateTeamStatus();
             PkgMgrFrame.updateJavaMEstatus(); 
+            
+            TabbedPkgFrame.updateTestingStatus();
+            TabbedPkgFrame.updateTeamStatus();
+            TabbedPkgFrame.updateJavaMEstatus();
             
             DataCollector.setExperimentIdentifier(experimentIdentifierField.getText());
             DataCollector.setParticipantIdentifier(participantIdentifierField.getText());

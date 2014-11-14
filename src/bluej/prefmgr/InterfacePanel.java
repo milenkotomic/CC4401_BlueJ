@@ -252,8 +252,7 @@ public class InterfacePanel extends JPanel
             TabbedPkgFrame.updateTestingStatus();
             TabbedPkgFrame.updateTeamStatus();
             TabbedPkgFrame.updateJavaMEstatus(); 
-            
-            
+                        
             String tkDir = toolkitDirField.getText(); 
             if (! tkDir.equals( "" )) {
                 Config.putPropString(toolkitDir, tkDir);

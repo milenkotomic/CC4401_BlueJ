@@ -48,7 +48,6 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
         
 	public void initTestingMenu(JMenu menu){
 	
-		System.out.print("holi");
 		createMenuItem(RunTestsAction.getInstance(), testingMenu);
 		endTestMenuItem = createMenuItem(EndTestRecordAction.getInstance(), testingMenu);
 		cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);

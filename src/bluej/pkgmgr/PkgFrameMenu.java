@@ -150,7 +150,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		}
 	}
 	
-	protected void setupToolMenu(PkgFrameTestingMenu test){
+	protected void setupToolMenu(PkgFrameTestingMenu test,PkgFrameTeamMenu team){
 		menubar.add(ToolMenu);
 		createMenuItem(CompileAction.getInstance(), ToolMenu);
 		createMenuItem(CompileSelectedAction.getInstance(), ToolMenu);
@@ -162,6 +162,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		createMenuItem(GenerateDocsAction.getInstance(), ToolMenu);
 
 		test.initTestingMenu(ToolMenu);	
+		team.initTeamMenu(ToolMenu);
 		if (!Config.usingMacScreenMenubar()) { // no "Preferences" here for
 			// Mac
 			ToolMenu.addSeparator();
@@ -170,7 +171,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		
 	}
 	
-	protected void setupViewMenu(){
+	protected void setupViewMenu(PkgFrameTestingMenu test){
 		JMenu menu = new JMenu(Config.getString("menu.view"));
 		menu.setMnemonic(Config.getMnemonicKey("menu.view"));
 		menubar.add(menu);
@@ -181,6 +182,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		createCheckboxMenuItem(ShowDebuggerAction.getInstance(), menu, false);
 		createCheckboxMenuItem(ShowTerminalAction.getInstance(), menu, false);
 		createCheckboxMenuItem(ShowTextEvalAction.getInstance(), menu, false);
+		test.initViewTestingMenu(menu);
 	}
 	
 	protected JMenu setupHelpMenu(){

@@ -89,7 +89,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	private PkgFrameTestingMenu test;
 	private PkgFrameJavaME javaME;
 	private PkgFrameLeftPanel leftPanel = new PkgFrameLeftPanel();
-	private PkgFrameTeamMenu team = new PkgFrameTeamMenu();
+	private PkgFrameTeamMenu team;
 	
 	private static boolean testToolsShown;
 	private static boolean teamToolsShown;
@@ -110,11 +110,12 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     private List<Action> actionsToDisable;
     
     
-	public TabbedFrameUnit(PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME){
+	public TabbedFrameUnit(PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team){
 		tabWindow = new JPanel();
 		this.menuMgr = menuMgr; 
 		this.test = test;
 		this.javaME = javaME;
+		this.team = team;
 		
 		setupActionDisableSet();
 		itemsToDisable = new ArrayList<JComponent>();
@@ -129,11 +130,10 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 				
 	}
 	
-	public TabbedFrameUnit(Package p){
-		pkg = p;
-		tabWindow = new JPanel();
-				
-		editor = new PackageEditor(pkg, this, this);
+	public TabbedFrameUnit(Package p,PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team){
+		this(menuMgr,test,javaME,team);
+		pkg = p;		
+		
 	}
 	
 	public boolean isEmptyFrame(){
@@ -171,6 +171,17 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		return objbench;
 	}
 	
+	protected void updateTestShow(){
+		testToolsShown = test.wantToSeeTestingTools();
+	}
+	
+	protected void updateTeamShow(){
+		teamToolsShown = team.wantToSeeTeamTools();
+	}
+	
+	protected void updateJavaMEShow(){
+		javaMEtoolsShown = javaME.wantToSeeJavaMEtools();
+	}
 	protected void makeFrame(){
 		setFont(pkgMgrFont);
 		setContentPane(new GradientFillPanel(getContentPane().getLayout()));
@@ -293,7 +304,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
      */
     protected void enableFunctions(boolean enable)
     {
-        if (! enable) {
+        if (!enable) {
             team.setAllDisabled();
         }
         
@@ -983,32 +994,22 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     }
     
     public void updateTestingStatus(){
-    	if (testToolsShown != test.wantToSeeTestingTools()) {
-    		//Testing tools are always hidden in Java ME packages.  
-            if (isJavaMEpackage()) {
-         	   test.showTestingTools(false);
-            }
-            else {
-                test.showTestingTools(!testToolsShown);               
-            }
-           
-    	   	testToolsShown = !testToolsShown;
-    	}   	
-    }
+    	//Testing tools are always hidden in Java ME packages.  
+    	if (isJavaMEpackage()) {
+    		test.showTestingTools(false);
+    	}
+    	else {
+    		test.showTestingTools(testToolsShown);               
+    	}	
+   }
       
-    public void updateTeamStatus(){
-        if (teamToolsShown != team.wantToSeeTeamTools()) {
-        	team.showTeamTools(!teamToolsShown);
-        	teamToolsShown = !teamToolsShown;
-        }
+    public void updateTeamStatus(){ 	
+    	team.showTeamTools(teamToolsShown);
    }
    
-    public void updateJavaMEstatus()
-    {
-        if ( javaMEtoolsShown != javaME.wantToSeeJavaMEtools() )  {
-        	javaME.showJavaMEtools(!javaMEtoolsShown );
-        	javaMEtoolsShown = !javaMEtoolsShown;
-        }
+    public void updateJavaMEstatus(){
+    	javaME.showJavaMEtools(javaMEtoolsShown);
+      
     } 
     
     /**

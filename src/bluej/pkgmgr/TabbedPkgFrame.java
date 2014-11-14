@@ -1,22 +1,16 @@
 package bluej.pkgmgr;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -29,12 +23,9 @@ import javax.swing.event.ChangeListener;
 import bluej.BlueJEvent;
 import bluej.BlueJTheme;
 import bluej.Config;
-import bluej.debugmgr.LibraryCallDialog;
 import bluej.debugmgr.LibraryCallDialogTFU;
 import bluej.extmgr.MenuManager;
 import bluej.extmgr.ToolsExtensionMenu;
-import bluej.pkgmgr.PkgMgrFrame.ProjectOpener;
-import bluej.pkgmgr.PkgMgrFrame.URLDisplayer;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.Debug;
@@ -54,7 +45,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	/*Variables comunes a todas las pestanas, se deben entregar como parametro*/
 	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
 	private PkgFrameJavaME javaME = new PkgFrameJavaME();
-	
+	private PkgFrameTeamMenu team = new PkgFrameTeamMenu();
+		
 	private static List<TabbedFrameUnit> pkgTabs = new ArrayList<TabbedFrameUnit>();
 	protected TabbedFrameUnit recentFrame = null;
 	
@@ -78,7 +70,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));   
 		setupMenu();
 		
-		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME);
+		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME,team);
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
@@ -120,8 +112,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 
 		menuMgr.setupPackageMenu(javaME,recentProjectsMenu);
 		menuMgr.setupEditMenu();
-		menuMgr.setupToolMenu(test);
-		menuMgr.setupViewMenu();
+		menuMgr.setupToolMenu(test,team);
+		menuMgr.setupViewMenu(test);
 		JMenu HelpMenu = menuMgr.setupHelpMenu();
 		
 		addUserHelpItems(HelpMenu);
@@ -159,14 +151,14 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 
 	
 	public TabbedFrameUnit createFrame(Package pkg){
-		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg);
+		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg,menuMgr,test,javaME,team);
 				
 		pkgTabs.add(tfu);
 		return tfu;
 	}
 	
 	public TabbedFrameUnit createFrame(){
-		TabbedFrameUnit tfu = new TabbedFrameUnit(menuMgr,test,javaME);
+		TabbedFrameUnit tfu = new TabbedFrameUnit(menuMgr,test,javaME,team);
 		
 		pkgTabs.add(tfu);	
 		return tfu;
@@ -280,7 +272,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
     }
     
     public void doOpenTab(){
-		TabbedFrameUnit newTab = new TabbedFrameUnit(menuMgr,test,javaME);
+		TabbedFrameUnit newTab = new TabbedFrameUnit(menuMgr,test,javaME,team);
         pkgTabs.add(newTab);
 		        
 		jtp.addTab("BlueJ", newTab.getTab());
@@ -472,6 +464,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
   	public static void updateTestingStatus(){
 		for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
 			TabbedFrameUnit pmf = i.next();
+			pmf.updateTestShow();
 			pmf.updateTestingStatus();
        }
 	}
@@ -483,6 +476,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
    public static void updateTeamStatus(){
 	   for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
 		   TabbedFrameUnit pmf = i.next();
+		   pmf.updateTeamShow();
 		   pmf.updateTeamStatus();
 	   }
    }
@@ -494,6 +488,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
    public static void updateJavaMEstatus(){
 	   for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
 		   TabbedFrameUnit tfu = i.next();            
+		   tfu.updateJavaMEShow();
 		   tfu.updateJavaMEstatus();
 	   }
    }
