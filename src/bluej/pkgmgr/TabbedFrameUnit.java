@@ -89,15 +89,13 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
 	private PkgFrameJavaME javaME = new PkgFrameJavaME();
 	private PkgFrameLeftPanel leftPanel = new PkgFrameLeftPanel();
+	private PkgFrameTeamMenu team = new PkgFrameTeamMenu();
 	
 	private JScrollPane classScroller = null;
 	private NoProjectMessagePanel noProjectMessagePanel = new NoProjectMessagePanel();
 	private PackageEditor editor = null;
 	private ObjectBenchTFU objbench;
-	
-	private MenuManager toolsMenuManager;
-    private MenuManager viewMenuManager;
-	
+		
     /*Conservar para primeras pruebas*/   
     static final int DEFAULT_WIDTH = 560;
     static final int DEFAULT_HEIGHT = 400;
@@ -114,7 +112,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		itemsToDisable = new ArrayList<JComponent>();
 		objbench = new ObjectBenchTFU(this);
 		text = new TextEvaluatorMgr(new TextEvalAreaTFU(this,pkgMgrFont),objbench);
-				
+			
 		makeFrame();
 		//editor = new PackageEditor(pkg, this, this);
 		
@@ -129,6 +127,10 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	
 	public boolean isEmptyFrame(){
 		return pkg == null;		
+	}
+	
+	public Package getPkg(){
+		return pkg;
 	}
 	
 	public void setState(){
@@ -180,16 +182,19 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
                 
         /*Panel para actividades asociadas a un paquete java ME*/
         JPanel javaMEPanel = javaME.createJavaMEPanel();    
-                
+        
+        /*Panel para actividades asociadas a team*/
+        JPanel teamPanel = team.createTeamPanel();
+        
         /*Machine icon: Indicador de actividad tipo "barbero"*/
         machineIcon = new MachineIcon();
         machineIcon.setAlignmentX(0.5f);
-        //itemsToDisable.add(machineIcon);
+        itemsToDisable.add(machineIcon);
         
         toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.Y_AXIS));
         toolPanel.add(buttonPanel);
         toolPanel.add(Box.createVerticalGlue());
-        //toolPanel.add(teamPanel);
+        toolPanel.add(teamPanel);
         toolPanel.add(javaMEPanel);
         toolPanel.add(testPanel);
         toolPanel.add(machineIcon);
@@ -215,16 +220,15 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         statusbar.setFont(pkgMgrFont);
         statusArea.add(statusbar, BorderLayout.CENTER);
 
-        JLabel testStatusMessage = new JLabel(" ");
-        testStatusMessage.setFont(pkgMgrFont);
-        statusArea.add(testStatusMessage, BorderLayout.WEST);
+        test.setFont(pkgMgrFont);	
+        statusArea.add(test.getStatusMessage(), BorderLayout.WEST);
 
         ActivityIndicator progressbar = new ActivityIndicator();
         progressbar.setRunning(false);
         statusArea.add(progressbar, BorderLayout.EAST);
         
         contentPane.add(statusArea, BorderLayout.SOUTH);
-        
+                
         tabWindow.add(mainPanel);
         tabWindow.add(contentPane);
         
@@ -273,9 +277,9 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
      */
     protected void enableFunctions(boolean enable)
     {
-        /*if (! enable) {
-            teamActions.setAllDisabled();
-        }*/
+        if (! enable) {
+            team.setAllDisabled();
+        }
         
         for (Iterator<JComponent> it = itemsToDisable.iterator(); it.hasNext();) {
             JComponent component = it.next();
@@ -847,7 +851,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     {
         if (!isEmptyFrame())
         {
-            getProject().restartVM();
+        	getProject().restartVM();
             DataCollector.restartVM(getProject());
         }
     }

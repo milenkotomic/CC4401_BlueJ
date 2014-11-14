@@ -31,6 +31,7 @@ import bluej.Config;
 import bluej.debugmgr.LibraryCallDialog;
 import bluej.debugmgr.LibraryCallDialogTFU;
 import bluej.extmgr.MenuManager;
+import bluej.extmgr.ToolsExtensionMenu;
 import bluej.pkgmgr.PkgMgrFrame.ProjectOpener;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
@@ -73,18 +74,23 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	    });
 				
 		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
+		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));   
+		setupMenu();
 		
 		recentFrame = new TabbedFrameUnit();
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
 	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp,this));
-		
-		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
-        setupMenu();
-        
+				     
         testToolsShown = testMenu.wantToSeeTestingTools();
   
+        toolsMenuManager = new MenuManager(menuMgr.getMenuPopUp());
+        if (frameCount() <= 1) {
+            toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(null));
+            toolsMenuManager.addExtensionMenu(null);
+        }
+        
 	}
 
 	private void setupWindow(){
@@ -103,7 +109,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		JMenuBar menubar = new JMenuBar();
 		setJMenuBar(menubar);
 		
-		menuMgr.setupMenu(menubar,recentProjectsMenu);
+		menuMgr.setupMenu(menubar,recentProjectsMenu,testMenu);
 	}
 
 	public TabbedFrameUnit createFrame(Package pkg){
@@ -359,10 +365,11 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         if (frameCount() == 1) {
             if (keepLastFrame) {
                 recentFrame.testRecordingEnded(); // disable test controls
+                toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(recentFrame.getPackage()));
                 recentFrame.closePackage();
                 
                 updateRecentProjects();
-                menuMgr.enableFunctions(false); // changes menu items
+                recentFrame.enableFunctions(false); // changes menu items
                 updateWindow();
                 toolsMenuManager.addExtensionMenu(null);
                 viewMenuManager.addExtensionMenu(null);
@@ -454,6 +461,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
                if (recentFrame.isEmptyFrame()) {
                    pmf = recentFrame;
                    pmf.openPackage(initialPkg);
+                   toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pmf.getPackage()));
+                   toolsMenuManager.addExtensionMenu(pmf.getProject());              
                    updateWindowTitle(pmf);
               }
                else {

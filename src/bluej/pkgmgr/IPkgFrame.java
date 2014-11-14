@@ -33,7 +33,7 @@ public interface IPkgFrame{
 	public void doCompile();
 	public void compileSelected();
 	public void rebuild(); 
-	public void restartDebugger(); //Mismo problema anterior!
+	public void restartDebugger(); 
 	public void callLibraryClass();
 	public void generateProjectDocumentation();
 	public void showPreferences();

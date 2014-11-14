@@ -1,5 +1,6 @@
 package bluej.pkgmgr;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,7 @@ import bluej.prefmgr.PrefMgr;
 
 public class PkgFrameTestingMenu extends AbstractPkgMenu{
 
-	private JLabel testStatusMessage;
+	private JLabel testStatusMessage = new JLabel(" ");
     private JLabel recordingLabel;
     private AbstractButton endTestButton;
     private AbstractButton cancelTestButton;
@@ -37,22 +38,33 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
     private AbstractButton runButton;
     
     public PkgFrameTestingMenu(){
-    	
+    	testingMenu = new JMenu(Config.getString("menu.tools.testing"));
+		testingMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
+	
     }
         
 	public void initTestingMenu(JMenu menu){
 	
+		System.out.print("holi");
 		createMenuItem(RunTestsAction.getInstance(), testingMenu);
 		endTestMenuItem = createMenuItem(EndTestRecordAction.getInstance(), testingMenu);
-	    cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);
+		cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);
 	    endTestMenuItem.setEnabled(false);
-	    cancelTestMenuItem.setEnabled(false);
+	    cancelTestMenuItem.setEnabled(false); 
 
 		testItems.add(testingMenu);
 		menu.add(testingMenu);
 		
 	}
 
+	public JLabel getStatusMessage(){
+		return testStatusMessage;
+	}
+	
+	public void setFont(Font pkgMgrFont){
+		testStatusMessage.setFont(pkgMgrFont);
+	}
+	
     /**
      * Tell whether unit testing tools should be shown.
      */
@@ -119,7 +131,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(runButton);
 		 testPanel.add(Box.createVerticalStrut(8));
 
-		 JLabel recordingLabel = new JLabel(Config.getString("pkgmgr.test.record"), Config
+		 recordingLabel = new JLabel(Config.getString("pkgmgr.test.record"), Config
 				 .getFixedImageAsIcon("record.gif"), SwingConstants.LEADING);
 		 //recordingLabel.setFont(pkgMgrFont);
 		 recordingLabel.setEnabled(visible);
@@ -127,8 +139,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(recordingLabel);
 		 testPanel.add(Box.createVerticalStrut(3));
 
-		 Action action = EndTestRecordAction.getInstance();
-		 AbstractButton endTestButton = createButton(action, false, false, 2, 4);
+		 endTestButton = createButton(EndTestRecordAction.getInstance(), false, false, 2, 4);
 		 //make the button use a different label than the one from
 		 // action
 		 endTestButton.setText(Config.getString("pkgmgr.test.end"));
@@ -137,8 +148,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(endTestButton);
 		 if(!Config.isMacOSLeopard()) testPanel.add(Box.createVerticalStrut(3));
 
-		 action = CancelTestRecordAction.getInstance();
-		 AbstractButton cancelTestButton = createButton(action, false, false, 2, 4);
+		 cancelTestButton = createButton(CancelTestRecordAction.getInstance(), false, false, 2, 4);
 		 //make the button use a different label than the one from
 		 // action
 		 cancelTestButton.setText(Config.getString("cancel"));

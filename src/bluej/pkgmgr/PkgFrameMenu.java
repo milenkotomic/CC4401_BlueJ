@@ -2,16 +2,15 @@ package bluej.pkgmgr;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.Action;
 
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
@@ -54,7 +53,6 @@ import bluej.pkgmgr.actions.QuitAction;
 import bluej.pkgmgr.actions.RebuildAction;
 import bluej.pkgmgr.actions.RemoveAction;
 import bluej.pkgmgr.actions.RestartVMAction;
-import bluej.pkgmgr.actions.RunTestsAction;
 import bluej.pkgmgr.actions.SaveProjectAction;
 import bluej.pkgmgr.actions.SaveProjectAsAction;
 import bluej.pkgmgr.actions.ShowCopyrightAction;
@@ -78,18 +76,23 @@ public class PkgFrameMenu extends AbstractPkgMenu {
     private JMenuItem javaMEdeployMenuItem;
     private JCheckBoxMenuItem showUsesMenuItem;
     private JCheckBoxMenuItem showExtendsMenuItem;
-    private JMenu testingMenu;
     
+    private JMenu menu;
+        
 	public PkgFrameMenu(){
 		 
 	}
 	
+	public JPopupMenu getMenuPopUp(){
+		return menu.getPopupMenu();
+	}
+		
 	/**
 	 * @param menubar
 	 */
-	protected MenuManager setupMenu(JMenuBar menubar, JMenu recentProjectsMenu){
+	protected MenuManager setupMenu(JMenuBar menubar, JMenu recentProjectsMenu,PkgFrameTestingMenu test){
 
-		JMenu menu = new JMenu(Config.getString("menu.package"));
+		menu = new JMenu(Config.getString("menu.package"));
 		int mnemonic = Config.getMnemonicKey("menu.package");
 		menu.setMnemonic(mnemonic);
 		menubar.add(menu);
@@ -147,11 +150,8 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 			createMenuItem(UseLibraryAction.getInstance(), menu);
 			createMenuItem(GenerateDocsAction.getInstance(), menu);
 
-			testingMenu = new JMenu(Config.getString("menu.tools.testing"));
-			testingMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
 			{
-				
-	
+				test.initTestingMenu(menu);	
 				if (!Config.usingMacScreenMenubar()) { // no "Preferences" here for
 					// Mac
 					menu.addSeparator();
@@ -271,30 +271,6 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 	{
 	        return showExtendsMenuItem.isSelected();
 	}
-	
-	
-	/**
-	 * Enable/disable functionality. Enable or disable all the interface
-	 * elements that should change when a project is or is not open.
-	 */
-	protected void enableFunctions(boolean enable)
-	{
-		/* if (! enable) {
-	            teamActions.setAllDisabled();
-	        }
-
-	        for (Iterator<JComponent> it = itemsToDisable.iterator(); it.hasNext();) {
-	            JComponent component = it.next();
-	            component.setEnabled(enable);
-	        }*/
-		for (Iterator<Action> it = actionsToDisable.iterator(); it.hasNext();) {
-			Action action = it.next();
-			action.setEnabled(enable);
-		}
-	}
-
-  
-	
 	
 }
 
