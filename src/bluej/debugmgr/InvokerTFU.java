@@ -48,8 +48,10 @@ import bluej.debugger.ExceptionDescription;
 import bluej.debugger.gentype.GenTypeParameter;
 import bluej.debugger.gentype.JavaType;
 import bluej.debugger.gentype.NameTransform;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectBenchInterface;
 import bluej.debugmgr.objectbench.ObjectWrapper;
+import bluej.debugmgr.objectbench.ObjectWrapperTFU;
 import bluej.pkgmgr.Package;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.Project;
@@ -239,7 +241,7 @@ public class InvokerTFU
      * @param watcher
      *            an object interested in the result of the invocation
      */
-    public InvokerTFU(TabbedFrameUnit pmf, MethodView member, ObjectWrapper objWrapper, ResultWatcher watcher)
+    public InvokerTFU(TabbedFrameUnit pmf, MethodView member, ObjectWrapperTFU objWrapper, ResultWatcher watcher)
     {
         initialize(pmf);
 

@@ -67,6 +67,7 @@ import bluej.debugmgr.inspector.Inspector;
 import bluej.debugmgr.inspector.InspectorManager;
 import bluej.debugmgr.inspector.ObjectInspector;
 import bluej.debugmgr.inspector.ResultInspector;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.editor.Editor;
 import bluej.extensions.BProject;
@@ -727,7 +728,7 @@ public class Project implements DebuggerListener, InspectorManager
         
         // See if it is on the bench:
         String benchName = null;
-        for (ObjectWrapper ow : PkgMgrFrame.findFrame(pkg).getObjectBench().getObjects())
+        for (AbstractObjectWrapper ow : PkgMgrFrame.findFrame(pkg).getObjectBench().getObjects())
         {
             if (ow.getObject().equals(obj))
                 benchName = ow.getName();

@@ -55,7 +55,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
 
     private JScrollPane scroll;
     private ObjectBenchPanel obp;
-    private List<ObjectWrapper> objects;
+    private List<AbstractObjectWrapper> objects;
     private ObjectWrapper selectedObject;
     private PkgMgrFrame pkgMgrFrame;
        
@@ -69,7 +69,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
     public ObjectBench(PkgMgrFrame pkgMgrFrame)
     {
         super();
-        objects = new ArrayList<ObjectWrapper>();
+        objects = new ArrayList<AbstractObjectWrapper>();
         createComponent();
         this.pkgMgrFrame = pkgMgrFrame;
         updateAccessibleName();
@@ -91,11 +91,11 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
     /**
      * Add an object (in the form of an ObjectWrapper) to this bench.
      */
-    public void addObject(ObjectWrapper wrapper)
+    public void addObject(AbstractObjectWrapper objectWrapper)
     {
         // check whether name is already taken
 
-        String newname = wrapper.getName();
+        String newname = objectWrapper.getName();
         int count = 1;
         
         if (JavaNames.isJavaKeyword(newname)) {
@@ -104,13 +104,13 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
 
         while(hasObject(newname)) {
             count++;
-            newname = wrapper.getName() + count;
+            newname = objectWrapper.getName() + count;
         }
-        wrapper.setName(newname);
+        objectWrapper.setName(newname);
 
         // wrapper.addFocusListener(this); -- not needed
-        obp.add(wrapper);
-        objects.add(wrapper);
+        obp.add(objectWrapper);
+        objects.add(objectWrapper);
         obp.revalidate();
         obp.repaint();
         updateAccessibleName();
@@ -120,7 +120,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
     /**
      * Return all the wrappers stored in this object bench in an array
      */
-    public List<ObjectWrapper> getObjects()
+    public List<AbstractObjectWrapper> getObjects()
     {
         return Collections.unmodifiableList(objects);
     }
@@ -129,7 +129,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
      * Return an iterator through all the objects on the bench (to meet
      * the ValueCollection interface)
      */
-    public Iterator<ObjectWrapper> getValueIterator()
+    public Iterator<AbstractObjectWrapper> getValueIterator()
     {
         return getObjects().iterator();
     }
@@ -141,10 +141,10 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
      * @param name  The name to check for.
      * @return  The named object wrapper, or null if not found.
      */
-    public ObjectWrapper getObject(String name)
+    public AbstractObjectWrapper getObject(String name)
     {
-        for(Iterator<ObjectWrapper> i = objects.iterator(); i.hasNext(); ) {
-            ObjectWrapper wrapper = i.next();
+        for(Iterator<AbstractObjectWrapper> i = objects.iterator(); i.hasNext(); ) {
+            AbstractObjectWrapper wrapper = i.next();
             if(wrapper.getName().equals(name))
                 return wrapper;
         }
@@ -184,8 +184,8 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
     {
         setSelectedObject (null);
 
-        for(Iterator<ObjectWrapper> i = objects.iterator(); i.hasNext(); ) {
-            ObjectWrapper wrapper = i.next();
+        for(Iterator<AbstractObjectWrapper> i = objects.iterator(); i.hasNext(); ) {
+        	AbstractObjectWrapper wrapper = i.next();
             wrapper.prepareRemove();
             wrapper.getPackage().getDebugger().removeObject(scopeId, wrapper.getName());
             obp.remove(wrapper);
@@ -203,18 +203,18 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
      * is also removed from the scope of the package (so it is not accessible
      * as a parameter anymore) and the bench is redrawn.
      */
-    public void removeObject(ObjectWrapper wrapper, String scopeId)
+    public void removeObject(AbstractObjectWrapper objectWrapper, String scopeId)
     {
-        if(wrapper == selectedObject) {
+        if(objectWrapper == selectedObject) {
             setSelectedObject(null);
         }
      
-        DataCollector.removeObject(wrapper.getPackage(), wrapper.getName());
+        DataCollector.removeObject(objectWrapper.getPackage(), objectWrapper.getName());
         
-        wrapper.prepareRemove();
-        wrapper.getPackage().getDebugger().removeObject(scopeId, wrapper.getName());
-        obp.remove(wrapper);
-        objects.remove(wrapper);
+        objectWrapper.prepareRemove();
+        objectWrapper.getPackage().getDebugger().removeObject(scopeId, objectWrapper.getName());
+        obp.remove(objectWrapper);
+        objects.remove(objectWrapper);
 
         obp.revalidate();
         obp.repaint();

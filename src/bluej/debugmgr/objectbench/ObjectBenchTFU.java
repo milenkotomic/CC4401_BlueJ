@@ -19,7 +19,7 @@
  This file is subject to the Classpath exception as provided in the  
  LICENSE.txt file that accompanied this code.
  */
-package bluej.debugmgr;
+package bluej.debugmgr.objectbench;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -37,10 +37,6 @@ import bluej.Config;
 import bluej.collect.DataCollector;
 import bluej.debugmgr.NamedValue;
 import bluej.debugmgr.ValueCollection;
-import bluej.debugmgr.objectbench.ObjectBenchEvent;
-import bluej.debugmgr.objectbench.ObjectBenchInterface;
-import bluej.debugmgr.objectbench.ObjectBenchListener;
-import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.pkgmgr.TabbedFrameUnit;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.utility.JavaNames;

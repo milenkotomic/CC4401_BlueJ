@@ -1,45 +1,19 @@
-/*
- This file is part of the BlueJ program. 
- Copyright (C) 1999-2010,2011,2012,2013  Michael Kolling and John Rosenberg 
- 
- This program is free software; you can redistribute it and/or 
- modify it under the terms of the GNU General Public License 
- as published by the Free Software Foundation; either version 2 
- of the License, or (at your option) any later version. 
- 
- This program is distributed in the hope that it will be useful, 
- but WITHOUT ANY WARRANTY; without even the implied warranty of 
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- GNU General Public License for more details. 
- 
- You should have received a copy of the GNU General Public License 
- along with this program; if not, write to the Free Software 
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA. 
- 
- This file is subject to the Classpath exception as provided in the  
- LICENSE.txt file that accompanied this code.
- */
 package bluej.debugmgr.objectbench;
 
-import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
+
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,27 +30,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import bluej.BlueJEvent;
 import bluej.Config;
 import bluej.debugger.DebuggerObject;
-import bluej.debugger.ExceptionDescription;
 import bluej.debugger.gentype.GenTypeClass;
 import bluej.debugger.gentype.GenTypeParameter;
 import bluej.debugger.gentype.JavaType;
-import bluej.debugmgr.ExecutionEvent;
-import bluej.debugmgr.ExpressionInformation;
-import bluej.debugmgr.Invoker;
 import bluej.debugmgr.NamedValue;
-import bluej.debugmgr.ResultWatcher;
 import bluej.extensions.BObject;
 import bluej.extensions.ExtensionBridge;
-import bluej.extmgr.MenuManager;
-import bluej.extmgr.ObjectExtensionMenu;
 import bluej.pkgmgr.Package;
-import bluej.pkgmgr.PkgMgrFrame;
 import bluej.prefmgr.PrefMgr;
-import bluej.testmgr.record.InvokerRecord;
-import bluej.testmgr.record.ObjectInspectInvokerRecord;
 import bluej.utility.Debug;
 import bluej.utility.JavaNames;
 import bluej.utility.JavaReflective;
@@ -86,18 +49,8 @@ import bluej.views.MethodView;
 import bluej.views.View;
 import bluej.views.ViewFilter;
 
-/**
- * A wrapper around a Java object that handles calling methods, inspecting, etc.
- *
- * <p>The wrapper is represented by the red oval that is visible on the
- * object bench.
- *
- * @author  Michael Kolling
- */
-public class ObjectWrapper extends AbstractObjectWrapper
-{
-    // Strings
-    static String methodException = Config.getString("debugger.objectwrapper.methodException");
+public abstract class AbstractObjectWrapper extends JComponent implements Accessible, FocusListener, InvokeListener, KeyListener, NamedValue{
+	static String methodException = Config.getString("debugger.objectwrapper.methodException");
     static String invocationException = Config.getString("debugger.objectwrapper.invocationException");
     static String inspect = Config.getString("debugger.objectwrapper.inspect");
     static String remove = Config.getString("debugger.objectwrapper.remove");
@@ -141,83 +94,27 @@ public class ObjectWrapper extends AbstractObjectWrapper
 
     // back references to the containers that we live in
     private Package pkg;
-    private PkgMgrFrame pmf;
-    private ObjectBench ob;
-
+    private AbstractObjectBench ob;
+    
     private boolean isSelected = false;
     
     /**
      * Get an object wrapper for a user object. 
      * 
      * @param pmf   The package manager frame
-     * @param objectBench    The object bench
+     * @param ob    The object bench
      * @param obj   The object to wrap
      * @param iType   The static type of the object, used as a fallback if
      *                the runtime type is inaccessible
      * @param instanceName  The name for the object reference
      * @return
      */
-    static public ObjectWrapper getWrapper(PkgMgrFrame pmf, ObjectBench objectBench,
-                                            DebuggerObject obj,
-                                            GenTypeClass iType,
-                                            String instanceName)
-    {
-        if (obj.isArray()) {
-            return new ArrayWrapper(pmf, objectBench, obj, instanceName);
-        }
-        else {
-            return new ObjectWrapper(pmf, objectBench, obj, iType, instanceName);
-        }
-    }
-
-    protected ObjectWrapper(PkgMgrFrame pmf, ObjectBench objectBench, DebuggerObject obj, GenTypeClass iType, String instanceName)
-    {
-        // first one we construct will give us more info about the size of the screen
-        if(!itemHeightKnown) {
-            itemsOnScreen = (int)Config.screenBounds.getHeight() / itemHeight;
-        }
-
-        this.pmf = pmf;
-        this.pkg = pmf.getPackage();
-        this.ob = objectBench;
-        this.obj = obj;
-        this.iType = iType;
-        this.setName(instanceName);
-        if (obj.isNullObject()) {
-            className = "";
-            displayClassName = "";
-        }
-        else {
-            GenTypeClass objType = obj.getGenType();
-            className = objType.toString();
-            displayClassName = objType.toString(true);
-        }
-
-        createMenu(findIType());
-                
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-        
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setSize(WIDTH, HEIGHT);
-        setFocusable(true);
-        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        addFocusListener(this);
-        addKeyListener(this);
-    }
-
+ 
     public Package getPackage()
     {
         return pkg;
     }
-
-    /**
-     * Get the PkgMgrFrame which is housing this object wrapper.
-     */
-    public PkgMgrFrame getFrame()
-    {
-        return pmf;
-    }
-    
+  
     public String getClassName()
     {
         return obj.getClassName();
@@ -256,7 +153,20 @@ public class ObjectWrapper extends AbstractObjectWrapper
     // ----------------------------------------------
     
     private BObject singleBObject;  // Every ObjectWrapper has none or one BObject
-       
+    
+    /**
+     * Return the extensions BObject associated with this ObjectWrapper.
+     * There should be only one BObject object associated with each Package.
+     * @return the BPackage associated with this Package.
+     */
+    public synchronized final BObject getBObject ()
+    {
+        if ( singleBObject == null )
+          singleBObject = ExtensionBridge.newBObject(this);
+          
+        return singleBObject;
+    }
+    
     /**
      * Perform any necessary cleanup before removal from the object bench.
      */
@@ -283,6 +193,8 @@ public class ObjectWrapper extends AbstractObjectWrapper
             return true;
         }
     }
+    
+    public abstract void setSelected(boolean isSelected); 
     
     /**
      * Determine an appropriate type to use for this object in shell files.
@@ -322,43 +234,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
         return cl;
     }
     
-    /**
-     * Creates the popup menu structure by parsing the object's
-     * class inheritance hierarchy.
-     */
-    protected void createMenu(Class<?> cl)
-    {
-        menu = new JPopupMenu(getName() + " operations");
-
-        // add the menu items to call the methods
-        createMethodMenuItems(menu, cl, iType, this, obj, pkg.getQualifiedName(), true);
-
-        // add inspect and remove options
-        JMenuItem item;
-        menu.add(item = new JMenuItem(inspect));
-        item.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) { inspectObject(); }
-            });
-        item.setFont(PrefMgr.getStandoutMenuFont());
-        item.setForeground(envOpColour);
-  
-        menu.add(item = new JMenuItem(remove));
-        item.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent e) { removeObject(); }
-            });
-        item.setFont(PrefMgr.getStandoutMenuFont());
-        item.setForeground(envOpColour);
-
-        MenuManager menuManager = new MenuManager (menu); 
-        menuManager.setMenuGenerator(new ObjectExtensionMenu(this));
-        menuManager.addExtensionMenu(pkg.getProject());
-
-        add(menu);
-    }
-    
+        
     /**
      * Creates the menu items for all the methods in the class, which is a raw
      * class type.
@@ -662,31 +538,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
                             getName() + ":", displayClassName);
     }
 
-    /**
-     * Process a mouse click into this object. If it was a popup event, show the object's
-     * menu. If it was a double click, inspect the object. If it was a normal mouse click,
-     * insert it into a parameter field (if any).
-     */
-    @Override
-    protected void processMouseEvent(MouseEvent evt)
-    {
-        super.processMouseEvent(evt);
-        if(evt.isPopupTrigger()) {
-            showMenu(evt.getX(), evt. getY());
-        }
-        else if(evt.getID() == MouseEvent.MOUSE_CLICKED) {
-            if (evt.getClickCount() > 1) // double click
-                inspectObject();
-            else { //single click
-                ob.fireObjectEvent(this);
-            }
-        }
-        //manage focus
-        if (evt.getID() == MouseEvent.MOUSE_CLICKED || evt.isPopupTrigger()) {
-            requestFocusInWindow();
-        }
-    }
-
+    
     // --- popup menu actions ---
     
     private int calcOffset()
@@ -731,122 +583,18 @@ public class ObjectWrapper extends AbstractObjectWrapper
         showMenu(WIDTH/2, HEIGHT/2);
     }
 
-    /**
-     * Open this object for inspection.
-     */
-    protected void inspectObject()
-    {
-        InvokerRecord ir = new ObjectInspectInvokerRecord(getName());
-        pkg.getProject().getInspectorInstance(obj, getName(), pkg, ir, pmf);  // shows the inspector
-    }
-
     protected void removeObject()
     {
         ob.removeObject(this, pkg.getId());
     }
     
-    /**
-     * Execute an interactive method call. If the method has results,
-     * create a watcher to watch out for the result coming back, do the
-     * actual invocation, and update open object viewers after the call.
-     */
-    @Override
-    public void executeMethod(final MethodView method)
-    {
-        ResultWatcher watcher = null;
-
-        pkg.forgetLastSource();
-
-        watcher = new ResultWatcher() {
-            private ExpressionInformation expressionInformation = new ExpressionInformation(method,getName(),obj.getGenType());
-            
-            @Override
-            public void beginCompile()
-            {
-                pmf.setWaitCursor(true);
-            }
-            
-            @Override
-            public void beginExecution(InvokerRecord ir)
-            {
-                BlueJEvent.raiseEvent(BlueJEvent.METHOD_CALL, ir);
-                pmf.setWaitCursor(false);
-            }
-            
-            @Override
-            public void putResult(DebuggerObject result, String name, InvokerRecord ir)
-            {
-                ExecutionEvent executionEvent = new ExecutionEvent(pkg, obj.getClassName(), instanceName);
-                executionEvent.setMethodName(method.getName());
-                executionEvent.setParameters(method.getParamTypes(false), ir.getArgumentValues());
-                executionEvent.setResult(ExecutionEvent.NORMAL_EXIT);
-                executionEvent.setResultObject(result);
-                BlueJEvent.raiseEvent(BlueJEvent.EXECUTION_RESULT, executionEvent);
-                
-                pkg.getProject().updateInspectors();
-                expressionInformation.setArgumentValues(ir.getArgumentValues());
-                ob.addInteraction(ir);
-                
-                // a void result returns a name of null
-                if (result != null && ! result.isNullObject()) {
-                    pkg.getProject().getResultInspectorInstance(result, name, pkg,
-                            ir, expressionInformation, pmf);
-                }
-            }
-            
-            @Override
-            public void putError(String msg, InvokerRecord ir)
-            {
-                pmf.setWaitCursor(false);
-            }
-            
-            @Override
-            public void putException(ExceptionDescription exception, InvokerRecord ir)
-            {
-                ExecutionEvent executionEvent = new ExecutionEvent(pkg, obj.getClassName(), instanceName);
-                executionEvent.setParameters(method.getParamTypes(false), ir.getArgumentValues());
-                executionEvent.setResult(ExecutionEvent.EXCEPTION_EXIT);
-                executionEvent.setException(exception);
-                BlueJEvent.raiseEvent(BlueJEvent.EXECUTION_RESULT, executionEvent);
-                
-                pkg.getProject().updateInspectors();
-                pkg.exceptionMessage(exception);
-            }
-            
-            @Override
-            public void putVMTerminated(InvokerRecord ir)
-            {
-                ExecutionEvent executionEvent = new ExecutionEvent(pkg, obj.getClassName(), instanceName);
-                executionEvent.setParameters(method.getParamTypes(false), ir.getArgumentValues());
-                executionEvent.setResult(ExecutionEvent.TERMINATED_EXIT);
-                BlueJEvent.raiseEvent(BlueJEvent.EXECUTION_RESULT, executionEvent);
-            }
-        };
-
-        if (pmf.checkDebuggerState()) {
-            Invoker invoker = new Invoker(pmf, method, this, watcher);
-            invoker.invokeInteractive();
-        }
-    }
-    
+        
     public void callConstructor(ConstructorView cv)
     {
         // do nothing (satisfy the InvokeListener interface)
     }
 
-    /**
-     * @param isSelected The isSelected to set.
-     */
-    public void setSelected(boolean isSelected) 
-    {
-        this.isSelected = isSelected;
-        if(isSelected) {
-            pmf.setStatus(getName() + " : " + displayClassName);
-            scrollRectToVisible(new Rectangle(0, 0, WIDTH, HEIGHT));
-        }
-        repaint();
-    }
-    
+      
     @Override
     public AccessibleContext getAccessibleContext()
     {
@@ -886,12 +634,6 @@ public class ObjectWrapper extends AbstractObjectWrapper
     public void keyTyped(KeyEvent arg0)
     {
         ob.keyTyped(arg0);
-    }
-
-    @Override
-    public void focusGained(FocusEvent arg0)
-    {
-        ob.objectGotFocus(this);
     }
 
     @Override

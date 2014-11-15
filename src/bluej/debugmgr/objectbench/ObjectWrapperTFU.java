@@ -36,9 +36,7 @@ import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -47,7 +45,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import javax.accessibility.Accessible;
 import javax.accessibility.AccessibleContext;
 import javax.accessibility.AccessibleRole;
 import javax.swing.Action;
@@ -66,6 +63,7 @@ import bluej.debugger.gentype.JavaType;
 import bluej.debugmgr.ExecutionEvent;
 import bluej.debugmgr.ExpressionInformation;
 import bluej.debugmgr.Invoker;
+import bluej.debugmgr.InvokerTFU;
 import bluej.debugmgr.NamedValue;
 import bluej.debugmgr.ResultWatcher;
 import bluej.extensions.BObject;
@@ -74,6 +72,7 @@ import bluej.extmgr.MenuManager;
 import bluej.extmgr.ObjectExtensionMenu;
 import bluej.pkgmgr.Package;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
 import bluej.prefmgr.PrefMgr;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.testmgr.record.ObjectInspectInvokerRecord;
@@ -94,7 +93,7 @@ import bluej.views.ViewFilter;
  *
  * @author  Michael Kolling
  */
-public class ObjectWrapper extends AbstractObjectWrapper
+public class ObjectWrapperTFU extends AbstractObjectWrapper  
 {
     // Strings
     static String methodException = Config.getString("debugger.objectwrapper.methodException");
@@ -141,8 +140,8 @@ public class ObjectWrapper extends AbstractObjectWrapper
 
     // back references to the containers that we live in
     private Package pkg;
-    private PkgMgrFrame pmf;
-    private ObjectBench ob;
+    private TabbedFrameUnit pmf;
+    private AbstractObjectBench ob;
 
     private boolean isSelected = false;
     
@@ -150,27 +149,27 @@ public class ObjectWrapper extends AbstractObjectWrapper
      * Get an object wrapper for a user object. 
      * 
      * @param pmf   The package manager frame
-     * @param objectBench    The object bench
+     * @param ob    The object bench
      * @param obj   The object to wrap
      * @param iType   The static type of the object, used as a fallback if
      *                the runtime type is inaccessible
      * @param instanceName  The name for the object reference
      * @return
      */
-    static public ObjectWrapper getWrapper(PkgMgrFrame pmf, ObjectBench objectBench,
+    static public ObjectWrapperTFU getWrapper(TabbedFrameUnit pmf, AbstractObjectBench ob,
                                             DebuggerObject obj,
                                             GenTypeClass iType,
                                             String instanceName)
     {
         if (obj.isArray()) {
-            return new ArrayWrapper(pmf, objectBench, obj, instanceName);
+            return new ArrayWrapperTFU(pmf, ob, obj, instanceName);
         }
         else {
-            return new ObjectWrapper(pmf, objectBench, obj, iType, instanceName);
+            return new ObjectWrapperTFU(pmf, ob, obj, iType, instanceName);
         }
     }
 
-    protected ObjectWrapper(PkgMgrFrame pmf, ObjectBench objectBench, DebuggerObject obj, GenTypeClass iType, String instanceName)
+    protected ObjectWrapperTFU(TabbedFrameUnit pmf, AbstractObjectBench ob, DebuggerObject obj, GenTypeClass iType, String instanceName)
     {
         // first one we construct will give us more info about the size of the screen
         if(!itemHeightKnown) {
@@ -179,7 +178,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
 
         this.pmf = pmf;
         this.pkg = pmf.getPackage();
-        this.ob = objectBench;
+        this.ob = ob;
         this.obj = obj;
         this.iType = iType;
         this.setName(instanceName);
@@ -213,7 +212,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
     /**
      * Get the PkgMgrFrame which is housing this object wrapper.
      */
-    public PkgMgrFrame getFrame()
+    public TabbedFrameUnit getFrame()
     {
         return pmf;
     }
@@ -256,7 +255,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
     // ----------------------------------------------
     
     private BObject singleBObject;  // Every ObjectWrapper has none or one BObject
-       
+     
     /**
      * Perform any necessary cleanup before removal from the object bench.
      */
@@ -824,7 +823,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
         };
 
         if (pmf.checkDebuggerState()) {
-            Invoker invoker = new Invoker(pmf, method, this, watcher);
+            InvokerTFU invoker = new InvokerTFU(pmf, method, this, watcher);
             invoker.invokeInteractive();
         }
     }
@@ -841,7 +840,7 @@ public class ObjectWrapper extends AbstractObjectWrapper
     {
         this.isSelected = isSelected;
         if(isSelected) {
-            pmf.setStatus(getName() + " : " + displayClassName);
+            //pmf.setStatus(getName() + " : " + displayClassName);
             scrollRectToVisible(new Rectangle(0, 0, WIDTH, HEIGHT));
         }
         repaint();

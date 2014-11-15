@@ -97,6 +97,7 @@ import bluej.debugmgr.ExpressionInformation;
 import bluej.debugmgr.Invoker;
 import bluej.debugmgr.LibraryCallDialog;
 import bluej.debugmgr.ResultWatcher;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectBench;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.debugmgr.texteval.TextEvalArea;
@@ -2015,7 +2016,7 @@ public class PkgMgrFrame extends AbstractPkgFrame
     public String putObjectOnBench(String newInstanceName, DebuggerObject object, GenTypeClass iType, InvokerRecord ir)
     {
         if (!object.isNullObject()) {
-            ObjectWrapper wrapper = ObjectWrapper.getWrapper(this, getObjectBench(), object, iType, newInstanceName);
+            AbstractObjectWrapper wrapper = ObjectWrapper.getWrapper(this, getObjectBench(), object, iType, newInstanceName);
             getObjectBench().addObject(wrapper); // might change name
             newInstanceName = wrapper.getName();
 

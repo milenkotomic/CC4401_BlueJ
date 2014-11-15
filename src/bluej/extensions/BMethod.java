@@ -22,6 +22,7 @@
 package bluej.extensions;
 
 import bluej.debugger.DebuggerObject;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.views.MethodView;
@@ -181,7 +182,7 @@ public class BMethod
         throws ProjectNotOpenException, PackageNotFoundException, 
                InvocationArgumentException, InvocationErrorException
     {
-        ObjectWrapper instanceWrapper=null;
+        AbstractObjectWrapper instanceWrapper=null;
         // If it is a method call on a live object get the identifier for it.
         if ( onThis != null ) instanceWrapper = onThis.getObjectWrapper();
         

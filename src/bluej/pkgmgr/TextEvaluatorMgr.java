@@ -3,7 +3,7 @@ package bluej.pkgmgr;
 import javax.swing.JSplitPane;
 
 import bluej.Config;
-import bluej.debugmgr.ObjectBenchTFU;
+import bluej.debugmgr.objectbench.ObjectBenchTFU;
 import bluej.debugmgr.texteval.TextEvalArea;
 import bluej.debugmgr.texteval.TextEvalAreaTFU;
 
@@ -101,8 +101,5 @@ public class TextEvaluatorMgr {
         showingTextEvaluator = true;
     
         return objectBenchSplitPane;
-    }
-
-    
-    
+    }       
 }

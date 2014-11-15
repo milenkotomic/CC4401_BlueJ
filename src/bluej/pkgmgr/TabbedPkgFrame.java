@@ -26,11 +26,13 @@ import bluej.Config;
 import bluej.debugmgr.LibraryCallDialogTFU;
 import bluej.extmgr.MenuManager;
 import bluej.extmgr.ToolsExtensionMenu;
+import bluej.extmgr.ViewExtensionMenu;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.Debug;
 import bluej.utility.DialogManager;
 import bluej.utility.FileUtility;
+import bluej.utility.GradientFillPanel;
 import bluej.utility.Utility;
 
 public class TabbedPkgFrame extends AbstractPkgFrame {
@@ -56,7 +58,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	
 	public TabbedPkgFrame(){
 		setupWindow();
-			
+		
+		
 		jtp = new JTabbedPane();
 		jtp.addChangeListener(new ChangeListener() {
 	        public void stateChanged(ChangeEvent e) {
@@ -66,9 +69,11 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	        }
 	    });
 				
-		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
+		
 		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));   
+		
 		setupMenu();
+		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
 		
 		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME,team);
 		pkgTabs.add(recentFrame);	
@@ -371,6 +376,12 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
             
             if (recentFrame.isEmptyFrame()) {
                 recentFrame.openPackage(unNamedPkg);
+                toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(unNamedPkg));
+                toolsMenuManager.addExtensionMenu(unNamedPkg.getProject());
+
+                viewMenuManager.setMenuGenerator(new ViewExtensionMenu(unNamedPkg));
+                viewMenuManager.addExtensionMenu(unNamedPkg.getProject());
+
                 updateWindowTitle(recentFrame);
             }
             else {

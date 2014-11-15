@@ -134,6 +134,11 @@ public class PkgFrameTeamMenu extends AbstractPkgMenu {
         }
     }
 
+    public void setTeamActions(TeamActionGroup team){
+    	this.teamActions = team;
+    	resetTeamActions(); 
+    }
+    
     /**
      * Tell whether teamwork tools should be shown.
      */

@@ -3,6 +3,7 @@ package bluej.pkgmgr;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.KeyboardFocusManager;
@@ -39,7 +40,8 @@ import bluej.BlueJEventListener;
 import bluej.BlueJTheme;
 import bluej.Config;
 import bluej.collect.DataCollector;
-import bluej.debugmgr.ObjectBenchTFU;
+import bluej.debugger.Debugger;
+import bluej.debugmgr.objectbench.ObjectBenchTFU;
 import bluej.debugmgr.texteval.TextEvalAreaTFU;
 import bluej.extmgr.ExtensionsManager;
 import bluej.groupwork.ui.ActivityIndicator;
@@ -157,9 +159,10 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	}
 
 	public void showHideTextEval(boolean show){
-		boolean b = text.showHideTextEval(show);
-		if(b)
+		boolean showText = text.showHideTextEval(show);
+		if(showText){
 			editor.requestFocus();
+		}
 	}
 	
 	public void clearTextEval(){
@@ -184,8 +187,8 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	}
 	protected void makeFrame(){
 		setFont(pkgMgrFont);
-		setContentPane(new GradientFillPanel(getContentPane().getLayout()));
 		JPanel toolPanel = new JPanel();
+		//setContentPane(new GradientFillPanel(getContentPane().getLayout()));
 		toolPanel.setOpaque(false);
 		tabWindow.add(toolPanel);
 	
@@ -193,7 +196,13 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	    ((JPanel) contentPane).setBorder(BlueJTheme.generalBorderWithStatusBar);
 		
 	    JPanel mainPanel = new JPanel(new BorderLayout(5, 5));
-	    if (!Config.isRaspberryPi()) mainPanel.setOpaque(false);
+	    mainPanel.setOpaque(false);
+	    
+	    /*Shortcut para reiniciar la VM*/
+	    Action action = RestartVMAction.getInstance();
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                (KeyStroke) action.getValue(Action.ACCELERATOR_KEY), "restartVM");
+        mainPanel.getActionMap().put("restartVM", action);
 	    		
 		/*Panel para los botones que se encuentran al lado izquierdo*/
 		JPanel buttonPanel = leftPanel.createLeftPanel();      
@@ -225,17 +234,19 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         classScroller = new JScrollPane();
         configureClassScroller();
         mainPanel.add(classScroller, BorderLayout.CENTER);
+        
+        itemsToDisable.add(objbench);
                      
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPanel, objbench);
         splitPane.setBorder(null);
         splitPane.setResizeWeight(1.0);
         splitPane.setDividerSize(5);
-        if (!Config.isRaspberryPi()) splitPane.setOpaque(false);
+        splitPane.setOpaque(false);
         contentPane.add(splitPane, BorderLayout.CENTER);
         
         /*Zona de abajo*/
         JPanel statusArea = new JPanel(new BorderLayout());
-        if (!Config.isRaspberryPi()) statusArea.setOpaque(false);
+        statusArea.setOpaque(false);
 
         statusArea.setBorder(BorderFactory.createEmptyBorder(2, 0, 4, 6));
         JLabel statusbar = new JLabel(" ");
@@ -253,7 +264,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
                 
         tabWindow.add(mainPanel);
         tabWindow.add(contentPane);
-                      
+                             
         if (isEmptyFrame()) {
             enableFunctions(false);
         }
@@ -271,9 +282,15 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         if (! javaMEtoolsShown) {
         	javaME.showJavaMEtools(false);
         }
-            
+        
+        if (PrefMgr.getFlag(PrefMgr.SHOW_TEXT_EVAL)) {
+        	classScroller.setPreferredSize(classScroller.getSize());
+        	text.addTextEvaluatorPane();
+        }
+        
         javaMEPanel.setVisible(false); 
         textEvalConfig();
+    
         
 	}
 	
@@ -644,7 +661,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             this.editor = new PackageEditor(pkg, this, this);
             editor.getAccessibleContext().setAccessibleName(Config.getString("pkgmgr.graphEditor.title"));
             editor.setFocusable(true);
-            //editor.setTransferHandler(new FileTransferHandler(this));
+            editor.setTransferHandler(new FileTransferHandlerTFU(this));
             editor.addMouseListener(this); // This mouse listener MUST be before
             editor.addFocusListener(this); //  the editor's listener itself!
             editor.startMouseListening();
@@ -692,10 +709,9 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             //showUsesMenuItem.setSelected(uses_str.equals("true"));
             //showExtendsMenuItem.setSelected(extends_str.equals("true"));
             
-            //updateShowUsesInPackage();
-            //updateShowExtendsInPackage();
-            
-            pack();
+            updateShowUsesInPackage();
+            updateShowExtendsInPackage();
+          
             editor.revalidate();
             editor.requestFocus();
             
@@ -703,17 +719,9 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             updateWindow();
             setVisible(true);
             
-            //updateTextEvalBackground(isEmptyFrame());
-                    
-            //this.toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
-            //this.toolsMenuManager.addExtensionMenu(pkg.getProject());
-
-            //this.viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
-            //this.viewMenuManager.addExtensionMenu(pkg.getProject());
-        
-            //teamActions = pkg.getProject().getTeamActions();
-            //resetTeamActions();             
-           
+            text.updateTextEvalBackground(isEmptyFrame());  
+            team.setTeamActions(pkg.getProject().getTeamActions());
+                                 
             // In Java-ME packages, we display Java-ME controls in the
             // test panel. We are just using the real estate of the test panel.
             // The rest of the testing tools (menus, etc) are always hidden.
@@ -729,6 +737,21 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         DataCollector.packageOpened(pkg);
 
         ExtensionsManager.getInstance().packageOpened(pkg);
+    }
+    
+    /**
+     * Toggle the state of the "show uses arrows" switch.
+     */
+    public void updateShowUsesInPackage()
+    {
+        pkg.setShowUses(menuMgr.isShowUses());
+        editor.repaint();
+    }
+
+    public void updateShowExtendsInPackage()
+    {
+        pkg.setShowExtends(menuMgr.isShowExtends());
+        editor.repaint();
     }
     
     /**
@@ -1013,6 +1036,14 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     } 
     
     /**
+     * Add a given set of Java source files as classes to this package.
+     */
+    public void addFiles(List<File> classes)
+    {
+        importFromFile(classes.toArray(new File[classes.size()]));
+    }
+        
+    /**
      * Add the given set of Java source files as classes to this package.
      */
     protected void importFromFile(File[] classes)
@@ -1047,6 +1078,35 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         }
     }
 
+    /**
+     * Set the frames cursor to a WAIT_CURSOR while system is busy
+     */
+    public void setWaitCursor(boolean wait)
+    {
+        if (wait)
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        else
+            setCursor(Cursor.getDefaultCursor());
+    }
+    
+    public boolean checkDebuggerState()
+    {
+        Debugger debugger = getProject().getDebugger();
+        if (debugger.getStatus() == Debugger.SUSPENDED) {
+            setVisible(true);
+            DialogManager.showError(this, "stuck-at-breakpoint");
+            return false;
+        }
+        else if (debugger.getStatus() == Debugger.RUNNING) {
+            setVisible(true);
+            DialogManager.showError(this, "already-executing");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
 	public void focusGained(FocusEvent e) {
 		 classScroller.setBorder(Config.focusBorder);
 	     editor.setHasFocus(true);

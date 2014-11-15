@@ -42,7 +42,7 @@ import java.util.*;
  */
 public class BObject
 {
-    private ObjectWrapper objectWrapper;
+    private AbstractObjectWrapper objectWrapper;
     
     /** An identifier for the class of this object */
     private Identifier wrapperId;
@@ -51,11 +51,11 @@ public class BObject
     /**
      * Constructor for BObject.
      *
-     * @param  aWrapper  Description of the Parameter
+     * @param  abstractObjectWrapper  Description of the Parameter
      */
-    BObject(ObjectWrapper aWrapper)
+    BObject(AbstractObjectWrapper abstractObjectWrapper)
     {
-        objectWrapper = aWrapper;
+        objectWrapper = abstractObjectWrapper;
 
         Package bluejPkg = objectWrapper.getPackage();
         Project bluejProj = bluejPkg.getProject();
@@ -68,7 +68,12 @@ public class BObject
     }
 
 
-    /**
+    public BObject(ObjectWrapperTFU aWrapper) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	/**
      * Returns the package this object belongs to.
      *
      * @return                            The package value
@@ -206,7 +211,7 @@ public class BObject
      *
      * @return    The objectWrapper value
      */
-    ObjectWrapper getObjectWrapper()
+    AbstractObjectWrapper getObjectWrapper()
     {
         return objectWrapper;
     }

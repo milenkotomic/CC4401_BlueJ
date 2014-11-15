@@ -1,24 +1,3 @@
-/*
- This file is part of the BlueJ program. 
- Copyright (C) 1999-2009  Michael Kolling and John Rosenberg 
- 
- This program is free software; you can redistribute it and/or 
- modify it under the terms of the GNU General Public License 
- as published by the Free Software Foundation; either version 2 
- of the License, or (at your option) any later version. 
- 
- This program is distributed in the hope that it will be useful, 
- but WITHOUT ANY WARRANTY; without even the implied warranty of 
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- GNU General Public License for more details. 
- 
- You should have received a copy of the GNU General Public License 
- along with this program; if not, write to the Free Software 
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA. 
- 
- This file is subject to the Classpath exception as provided in the  
- LICENSE.txt file that accompanied this code.
- */
 package bluej.debugmgr.objectbench;
 
 import java.awt.*;
@@ -41,7 +20,7 @@ import bluej.prefmgr.PrefMgr;
  * @author Bruce Quig
  * @version $Id: ArrayWrapper.java 6215 2009-03-30 13:28:25Z polle $
  */
-public class ArrayWrapper extends ObjectWrapper
+public class ArrayWrapperTFU extends ObjectWrapperTFU
 {
     public static int WORD_GAP = 8;
     public static int SHADOW_SIZE = 3;
@@ -49,11 +28,11 @@ public class ArrayWrapper extends ObjectWrapper
     
     
 
-    public ArrayWrapper(PkgMgrFrame pmf, ObjectBench objectBench, DebuggerObject obj, String instanceName)
+    public ArrayWrapperTFU(TabbedFrameUnit pmf, AbstractObjectBench ob, DebuggerObject obj, String instanceName)
     {
-        super(pmf, objectBench, obj, obj.getGenType(), instanceName);
+        super(pmf, ob, obj, obj.getGenType(), instanceName);
     }
-    
+
     /**
      * Creates the popup menu structure by parsing the object's class
      * inheritance hierarchy.

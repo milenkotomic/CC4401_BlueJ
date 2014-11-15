@@ -7,7 +7,7 @@ import javax.swing.*;
 import bluej.Config;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.debugger.DebuggerObject;
-import bluej.debugmgr.ObjectBenchTFU;
+import bluej.debugmgr.objectbench.ObjectBenchTFU;
 import bluej.pkgmgr.TabbedFrameUnit;
 
 /**
