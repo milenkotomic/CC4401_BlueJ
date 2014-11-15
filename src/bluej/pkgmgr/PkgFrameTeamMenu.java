@@ -1,6 +1,7 @@
 package bluej.pkgmgr;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractButton;
@@ -16,8 +17,9 @@ import javax.swing.JPanel;
 import bluej.Config;
 import bluej.groupwork.actions.CheckoutAction;
 import bluej.groupwork.actions.TeamActionGroup;
+import bluej.prefmgr.PrefMgr;
 
-public class PkgFrameTeamMenu extends PkgFrameMenu {
+public class PkgFrameTeamMenu extends AbstractPkgMenu {
 	private JPanel teamPanel;
 	private AbstractButton updateButton;
     private AbstractButton commitButton;
@@ -30,7 +32,7 @@ public class PkgFrameTeamMenu extends PkgFrameMenu {
     private JMenuItem updateMenuItem;
     private JMenuItem commitMenuItem;
     private JMenuItem statusMenuItem;
-    
+       
     private TeamActionGroup teamActions;
 	
     public PkgFrameTeamMenu(){
@@ -123,4 +125,24 @@ public class PkgFrameTeamMenu extends PkgFrameMenu {
 	}
 	
 	
+    
+    /**
+     * Show or hide the teamwork tools.
+     */
+    public void showTeamTools(boolean show)
+    {
+        for (Iterator<JComponent> it = teamItems.iterator(); it.hasNext();) {
+            JComponent component = it.next();
+            component.setVisible(show);
+        }
+    }
+
+    /**
+     * Tell whether teamwork tools should be shown.
+     */
+    public boolean wantToSeeTeamTools()
+    {
+        return PrefMgr.getFlag(PrefMgr.SHOW_TEAM_TOOLS);
+    }
+    	
 }

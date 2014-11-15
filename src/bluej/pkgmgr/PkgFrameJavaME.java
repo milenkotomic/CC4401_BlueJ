@@ -8,19 +8,35 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import bluej.Config;
 import bluej.pkgmgr.actions.DeployMIDletAction;
+import bluej.pkgmgr.actions.NewMEprojectAction;
 import bluej.prefmgr.PrefMgr;
 
 public class PkgFrameJavaME extends AbstractPkgMenu{
     private JMenuItem javaMEdeployMenuItem;
     private JMenuItem javaMEnewProjMenuItem;
     private JPanel javaMEPanel;
-	
-	/**
+		
+    public PkgFrameJavaME(){  	
+    	javaMEPanel = new JPanel();
+    	
+    }
+    
+    public void initJavaMEProj(JMenu menu){
+    	javaMEnewProjMenuItem = createMenuItem( NewMEprojectAction.getInstance(), menu);   
+    }
+    
+    public void initJavaMEDeploy(JMenu menu){
+    	javaMEdeployMenuItem = createMenuItem( DeployMIDletAction.getInstance(), menu); 
+    	javaMEdeployMenuItem.setVisible(false); //visible only in Java ME packages
+    }
+    
+    /**
     * Show or hide the Java ME controls.
     */
     public void showJavaMEcontrols(boolean show)
@@ -36,7 +52,7 @@ public class PkgFrameJavaME extends AbstractPkgMenu{
      * Java ME packages--depending on whether the checkbox in 
      * the Preferences panel is ticked or not.
      */
-    public void showJavaMEtools( boolean show )
+    public void showJavaMEtools(boolean show)
     {
         javaMEnewProjMenuItem.setVisible(show);
     }
@@ -44,14 +60,12 @@ public class PkgFrameJavaME extends AbstractPkgMenu{
     /**
      * Tell whether Java ME tools should be shown.
      */
-    protected static boolean wantToSeeJavaMEtools()
+    protected boolean wantToSeeJavaMEtools()
     {
         return PrefMgr.getFlag( PrefMgr.SHOW_JAVAME_TOOLS );
     }
     
-    protected JPanel createJavaMEPanel(){
-    
-    	javaMEPanel = new JPanel();
+    protected JPanel createJavaMEPanel(){  	
     	if (!Config.isRaspberryPi()) javaMEPanel.setOpaque(false);
    
         javaMEPanel.setLayout(new BoxLayout(javaMEPanel, BoxLayout.Y_AXIS));

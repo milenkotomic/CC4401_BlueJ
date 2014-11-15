@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -33,6 +34,7 @@ import bluej.debugmgr.LibraryCallDialogTFU;
 import bluej.extmgr.MenuManager;
 import bluej.extmgr.ToolsExtensionMenu;
 import bluej.pkgmgr.PkgMgrFrame.ProjectOpener;
+import bluej.pkgmgr.PkgMgrFrame.URLDisplayer;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.Debug;
@@ -43,13 +45,15 @@ import bluej.utility.Utility;
 public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
 	PkgFrameMenu menuMgr;
-	PkgFrameTestingMenu testMenu;
-	private JLabel statusbar;
+	private static JLabel statusbar;
 	private JMenu recentProjectsMenu;
-	private static boolean testToolsShown;
 	
 	private MenuManager toolsMenuManager;
 	private MenuManager viewMenuManager;
+	
+	/*Variables comunes a todas las pestanas, se deben entregar como parametro*/
+	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
+	private PkgFrameJavaME javaME = new PkgFrameJavaME();
 	
 	private static List<TabbedFrameUnit> pkgTabs = new ArrayList<TabbedFrameUnit>();
 	protected TabbedFrameUnit recentFrame = null;
@@ -60,10 +64,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	
 	public TabbedPkgFrame(){
 		setupWindow();
-		
-		menuMgr = new PkgFrameMenu();
-		testMenu = new PkgFrameTestingMenu();
-		
+			
 		jtp = new JTabbedPane();
 		jtp.addChangeListener(new ChangeListener() {
 	        public void stateChanged(ChangeEvent e) {
@@ -77,19 +78,25 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));   
 		setupMenu();
 		
-		recentFrame = new TabbedFrameUnit();
+		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME);
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
 	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp,this));
-				     
-        testToolsShown = testMenu.wantToSeeTestingTools();
-  
-        toolsMenuManager = new MenuManager(menuMgr.getMenuPopUp());
+		    
+        toolsMenuManager = new MenuManager(menuMgr.getToolMenuPopUp());
         if (frameCount() <= 1) {
             toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(null));
             toolsMenuManager.addExtensionMenu(null);
         }
+        
+        // Create the menu manager that looks after extension view menus
+        viewMenuManager = new MenuManager(menuMgr.getViewMenuPopUp());
+
+        // If this is the first frame create the extension view menu now.
+        // (Otherwise, it will be created during project open.)
+        if (frameCount() <= 1) 
+        	viewMenuManager.addExtensionMenu(null);
         
 	}
 
@@ -108,10 +115,49 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	private void setupMenu(){
 		JMenuBar menubar = new JMenuBar();
 		setJMenuBar(menubar);
+		updateRecentProjects();
+		menuMgr = new PkgFrameMenu(menubar);
+
+		menuMgr.setupPackageMenu(javaME,recentProjectsMenu);
+		menuMgr.setupEditMenu();
+		menuMgr.setupToolMenu(test);
+		menuMgr.setupViewMenu();
+		JMenu HelpMenu = menuMgr.setupHelpMenu();
 		
-		menuMgr.setupMenu(menubar,recentProjectsMenu,testMenu);
+		addUserHelpItems(HelpMenu);
+        updateRecentProjects();
+		
+		menuMgr.setupGitHubMenu();
+		menuMgr.setupWindowsMenu();		
 	}
 
+	/**
+     * Add user defined help menus. Users can add help menus via the
+     * bluej.help.items property. See comment in bluej.defs.
+     */
+    private void addUserHelpItems(JMenu menu)
+    {
+        String helpItems = Config.getPropString("bluej.help.items", "");
+
+        if (helpItems != null && helpItems.length() > 0) {
+            menu.addSeparator();
+            URLDisplayer urlDisplayer = new URLDisplayer();
+
+            StringTokenizer t = new StringTokenizer(helpItems);
+
+            while (t.hasMoreTokens()) {
+                String itemID = t.nextToken();
+                String itemName = Config.getPropString("bluej.help." + itemID + ".label");
+                String itemURL = Config.getPropString("bluej.help." + itemID + ".url");
+                JMenuItem item = new JMenuItem(itemName);
+                item.setActionCommand(itemURL);
+                item.addActionListener(urlDisplayer);
+                menu.add(item);
+            }
+        }
+    }
+
+	
 	public TabbedFrameUnit createFrame(Package pkg){
 		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg);
 				
@@ -120,7 +166,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	}
 	
 	public TabbedFrameUnit createFrame(){
-		TabbedFrameUnit tfu = new TabbedFrameUnit();
+		TabbedFrameUnit tfu = new TabbedFrameUnit(menuMgr,test,javaME);
 		
 		pkgTabs.add(tfu);	
 		return tfu;
@@ -234,7 +280,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
     }
     
     public void doOpenTab(){
-		TabbedFrameUnit newTab = new TabbedFrameUnit();
+		TabbedFrameUnit newTab = new TabbedFrameUnit(menuMgr,test,javaME);
         pkgTabs.add(newTab);
 		        
 		jtp.addTab("BlueJ", newTab.getTab());
@@ -423,23 +469,33 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
     * Check whether the status of the 'Show unit test tools' preference has
     * changed, and if it has, show or hide them as requested.
     */
-   public void updateTestingStatus()
-   {
-       if (testToolsShown != testMenu.wantToSeeTestingTools()) {
-           for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
-             
-               TabbedFrameUnit pmf = i.next();
-               
-               //Testing tools are always hidden in Java ME packages.  
-               if (pmf.isJavaMEpackage()) {
-            	   testMenu.showTestingTools(false);
-               }
-               else {
-                   testMenu.showTestingTools(!testToolsShown);               
-               }
-           }
-           testToolsShown = !testToolsShown;
+  	public static void updateTestingStatus(){
+		for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+			TabbedFrameUnit pmf = i.next();
+			pmf.updateTestingStatus();
        }
+	}
+		
+   /**
+    * Check whether the status of the 'Show teamwork tools' preference has
+    * changed, and if it has, show or hide them as requested.
+    */
+   public static void updateTeamStatus(){
+	   for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+		   TabbedFrameUnit pmf = i.next();
+		   pmf.updateTeamStatus();
+	   }
+   }
+   
+   /**
+    * Check whether the status of the 'Show Java ME tools' preference has
+    * changed, and if it has, show or hide them as requested.
+    */
+   public static void updateJavaMEstatus(){
+	   for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+		   TabbedFrameUnit tfu = i.next();            
+		   tfu.updateJavaMEstatus();
+	   }
    }
 
    /**
@@ -730,7 +786,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
    /**
     * Display a message in the status bar of the frame
     */
-   public final void setStatus(final String status)
+   public final static void setStatus(final String status)
    {
         EventQueue.invokeLater(new Runnable() {
            public void run() {
@@ -813,6 +869,18 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		   }
 	}
 
+		
+    class URLDisplayer implements ActionListener{
+    	public URLDisplayer()
+    	{}
+
+    	@Override
+    	public void actionPerformed(ActionEvent evt)
+    	{
+    		String url = evt.getActionCommand();
+    		showWebPage(url);
+    	}
+    }
 
 	
     

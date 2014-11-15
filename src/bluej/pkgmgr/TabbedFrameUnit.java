@@ -42,7 +42,6 @@ import bluej.collect.DataCollector;
 import bluej.debugmgr.ObjectBenchTFU;
 import bluej.debugmgr.texteval.TextEvalAreaTFU;
 import bluej.extmgr.ExtensionsManager;
-import bluej.extmgr.MenuManager;
 import bluej.groupwork.ui.ActivityIndicator;
 import bluej.pkgmgr.actions.AddClassAction;
 import bluej.pkgmgr.actions.CloseProjectAction;
@@ -84,13 +83,18 @@ import bluej.utility.JavaNames;
 public class TabbedFrameUnit extends JFrame implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener{
 	private Package pkg = null;
 	protected JPanel tabWindow;
+	protected PkgFrameMenu menuMgr;
 		
 	private TextEvaluatorMgr text = null;
-	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
-	private PkgFrameJavaME javaME = new PkgFrameJavaME();
+	private PkgFrameTestingMenu test;
+	private PkgFrameJavaME javaME;
 	private PkgFrameLeftPanel leftPanel = new PkgFrameLeftPanel();
 	private PkgFrameTeamMenu team = new PkgFrameTeamMenu();
 	
+	private static boolean testToolsShown;
+	private static boolean teamToolsShown;
+	private static boolean javaMEtoolsShown;
+			
 	private JScrollPane classScroller = null;
 	private NoProjectMessagePanel noProjectMessagePanel = new NoProjectMessagePanel();
 	private PackageEditor editor = null;
@@ -106,16 +110,23 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     private List<Action> actionsToDisable;
     
     
-	public TabbedFrameUnit(){
+	public TabbedFrameUnit(PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME){
 		tabWindow = new JPanel();
+		this.menuMgr = menuMgr; 
+		this.test = test;
+		this.javaME = javaME;
+		
 		setupActionDisableSet();
 		itemsToDisable = new ArrayList<JComponent>();
 		objbench = new ObjectBenchTFU(this);
 		text = new TextEvaluatorMgr(new TextEvalAreaTFU(this,pkgMgrFont),objbench);
-			
-		makeFrame();
-		//editor = new PackageEditor(pkg, this, this);
 		
+		testToolsShown = test.wantToSeeTestingTools();
+		teamToolsShown = team.wantToSeeTeamTools();
+		javaMEtoolsShown = javaME.wantToSeeJavaMEtools();
+		
+		makeFrame();
+				
 	}
 	
 	public TabbedFrameUnit(Package p){
@@ -231,19 +242,24 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
                 
         tabWindow.add(mainPanel);
         tabWindow.add(contentPane);
-        
+                      
         if (isEmptyFrame()) {
             enableFunctions(false);
         }
         
-        //if (!testToolsShown) {
+        // hide team tools if not wanted
+        if (! teamToolsShown) {
+            team.showTeamTools(false);
+        }
+        
+        if (!testToolsShown) {
             test.showTestingTools(false);
-        //}
+        }
 
         // hide Java ME tools if not wanted
-        //if (! javaMEtoolsShown) {
-        	//javaME.showJavaMEtools(false);
-        //}
+        if (! javaMEtoolsShown) {
+        	javaME.showJavaMEtools(false);
+        }
             
         javaMEPanel.setVisible(false); 
         textEvalConfig();
@@ -965,6 +981,35 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             DialogManager.showError(this, "no-class-selected-compile");
         }
     }
+    
+    public void updateTestingStatus(){
+    	if (testToolsShown != test.wantToSeeTestingTools()) {
+    		//Testing tools are always hidden in Java ME packages.  
+            if (isJavaMEpackage()) {
+         	   test.showTestingTools(false);
+            }
+            else {
+                test.showTestingTools(!testToolsShown);               
+            }
+           
+    	   	testToolsShown = !testToolsShown;
+    	}   	
+    }
+      
+    public void updateTeamStatus(){
+        if (teamToolsShown != team.wantToSeeTeamTools()) {
+        	team.showTeamTools(!teamToolsShown);
+        	teamToolsShown = !teamToolsShown;
+        }
+   }
+   
+    public void updateJavaMEstatus()
+    {
+        if ( javaMEtoolsShown != javaME.wantToSeeJavaMEtools() )  {
+        	javaME.showJavaMEtools(!javaMEtoolsShown );
+        	javaMEtoolsShown = !javaMEtoolsShown;
+        }
+    } 
     
     /**
      * Add the given set of Java source files as classes to this package.

@@ -1,9 +1,12 @@
 package bluej.pkgmgr;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
+
 import javax.swing.Action;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -17,6 +20,7 @@ import javax.swing.KeyStroke;
 import bluej.Config;
 
 import bluej.extmgr.MenuManager;
+import bluej.pkgmgr.PkgMgrFrame.URLDisplayer;
 import bluej.pkgmgr.actions.AddClassAction;
 
 import bluej.pkgmgr.actions.CheckExtensionsAction;
@@ -66,64 +70,72 @@ import bluej.pkgmgr.actions.StandardAPIHelpAction;
 import bluej.pkgmgr.actions.TutorialAction;
 import bluej.pkgmgr.actions.UseLibraryAction;
 import bluej.pkgmgr.actions.WebsiteAction;
+import bluej.utility.Utility;
 
 
 public class PkgFrameMenu extends AbstractPkgMenu {
-
-	private List<Action> actionsToDisable;
-	
-	private JMenuItem javaMEnewProjMenuItem;
-    private JMenuItem javaMEdeployMenuItem;
-    private JCheckBoxMenuItem showUsesMenuItem;
+	private JCheckBoxMenuItem showUsesMenuItem;
     private JCheckBoxMenuItem showExtendsMenuItem;
     
-    private JMenu menu;
-        
-	public PkgFrameMenu(){
-		 
+    private JMenuBar menubar;
+    private JMenu ToolMenu;
+    private JMenu ViewMenu;
+          
+    
+	public PkgFrameMenu(JMenuBar menubar){
+		this.menubar = menubar;
+		
+		ToolMenu = new JMenu(Config.getString("menu.tools"));
+		ToolMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
+
+		ViewMenu = new JMenu(Config.getString("menu.view"));
+		ViewMenu.setMnemonic(Config.getMnemonicKey("menu.view"));
 	}
 	
-	public JPopupMenu getMenuPopUp(){
-		return menu.getPopupMenu();
+	public JPopupMenu getToolMenuPopUp(){
+		return ToolMenu.getPopupMenu();
+	}
+	
+	public JPopupMenu getViewMenuPopUp(){
+		return ViewMenu.getPopupMenu();
 	}
 		
 	/**
 	 * @param menubar
 	 */
-	protected MenuManager setupMenu(JMenuBar menubar, JMenu recentProjectsMenu,PkgFrameTestingMenu test){
-
-		menu = new JMenu(Config.getString("menu.package"));
+	
+	protected void setupPackageMenu(PkgFrameJavaME javaME,JMenu recentProjectsMenu){
+		JMenu PackageMenu = new JMenu(Config.getString("menu.package"));
 		int mnemonic = Config.getMnemonicKey("menu.package");
-		menu.setMnemonic(mnemonic);
-		menubar.add(menu);
-		{
-			createMenuItem(NewProjectAction.getInstance(), menu);
-			javaMEnewProjMenuItem = createMenuItem(NewMEprojectAction.getInstance(), menu); 
-			javaMEnewProjMenuItem.setVisible(false); 
-			createMenuItem(OpenProjectAction.getInstance(), menu);
-			menu.add(recentProjectsMenu);
-			createMenuItem(OpenNonBlueJAction.getInstance(), menu);
-			createMenuItem(CloseProjectAction.getInstance(), menu);
-			createMenuItem(SaveProjectAction.getInstance(), menu);
-			createMenuItem(SaveProjectAsAction.getInstance(), menu);
-			menu.addSeparator();
+		PackageMenu.setMnemonic(mnemonic);
+		menubar.add(PackageMenu);
+		createMenuItem(NewProjectAction.getInstance(), PackageMenu);
+		javaME.initJavaMEProj(PackageMenu);
+			
+		createMenuItem(OpenProjectAction.getInstance(), PackageMenu);
+		PackageMenu.add(recentProjectsMenu);
+		createMenuItem(OpenNonBlueJAction.getInstance(), PackageMenu);
+		createMenuItem(CloseProjectAction.getInstance(), PackageMenu);
+		createMenuItem(SaveProjectAction.getInstance(), PackageMenu);
+		createMenuItem(SaveProjectAsAction.getInstance(), PackageMenu);
+		PackageMenu.addSeparator();
 
-			createMenuItem(ImportProjectAction.getInstance(), menu);
-			createMenuItem(ExportProjectAction.getInstance(), menu);
-			javaMEdeployMenuItem = createMenuItem( DeployMIDletAction.getInstance(), menu ); 
-			javaMEdeployMenuItem.setVisible(false); 
-			menu.addSeparator();
+		createMenuItem(ImportProjectAction.getInstance(), PackageMenu);
+		createMenuItem(ExportProjectAction.getInstance(), PackageMenu);
+		javaME.initJavaMEDeploy(PackageMenu); 
+		PackageMenu.addSeparator();
 
-			createMenuItem(PageSetupAction.getInstance(), menu);
-			createMenuItem(PrintAction.getInstance(), menu);
+		createMenuItem(PageSetupAction.getInstance(), PackageMenu);
+		createMenuItem(PrintAction.getInstance(), PackageMenu);
 
-			if (!Config.usingMacScreenMenubar()) { // no "Quit" here for Mac
-				menu.addSeparator();
-				createMenuItem(QuitAction.getInstance(), menu);
-			}
+		if (!Config.usingMacScreenMenubar()) { // no "Quit" here for Mac
+			PackageMenu.addSeparator();
+			createMenuItem(QuitAction.getInstance(), PackageMenu);
 		}
-
-		menu = new JMenu(Config.getString("menu.edit"));
+	}
+	
+	protected void setupEditMenu(){
+		JMenu menu = new JMenu(Config.getString("menu.edit"));
 		menu.setMnemonic(Config.getMnemonicKey("menu.edit"));
 		menubar.add(menu);
 		{
@@ -136,132 +148,84 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 			createMenuItem(NewUsesAction.getInstance(), menu);
 			createMenuItem(NewInheritsAction.getInstance(), menu);
 		}
-
-		menu = new JMenu(Config.getString("menu.tools"));
-		menu.setMnemonic(Config.getMnemonicKey("menu.tools"));
-		menubar.add(menu);
-		{
-			createMenuItem(CompileAction.getInstance(), menu);
-			createMenuItem(CompileSelectedAction.getInstance(), menu);
-			createMenuItem(RebuildAction.getInstance(), menu);
-			createMenuItem(RestartVMAction.getInstance(), menu);
-			menu.addSeparator();
-
-			createMenuItem(UseLibraryAction.getInstance(), menu);
-			createMenuItem(GenerateDocsAction.getInstance(), menu);
-
-			{
-				test.initTestingMenu(menu);	
-				if (!Config.usingMacScreenMenubar()) { // no "Preferences" here for
-					// Mac
-					menu.addSeparator();
-					createMenuItem(PreferencesAction.getInstance(), menu);
-				}
+	}
 	
-				// Create the menu manager that looks after extension tools menus
-				
-	
-				// If this is the first frame create the extension tools menu now.
-				// (Otherwise, it will be created during project open.)
-				//if (frames.size() <= 1) {
-				//  toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(null));
-				//  toolsMenuManager.addExtensionMenu(null);
-			}
+	protected void setupToolMenu(PkgFrameTestingMenu test){
+		menubar.add(ToolMenu);
+		createMenuItem(CompileAction.getInstance(), ToolMenu);
+		createMenuItem(CompileSelectedAction.getInstance(), ToolMenu);
+		createMenuItem(RebuildAction.getInstance(), ToolMenu);
+		createMenuItem(RestartVMAction.getInstance(), ToolMenu);
+		ToolMenu.addSeparator();
+
+		createMenuItem(UseLibraryAction.getInstance(), ToolMenu);
+		createMenuItem(GenerateDocsAction.getInstance(), ToolMenu);
+
+		test.initTestingMenu(ToolMenu);	
+		if (!Config.usingMacScreenMenubar()) { // no "Preferences" here for
+			// Mac
+			ToolMenu.addSeparator();
+			createMenuItem(PreferencesAction.getInstance(), ToolMenu);
 		}
-
-		MenuManager toolsMenuManager = new MenuManager(menu.getPopupMenu());
 		
-		menu = new JMenu(Config.getString("menu.view"));
+	}
+	
+	protected void setupViewMenu(){
+		JMenu menu = new JMenu(Config.getString("menu.view"));
 		menu.setMnemonic(Config.getMnemonicKey("menu.view"));
 		menubar.add(menu);
-		{
-			showUsesMenuItem = createCheckboxMenuItem(ShowUsesAction.getInstance(), menu, true);
-			showExtendsMenuItem = createCheckboxMenuItem(ShowInheritsAction.getInstance(), menu, true);
-			menu.addSeparator();
+		showUsesMenuItem = createCheckboxMenuItem(ShowUsesAction.getInstance(), menu, true);
+		showExtendsMenuItem = createCheckboxMenuItem(ShowInheritsAction.getInstance(), menu, true);
+		menu.addSeparator();
 
-			createCheckboxMenuItem(ShowDebuggerAction.getInstance(), menu, false);
-			createCheckboxMenuItem(ShowTerminalAction.getInstance(), menu, false);
-			createCheckboxMenuItem(ShowTextEvalAction.getInstance(), menu, false);
-			JSeparator testSeparator = new JSeparator();
-			//   testItems.add(testSeparator);
-			menu.add(testSeparator);
-
-			//  showTestResultsItem = createCheckboxMenuItem(ShowTestResultsAction.getInstance(), menu, false);
-			//   testItems.add(showTestResultsItem);
-
-			// Create the menu manager that looks after extension view menus
-			//  viewMenuManager = new MenuManager(menu.getPopupMenu());
-
-			// If this is the first frame create the extension view menu now.
-			// (Otherwise, it will be created during project open.)
-			// if (frames.size() <= 1) {
-			//   viewMenuManager.addExtensionMenu(null);
-		}
-		//}
-
-
-		menu = new JMenu(Config.getString("menu.help"));
+		createCheckboxMenuItem(ShowDebuggerAction.getInstance(), menu, false);
+		createCheckboxMenuItem(ShowTerminalAction.getInstance(), menu, false);
+		createCheckboxMenuItem(ShowTextEvalAction.getInstance(), menu, false);
+	}
+	
+	protected JMenu setupHelpMenu(){
+		JMenu menu = new JMenu(Config.getString("menu.help"));
 		menu.setMnemonic(Config.getMnemonicKey("menu.help"));
 		menubar.add(menu);
-		{
-			if (!Config.usingMacScreenMenubar()) { // no "About" here for Mac
-				createMenuItem(HelpAboutAction.getInstance(), menu);
-			}
-			createMenuItem(CheckVersionAction.getInstance(), menu);
-			createMenuItem(CheckExtensionsAction.getInstance(), menu);
-			createMenuItem(ShowCopyrightAction.getInstance(), menu);
-			menu.addSeparator();
 
-			createMenuItem(WebsiteAction.getInstance(), menu);
-			createMenuItem(TutorialAction.getInstance(), menu);
-			createMenuItem(StandardAPIHelpAction.getInstance(), menu);
+		if (!Config.usingMacScreenMenubar()) { // no "About" here for Mac
+			createMenuItem(HelpAboutAction.getInstance(), menu);
 		}
+		createMenuItem(CheckVersionAction.getInstance(), menu);
+		createMenuItem(CheckExtensionsAction.getInstance(), menu);
+		createMenuItem(ShowCopyrightAction.getInstance(), menu);
+		menu.addSeparator();
 
-
-		menu = new JMenu("GitHub");
-		menubar.add(menu);
-		{
-			createMenuItem(PushGitHubAction.getInstance(), menu);
-			createMenuItem(PullGitHubAction.getInstance(), menu);
-			createMenuItem(CommitGitHubAction.getInstance(), menu);
-			createMenuItem(NewIssueGitHubAction.getInstance(), menu);
-		}
-
-		menu = new JMenu("Windows");
-		menubar.add(menu);
-		{
-			JMenuItem newWindow = createMenuItem(NewWindowAction.getInstance(),menu);
-			newWindow.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
-						
-			JMenuItem newTab = createMenuItem(NewTabAction.getInstance(),menu);
-			newTab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
-			//menu.addSeparator();
-		}
+		createMenuItem(WebsiteAction.getInstance(), menu);
+		createMenuItem(TutorialAction.getInstance(), menu);
+		createMenuItem(StandardAPIHelpAction.getInstance(), menu);
 		
-		//addUserHelpItems(menu);
-		//updateRecentProjects();
+		return menu;
+		
+	}	
 
-		// setJMenuBar(menubar);     
-		return toolsMenuManager;
+	protected void setupGitHubMenu(){
+		JMenu menu = new JMenu("GitHub");
+		menubar.add(menu);
 
-	}
+		createMenuItem(PushGitHubAction.getInstance(), menu);
+		createMenuItem(PullGitHubAction.getInstance(), menu);
+		createMenuItem(CommitGitHubAction.getInstance(), menu);
+		createMenuItem(NewIssueGitHubAction.getInstance(), menu);
+	}	
+	
+	protected void setupWindowsMenu(){
+		JMenu menu = new JMenu("Windows");
+		menubar.add(menu);
 
-	/**
-	 * Add a new menu item to a menu.
-	 */
-	private JCheckBoxMenuItem createCheckboxMenuItem(PkgMgrAction action, JMenu menu, boolean selected)
-	{
-		//ButtonModel bmodel = action.getToggleModel(this);
+		JMenuItem newWindow = createMenuItem(NewWindowAction.getInstance(),menu);
+		newWindow.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
 
-		JCheckBoxMenuItem item = new JCheckBoxMenuItem(action);
-		//if (bmodel != null)
-		// item.setModel(action.getToggleModel(this));
-		//else
-		item.setState(selected);
-		menu.add(item);
-		return item;
-	}
+		JMenuItem newTab = createMenuItem(NewTabAction.getInstance(),menu);
+		newTab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
 
+	}	
+	
 	public boolean isShowUses()
 	{
 	        return showUsesMenuItem.isSelected();
@@ -271,6 +235,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 	{
 	        return showExtendsMenuItem.isSelected();
 	}
+	
 	
 }
 

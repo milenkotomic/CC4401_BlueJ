@@ -15,12 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import bluej.Config;
 import bluej.pkgmgr.actions.CancelTestRecordAction;
 import bluej.pkgmgr.actions.EndTestRecordAction;
 import bluej.pkgmgr.actions.RunTestsAction;
+import bluej.pkgmgr.actions.ShowTestResultsAction;
 import bluej.prefmgr.PrefMgr;
 
 public class PkgFrameTestingMenu extends AbstractPkgMenu{
@@ -31,6 +33,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
     private AbstractButton cancelTestButton;
     private JMenuItem endTestMenuItem;
     private JMenuItem cancelTestMenuItem;
+    private JMenuItem showTestResultsItem;
     
     private JMenu testingMenu;
     private List<JComponent> testItems = new ArrayList<JComponent>();
@@ -55,6 +58,15 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		testItems.add(testingMenu);
 		menu.add(testingMenu);
 		
+	}
+	
+	public void initViewTestingMenu(JMenu menu){
+		JSeparator testSeparator = new JSeparator();
+		testItems.add(testSeparator);
+		menu.add(testSeparator);
+
+		showTestResultsItem = createCheckboxMenuItem(ShowTestResultsAction.getInstance(), menu, false);
+		testItems.add(showTestResultsItem);
 	}
 
 	public JLabel getStatusMessage(){
