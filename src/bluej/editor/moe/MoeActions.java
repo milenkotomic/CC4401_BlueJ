@@ -805,6 +805,50 @@ public final class MoeActions
         {
             super ("add-javadoc");
         }
+        
+        private void makejavadoc(MethodNode methodNode , MoeEditor editor, NodeAndPosition<ParsedNode> node, int caretPos ){
+            StringBuilder indent = new StringBuilder();
+            int column = editor.getLineColumnFromOffset(node.getPosition()).getColumn();
+            for (int i = 0;i < column-1;i++)
+                indent.append(' ');
+            StringBuilder newComment = new StringBuilder();
+            newComment.append("/**\n");
+            
+            JavaEntity retTypeEntity = methodNode.getReturnType();
+            
+            if (retTypeEntity == null) {
+                // It's a constructor:
+                newComment.append(indent).append(" * ").append(methodNode.getName()).append(" ");
+                newComment.append(Config.getString("editor.addjavadoc.constructor")).append("\n");
+            } else {
+                // It's a method:
+                newComment.append(indent).append(" * ").append(Config.getString("editor.addjavadoc.method"));
+                newComment.append(" ").append(methodNode.getName()).append("\n");
+            }
+            newComment.append(indent).append(" *\n");
+
+            for (String s: methodNode.getParamNames()) {
+                newComment.append(indent).append(" * @para ").append(s).append("  ");
+                newComment.append(Config.getString("editor.addjavadoc.parameter")).append("\n");
+            }
+            
+            if (retTypeEntity != null) {
+                JavaType retType = retTypeEntity.resolveAsType().getType();
+                if (retType != null && !retType.isVoid()) {
+                    newComment.append(indent).append(" * @return ");
+                    newComment.append(Config.getString("editor.addjavadoc.returnValue")).append("\n");
+                }
+            }
+            
+            newComment.append(indent).append(" */\n").append(indent);
+            
+            editor.undoManager.beginCompoundEdit();
+            editor.getCurrentTextPane().setCaretPosition(node.getPosition());
+            editor.getCurrentTextPane().replaceSelection(newComment.toString());
+            editor.getCurrentTextPane().setCaretPosition((caretPos + newComment.length()));
+            editor.undoManager.endCompoundEdit();
+        }
+        
         private void createjavadoc(MoeEditor editor, int caretPos, NodeAndPosition<ParsedNode> node){
         	
             
@@ -830,46 +874,8 @@ public final class MoeActions
                 if (hasJavadocComment) {
                     editor.writeMessage(Config.getString("editor.addjavadoc.hasJavadoc"));
                 } else {
-                    StringBuilder indent = new StringBuilder();
-                    int column = editor.getLineColumnFromOffset(node.getPosition()).getColumn();
-                    for (int i = 0;i < column-1;i++)
-                        indent.append(' ');
-                    StringBuilder newComment = new StringBuilder();
-                    newComment.append("/**\n");
-                    
-                    JavaEntity retTypeEntity = methodNode.getReturnType();
-                    
-                    if (retTypeEntity == null) {
-                        // It's a constructor:
-                        newComment.append(indent).append(" * ").append(methodNode.getName()).append(" ");
-                        newComment.append(Config.getString("editor.addjavadoc.constructor")).append("\n");
-                    } else {
-                        // It's a method:
-                        newComment.append(indent).append(" * ").append(Config.getString("editor.addjavadoc.method"));
-                        newComment.append(" ").append(methodNode.getName()).append("\n");
-                    }
-                    newComment.append(indent).append(" *\n");
+                	 makejavadoc(methodNode, editor, node, caretPos);
 
-                    for (String s: methodNode.getParamNames()) {
-                        newComment.append(indent).append(" * @param ").append(s).append("  ");
-                        newComment.append(Config.getString("editor.addjavadoc.parameter")).append("\n");
-                    }
-                    
-                    if (retTypeEntity != null) {
-                        JavaType retType = retTypeEntity.resolveAsType().getType();
-                        if (retType != null && !retType.isVoid()) {
-                            newComment.append(indent).append(" * @return ");
-                            newComment.append(Config.getString("editor.addjavadoc.returnValue")).append("\n");
-                        }
-                    }
-                    
-                    newComment.append(indent).append(" */\n").append(indent);
-                    
-                    editor.undoManager.beginCompoundEdit();
-                    editor.getCurrentTextPane().setCaretPosition(node.getPosition());
-                    editor.getCurrentTextPane().replaceSelection(newComment.toString());
-                    editor.getCurrentTextPane().setCaretPosition((caretPos + newComment.length()));
-                    editor.undoManager.endCompoundEdit();
                 }
             
             }
@@ -884,14 +890,36 @@ public final class MoeActions
             if (!editor.containsSourceCode()){
                 return;
             }
-            int caretPos=0;
-           caretPos = editor.getCurrentTextPane().getCaretPosition();
-            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
-            createjavadoc(editor, caretPos,node);
-         
-           
+            int caretPos= getLastpositionofclass(editor).getPosition();
             
+            //getnode class           
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            
+            int classnode_end	= getLastpositionofclass(editor).getEnd();
+            System.out.println("poscision del caracter " + caretPos);
+            System.out.println("inicio nodo " + node.getPosition());
+            System.out.println("fin nodo " + node.getEnd());
+            while (caretPos <= classnode_end ){
+            	createjavadoc(editor, caretPos,node);
+            	caretPos++;
+            	classnode_end= getLastpositionofclass(editor).getEnd();
+            	
+            }           
         }
+        private NodeAndPosition<ParsedNode>  getLastpositionofclass(MoeEditor editor){
+        	int caretPos=0;
+            
+            //getnode class           
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            while (true){
+            	if (node!=null)
+            		break;
+            	caretPos++;
+            	node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            }
+            return node;
+        }
+        
     }
 
     // --------------------------------------------------------------------
