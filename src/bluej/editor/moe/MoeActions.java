@@ -896,9 +896,6 @@ public final class MoeActions
             NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
             
             int classnode_end	= getLastpositionofclass(editor).getEnd();
-            System.out.println("poscision del caracter " + caretPos);
-            System.out.println("inicio nodo " + node.getPosition());
-            System.out.println("fin nodo " + node.getEnd());
             while (caretPos <= classnode_end ){
             	createjavadoc(editor, caretPos,node);
             	caretPos++;
