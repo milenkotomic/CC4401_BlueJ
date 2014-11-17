@@ -1,5 +1,6 @@
 package bluej.pkgmgr;
 
+import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 
 import bluej.Config;
@@ -29,6 +30,10 @@ public class TextEvaluatorMgr {
 
     public TextEvalAreaTFU getTextEval(){
     	return textEvaluator;
+    }
+    
+    public JComponent getFocus(){
+    	return textEvaluator.getFocusableComponent();
     }
     
     /**

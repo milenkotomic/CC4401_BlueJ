@@ -58,8 +58,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	
 	public TabbedPkgFrame(){
 		setupWindow();
-		
-		
+				
 		jtp = new JTabbedPane();
 		jtp.addChangeListener(new ChangeListener() {
 	        public void stateChanged(ChangeEvent e) {
@@ -415,8 +414,9 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
             if (keepLastFrame) {
                 recentFrame.testRecordingEnded(); // disable test controls
                 toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(recentFrame.getPackage()));
-                recentFrame.closePackage();
+                recentFrame.closePackage(toolsMenuManager,viewMenuManager);
                 
+                                
                 updateRecentProjects();
                 recentFrame.enableFunctions(false); // changes menu items
                 updateWindow();
@@ -428,7 +428,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
             }
         }
         else {
-           recentFrame.closePackage(); // remove package and frame
+           recentFrame.closePackage(toolsMenuManager,viewMenuManager); // remove package and frame
            closeFrame(recentFrame);
         }
     }
@@ -667,10 +667,12 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
    
    public void doNewUses(){
 	   recentFrame.doNewUses();
+	   setStatus(Config.getString("pkgmgr.chooseUsesFrom"));
    }
    
    public void doNewInherits(){
 	   recentFrame.doNewInherits();
+	   setStatus(Config.getString("pkgmgr.chooseInhFrom"));
    }
    
    /**
@@ -697,9 +699,9 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
     	   projectPrintDialog = new ProjectPrintDialog(this);
 
        if (projectPrintDialog.display()) {
-         //  PackagePrintManager printManager = new PackagePrintManager(this.getPackage(), getPageFormat(),
-           //        projectPrintDialog);
-           //printManager.start();
+        // PackagePrintManager printManager = new PackagePrintManager(this.getPackage(), getPageFormat(),
+         //         projectPrintDialog);
+         //  printManager.start();
        }
    }
    

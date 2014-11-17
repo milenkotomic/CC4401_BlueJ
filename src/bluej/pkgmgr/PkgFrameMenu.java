@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.StringTokenizer;
 
 import javax.swing.Action;
@@ -100,6 +101,14 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		return ViewMenu.getPopupMenu();
 	}
 		
+	public void initShowItems(Properties p){
+		String uses_str = p.getProperty("package.showUses", "true");
+        String extends_str = p.getProperty("package.showExtends", "true");
+        
+		showUsesMenuItem.setSelected(uses_str.equals("true"));
+        showExtendsMenuItem.setSelected(extends_str.equals("true"));
+	}
+	
 	/**
 	 * @param menubar
 	 */

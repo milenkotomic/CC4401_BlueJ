@@ -44,6 +44,9 @@ import bluej.debugger.Debugger;
 import bluej.debugmgr.objectbench.ObjectBenchTFU;
 import bluej.debugmgr.texteval.TextEvalAreaTFU;
 import bluej.extmgr.ExtensionsManager;
+import bluej.extmgr.MenuManager;
+import bluej.extmgr.ToolsExtensionMenu;
+import bluej.extmgr.ViewExtensionMenu;
 import bluej.groupwork.ui.ActivityIndicator;
 import bluej.pkgmgr.actions.AddClassAction;
 import bluej.pkgmgr.actions.CloseProjectAction;
@@ -132,6 +135,10 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 				
 	}
 	
+	public ObjectBenchTFU getObjectBench(){
+		return objbench;
+	}
+	
 	public TabbedFrameUnit(Package p,PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team){
 		this(menuMgr,test,javaME,team);
 		pkg = p;		
@@ -168,12 +175,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	public void clearTextEval(){
 		text.clearTextEval();
 	}
-	
-	public ObjectBenchTFU getObjectBench()
-	{
-		return objbench;
-	}
-	
+		
 	protected void updateTestShow(){
 		testToolsShown = test.wantToSeeTestingTools();
 	}
@@ -611,7 +613,6 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     public void doNewUses()
     {
         pkg.setState(Package.S_CHOOSE_USES_FROM);
-        //setStatus(Config.getString("pkgmgr.chooseUsesFrom"));
         pkg.getEditor().clearSelection();
     }
 
@@ -621,7 +622,6 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     public void doNewInherits()
     {
         pkg.setState(Package.S_CHOOSE_EXT_FROM);
-        //setStatus(Config.getString("pkgmgr.chooseInhFrom"));
         editor.clearSelection();
     }
     
@@ -683,7 +683,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
                 String objectBench_width_str = p.getProperty("objectbench.width");
                 if (objectBench_height_str != null && objectBench_width_str != null) {
                     objbench.setPreferredSize(new Dimension(Integer.parseInt(objectBench_width_str),
-                            Integer.parseInt(objectBench_height_str)));
+                           Integer.parseInt(objectBench_height_str)));
                 }
                 
                 String x_str = p.getProperty("package.editor.x", "30");
@@ -702,13 +702,9 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             } catch (NumberFormatException e) {
                 Debug.reportError("Could not read preferred project screen position");
             }
-            
-            String uses_str = p.getProperty("package.showUses", "true");
-            String extends_str = p.getProperty("package.showExtends", "true");
-            
-            //showUsesMenuItem.setSelected(uses_str.equals("true"));
-            //showExtendsMenuItem.setSelected(extends_str.equals("true"));
-            
+                       
+            menuMgr.initShowItems(p);
+                        
             updateShowUsesInPackage();
             updateShowExtendsInPackage();
           
@@ -794,11 +790,11 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             visiblePanes.add(editor);
         }
         // Object bench is always present, even if no package open:
-        visiblePanes.add(objbench);
-        /*if (showingTextEvaluator)
+        	visiblePanes.add(objbench);
+        if (text.isTextEvalVisible())
         {
-            visiblePanes.add(textEvaluator.getFocusableComponent());
-        }*/
+            visiblePanes.add(text.getFocus());
+        }
         
         for (int i = 0; i < visiblePanes.size(); i++)
         {
@@ -848,8 +844,8 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         p.put("objectbench.width", Integer.toString(d.width));
         p.put("objectbench.height", Integer.toString(d.height));
 
-       /* p.put("package.showUses", Boolean.toString(isShowUses()));
-        p.put("package.showExtends", Boolean.toString(isShowExtends()));*/
+       p.put("package.showUses", Boolean.toString(menuMgr.isShowUses()));
+        p.put("package.showExtends", Boolean.toString(menuMgr.isShowExtends()));
        
         pkg.save(p);
     }
@@ -906,10 +902,14 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         }
     }
     
+    public void closePackage(){
+    	closePackage(null,null);
+    }
+    
 	/**
      * Closes the current package.
      */
-    public void closePackage()
+    public void closePackage(MenuManager toolsMenuManager, MenuManager viewMenuManager)
     {
         if (isEmptyFrame()) {
             return;
@@ -922,8 +922,11 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
             classScroller.setBorder(Config.normalBorder);
             editor.removeMouseListener(this);
             editor.removeFocusListener(this);
-            //toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
-            //viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
+            
+            if(toolsMenuManager!=null && viewMenuManager!=null){
+            	toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pkg));
+            	viewMenuManager.setMenuGenerator(new ViewExtensionMenu(pkg));
+            }
             
             objbench.removeAllObjects(getProject().getUniqueId());
             text.clearTextEval();
@@ -1131,7 +1134,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	}
 	
 	public void recordInteraction(InvokerRecord ir) {
-		objbench.addInteraction(ir);
+		//objbench.addInteraction(ir);
 		
 	}
 

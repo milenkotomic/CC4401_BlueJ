@@ -582,13 +582,13 @@ public class ObjectBenchTFU extends JPanel implements Accessible, ValueCollectio
 
         // a panel holding the actual object components
         obp = new ObjectBenchPanel();
-        if (!Config.isRaspberryPi()) obp.setBackground(TRANSPARENT);
-        if (!Config.isRaspberryPi()) obp.setOpaque(true);
-        if (!Config.isRaspberryPi()) setOpaque(false);
+        obp.setBackground(TRANSPARENT);
+        obp.setOpaque(true);
+        setOpaque(false);
         
         scroll = new JScrollPane(obp);
         scroll.setBorder(Config.normalBorder);
-        if (!Config.isRaspberryPi()) scroll.setOpaque(false);
+        scroll.setOpaque(false);
         Dimension sz = obp.getMinimumSize();
         Insets in = scroll.getInsets();
         sz.setSize(sz.getWidth()+in.left+in.right, sz.getHeight()+in.top+in.bottom);
@@ -620,7 +620,7 @@ public class ObjectBenchTFU extends JPanel implements Accessible, ValueCollectio
         public ObjectBenchPanel()
         {
             setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            setMinimumSize(new Dimension(ObjectWrapper.WIDTH, ObjectWrapper.HEIGHT));
+            setMinimumSize(new Dimension(ObjectWrapperTFU.WIDTH, ObjectWrapperTFU.HEIGHT));
         }
 
         /**
@@ -639,7 +639,7 @@ public class ObjectBenchTFU extends JPanel implements Accessible, ValueCollectio
         public Dimension getPreferredSize()
         {
             int rows = getNumberOfRows();
-            return new Dimension(ObjectWrapper.WIDTH, ObjectWrapper.HEIGHT * rows);                
+            return new Dimension(ObjectWrapperTFU.WIDTH, ObjectWrapperTFU.HEIGHT * rows);                
         }
         
         /**
@@ -652,7 +652,7 @@ public class ObjectBenchTFU extends JPanel implements Accessible, ValueCollectio
                 return 1;
             }
             else {
-                int objectsPerRow = getWidth() / ObjectWrapper.WIDTH;
+                int objectsPerRow = getWidth() / ObjectWrapperTFU.WIDTH;
                 return (objects + objectsPerRow - 1) / objectsPerRow;
             }            
         }
@@ -662,7 +662,7 @@ public class ObjectBenchTFU extends JPanel implements Accessible, ValueCollectio
          */
         public int getNumberOfColumns()
         {
-            return getWidth() / ObjectWrapper.WIDTH;
+            return getWidth() / ObjectWrapperTFU.WIDTH;
         }
 
         protected void paintComponent(Graphics g)
@@ -672,7 +672,7 @@ public class ObjectBenchTFU extends JPanel implements Accessible, ValueCollectio
             if (g instanceof Graphics2D && false == tfu.isEmptyFrame()) {
                 Graphics2D g2d = (Graphics2D)g;
                 
-                int w = getWidth();
+                int w = 1222;
                 int h = getHeight();
                 
                 boolean codePadVisible = tfu.isTextEvalVisible();
