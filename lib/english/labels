@@ -279,6 +279,10 @@ editor.addjavadoc.method=Method
 editor.addjavadoc.parameter=A parameter
 editor.addjavadoc.returnValue=The return value
 
+# "Getters/Setters" function
+
+editor.abstractCreateGetterSetter.notAField=Not in a field.
+
 # Messages shown as a result of a search with replace all
 editor.replaceAll.replaced=Replaced
 editor.replaceAll.intancesOf=instances of

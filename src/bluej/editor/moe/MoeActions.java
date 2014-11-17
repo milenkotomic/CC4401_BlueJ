@@ -1043,7 +1043,7 @@ public final class MoeActions
                 
             }
             if (node == null || !(node.getNode() instanceof FieldNode)) {
-                editor.writeMessage(Config.getString("editor.addjavadoc.notAMethod"));
+                editor.writeMessage(Config.getString("editor.abstractCreateGetterSetter.notAField"));
             } 
             else {
                 FieldNode fieldNode = ((FieldNode)node.getNode());
