@@ -80,7 +80,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		setupMenu();
 		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
 		
-		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME,team);
+		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME,team,true);
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
@@ -161,14 +161,14 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 
 	
 	public TabbedFrameUnit createFrame(Package pkg){
-		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg,menuMgr,test,javaME,team);
+		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg,menuMgr,test,javaME,team,false);
 				
 		pkgTabs.add(tfu);
 		return tfu;
 	}
 	
 	public TabbedFrameUnit createFrame(){
-		TabbedFrameUnit tfu = new TabbedFrameUnit(menuMgr,test,javaME,team);
+		TabbedFrameUnit tfu = new TabbedFrameUnit(menuMgr,test,javaME,team,false);
 		
 		pkgTabs.add(tfu);	
 		return tfu;
@@ -282,7 +282,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
     }
     
     public void doOpenTab(){
-		TabbedFrameUnit newTab = new TabbedFrameUnit(menuMgr,test,javaME,team);
+		TabbedFrameUnit newTab = new TabbedFrameUnit(menuMgr,test,javaME,team,false);
         pkgTabs.add(newTab);
 		        
 		jtp.addTab("BlueJ", newTab.getTab());
@@ -705,23 +705,20 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
     	   projectPrintDialog = new ProjectPrintDialog(this);
 
        if (projectPrintDialog.display()) {
-        // PackagePrintManager printManager = new PackagePrintManager(this.getPackage(), getPageFormat(),
-         //         projectPrintDialog);
-         //  printManager.start();
+        PackagePrintManager printManager = new PackagePrintManager(recentFrame.getPackage(), pageFormatMgr.getPageFormat(),
+                  projectPrintDialog);
+          printManager.start();
        }
    }
    
    
-   private PageFormatMgr pageFormatMgr = null;
+   private PageFormatMgr pageFormatMgr = new PageFormatMgr();
    /**
     * Creates a page setup dialog to alter page dimensions.
     *  
     */
    public void doPageSetup()
-   {
-	if(pageFormatMgr == null)
-		pageFormatMgr = new PageFormatMgr();
-	   
+   {   
 	pageFormatMgr.doPageSetup();
       
    }

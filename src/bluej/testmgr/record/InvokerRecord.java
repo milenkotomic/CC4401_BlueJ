@@ -24,6 +24,7 @@ package bluej.testmgr.record;
 import java.util.ArrayList;
 
 import bluej.debugger.DebuggerObject;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.TabbedFrameUnit;
 
@@ -117,7 +118,7 @@ public abstract class InvokerRecord
      * 
      * @return a String representing the test method src
      */
-    public abstract String toTestMethod(String secondIndent);
+    public abstract String toTestMethod(String secondIndent,IPkgFrame frame);
 
        /**
      * Construct an expression. This is an open expression which is not ended by

@@ -25,6 +25,7 @@ import bluej.Config;
 import bluej.collect.DataCollector;
 import bluej.debugmgr.NamedValue;
 import bluej.debugmgr.ValueCollection;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.testmgr.record.InvokerRecord;
 import bluej.utility.JavaNames;
 
@@ -528,7 +529,7 @@ public abstract class AbstractObjectBench extends JPanel implements Accessible, 
 	/**
 	 * Get the recorded interactions as Java code.
 	 */
-	public String getTestMethod(String secondIndent)
+	public String getTestMethod(String secondIndent, IPkgFrame frame)
 	{
 		StringBuffer sb = new StringBuffer();
 		Iterator<InvokerRecord> it = invokerRecords.iterator();
@@ -536,7 +537,7 @@ public abstract class AbstractObjectBench extends JPanel implements Accessible, 
 		while(it.hasNext()) {
 			InvokerRecord ir = it.next();
 
-			String testMethod = ir.toTestMethod(secondIndent);
+			String testMethod = ir.toTestMethod(secondIndent,null);
 			if (testMethod != null) {
 				sb.append(testMethod);
 			}

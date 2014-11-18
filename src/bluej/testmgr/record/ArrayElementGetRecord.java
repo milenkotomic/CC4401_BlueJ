@@ -21,6 +21,7 @@
  */
 package bluej.testmgr.record;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.TabbedFrameUnit;
 
@@ -107,7 +108,7 @@ public class ArrayElementGetRecord extends InvokerRecord
      * @return a String representing the test method src
      */
     @Override
-    public String toTestMethod (String secondIndent)
+    public String toTestMethod (String secondIndent,IPkgFrame frame)
     {
         return secondIndent + objType + " " + objName + " = " + toExpression() + statementEnd;
     }

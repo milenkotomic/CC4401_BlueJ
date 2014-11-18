@@ -21,6 +21,7 @@
  */
 package bluej.testmgr.record;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.pkgmgr.TabbedFrameUnit;
 
@@ -66,7 +67,7 @@ public class ClassInspectInvokerRecord extends InvokerRecord
     }
 
     @Override
-    public String toTestMethod(String secondIndent)
+    public String toTestMethod(String secondIndent, IPkgFrame frame)
     {
         return secondIndent + className + statementEnd;
     }

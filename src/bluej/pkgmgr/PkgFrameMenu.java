@@ -233,7 +233,7 @@ public class PkgFrameMenu extends AbstractPkgMenu {
 		newWindow.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
 
 		JMenuItem newTab = createMenuItem(NewTabAction.getInstance(),menu);
-		newTab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+		newTab.setAccelerator(KeyStroke.getKeyStroke("control shift T"));
 
 	}	
 	

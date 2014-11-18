@@ -115,7 +115,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
     private List<Action> actionsToDisable;
     
     
-	public TabbedFrameUnit(PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team){
+	public TabbedFrameUnit(PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team, Boolean recent){
 		tabWindow = new JPanel();
 		this.menuMgr = menuMgr; 
 		this.test = test;
@@ -131,7 +131,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		teamToolsShown = team.wantToSeeTeamTools();
 		javaMEtoolsShown = javaME.wantToSeeJavaMEtools();
 		
-		makeFrame();
+		makeFrame(recent);
 				
 	}
 	
@@ -139,8 +139,8 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 		return objbench;
 	}
 	
-	public TabbedFrameUnit(Package p,PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team){
-		this(menuMgr,test,javaME,team);
+	public TabbedFrameUnit(Package p,PkgFrameMenu menuMgr,PkgFrameTestingMenu test, PkgFrameJavaME javaME, PkgFrameTeamMenu team, Boolean recent){
+		this(menuMgr,test,javaME,team,recent);
 		pkg = p;		
 		
 	}
@@ -187,7 +187,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 	protected void updateJavaMEShow(){
 		javaMEtoolsShown = javaME.wantToSeeJavaMEtools();
 	}
-	protected void makeFrame(){
+	protected void makeFrame(Boolean recent){
 		setFont(pkgMgrFont);
 		JPanel toolPanel = new JPanel();
 		//setContentPane(new GradientFillPanel(getContentPane().getLayout()));
@@ -267,7 +267,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
         tabWindow.add(mainPanel);
         tabWindow.add(contentPane);
                              
-        if (isEmptyFrame()) {
+        if (isEmptyFrame() && recent) {
             enableFunctions(false);
         }
         

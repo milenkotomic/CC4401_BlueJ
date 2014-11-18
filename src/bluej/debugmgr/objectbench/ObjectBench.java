@@ -566,7 +566,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
         while(it.hasNext()) {
             InvokerRecord ir = it.next();
 
-            String testMethod = ir.toTestMethod(secondIndent);
+            String testMethod = ir.toTestMethod(secondIndent,null);
             if (testMethod != null) {
                 sb.append(testMethod);
             }

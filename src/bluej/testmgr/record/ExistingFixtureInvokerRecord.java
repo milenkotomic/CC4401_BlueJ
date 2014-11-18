@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -116,7 +117,7 @@ public class ExistingFixtureInvokerRecord extends InvokerRecord
      * @return a String representing the test method src
      */
     @Override
-    public String toTestMethod(String secondIndent)
+    public String toTestMethod(String secondIndent, IPkgFrame frame)
     {
         return null;
     }
