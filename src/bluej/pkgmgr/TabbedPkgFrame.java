@@ -268,7 +268,6 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	        BlueJEvent.removeListener(frame);
 	        PrefMgr.setFlag(PrefMgr.SHOW_TEXT_EVAL, frame.isTextEvalVisible());
     	}    
-
     }
            
     /*ACTIONS*/
@@ -421,8 +420,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
                 recentFrame.testRecordingEnded(); // disable test controls
                 toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(recentFrame.getPackage()));
                 recentFrame.closePackage(toolsMenuManager,viewMenuManager);
-                
-                                
+                                                
                 updateRecentProjects();
                 recentFrame.enableFunctions(false); // changes menu items
                 updateWindow();
@@ -856,7 +854,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 
        return list.toArray(new TabbedFrameUnit[list.size()]);
    }
-  
+    
 	public boolean isTextEvalVisible() {
 		return recentFrame.isTextEvalVisible();
 	}

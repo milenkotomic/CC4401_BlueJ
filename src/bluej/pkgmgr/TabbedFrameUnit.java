@@ -946,7 +946,7 @@ public class TabbedFrameUnit extends JFrame implements BlueJEventListener, Mouse
 
         // if there are no other frames editing this project, we close
         // the project
-        if (PkgMgrFrame.getAllProjectFrames(proj) == null) {
+        if (TabbedPkgFrame.getAllProjectFrames(proj) == null) {
             Project.cleanUp(proj);
         }
     }
