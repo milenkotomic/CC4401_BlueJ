@@ -590,7 +590,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
         if (!Config.isRaspberryPi()) setOpaque(false);
         
         scroll = new JScrollPane(obp);
-        /*scroll.setBorder(Config.normalBorder);
+        scroll.setBorder(Config.normalBorder);
         if (!Config.isRaspberryPi()) scroll.setOpaque(false);
         Dimension sz = obp.getMinimumSize();
         Insets in = scroll.getInsets();
@@ -599,7 +599,7 @@ public class ObjectBench extends JPanel implements Accessible, ValueCollection,
         scroll.setPreferredSize(sz);
         scroll.getVerticalScrollBar().setUnitIncrement(20);
         
-        add(scroll, BorderLayout.CENTER);*/
+        add(scroll, BorderLayout.CENTER);
 
         // start with a clean slate recording invocations
         resetRecordingInteractions();

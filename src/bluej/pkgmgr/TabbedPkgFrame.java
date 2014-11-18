@@ -65,6 +65,12 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	            int index = jtp.getSelectedIndex();
 	            TabbedFrameUnit tfu = findTFUbyIndex(index);
 	            recentFrame = tfu;
+	            if(recentFrame.isEmptyFrame()){
+	            	recentFrame.enableFunctions(false);
+	            }else{
+	            	recentFrame.enableFunctions(true);
+	            }
+	            
 	        }
 	    });
 				
@@ -104,7 +110,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	    	setIconImage(icon);
 	    }
 	   
-	    setSize(new Dimension(695, 575));
+	    setSize(new Dimension(695, 610));
 	    setLocation(20,20);   
 	}
 	
