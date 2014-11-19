@@ -23,7 +23,9 @@ package bluej.debugmgr;
 
 import javax.swing.JToggleButton;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
+
 
 /**
  * ButtonModel for the "Show Debugger" checkBoxItem in the menu.

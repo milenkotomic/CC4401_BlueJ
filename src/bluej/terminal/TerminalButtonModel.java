@@ -23,7 +23,9 @@ package bluej.terminal;
 
 import javax.swing.JToggleButton;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
+
 
 /**
  * ButtonModel for the "Show Terminal" checkBoxItem in the menu.

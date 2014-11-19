@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="ASCII"?>
+<javaapplication:Java2File xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:javaapplication="http://www.eclipse.org/MoDisco/Java/Composition/0.1.incubation/javaApplication">
+  <file href="../CC4401_BlueJ_kdm.xmi#//@model.0/@inventoryElement.0/@inventoryElement.17/@inventoryElement.0/@inventoryElement.11/@inventoryElement.27/@inventoryElement.0"/>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="1" startPosition="0" endLine="21" endPosition="931">
+    <node href="../CC4401_BlueJ_java.xmi#//@compilationUnits.228/@comments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="24" startPosition="967" endLine="24" endPosition="994">
+    <node href="../CC4401_BlueJ_java.xmi#//@compilationUnits.228/@imports.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="26" startPosition="996" endLine="26" endPosition="1033">
+    <node href="../CC4401_BlueJ_java.xmi#//@compilationUnits.228/@imports.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="28" startPosition="1035" endLine="84" endPosition="3317">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="28" startPosition="1035" endLine="52" endPosition="2201">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="29" startPosition="1042" endLine="49" endPosition="2168">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="29" startPosition="1042" endLine="29" endPosition="1045">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="30" startPosition="1049" endLine="30" endPosition="1119">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="31" startPosition="1123" endLine="31" endPosition="1196">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="32" startPosition="1200" endLine="32" endPosition="1273">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="33" startPosition="1277" endLine="33" endPosition="1354">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.4"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="34" startPosition="1358" endLine="34" endPosition="1414">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.5"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="35" startPosition="1418" endLine="35" endPosition="1422">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.6"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="36" startPosition="1426" endLine="36" endPosition="1429">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.7"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="37" startPosition="1433" endLine="37" endPosition="1505">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.8"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="38" startPosition="1509" endLine="38" endPosition="1584">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.9"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="39" startPosition="1588" endLine="39" endPosition="1656">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.10"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="40" startPosition="1660" endLine="40" endPosition="1737">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.11"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="41" startPosition="1741" endLine="41" endPosition="1818">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.12"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="42" startPosition="1822" endLine="42" endPosition="1826">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.13"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="43" startPosition="1830" endLine="43" endPosition="1833">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.14"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="44" startPosition="1837" endLine="44" endPosition="1906">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.15"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="45" startPosition="1910" endLine="45" endPosition="1983">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.16"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="46" startPosition="1987" endLine="46" endPosition="2062">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.17"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="47" startPosition="2066" endLine="47" endPosition="2141">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.18"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="48" startPosition="2145" endLine="48" endPosition="2160">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.19"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="49" startPosition="2164" endLine="49" endPosition="2168">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.0/@fragments.20"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="51" startPosition="2176" endLine="51" endPosition="2197">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="51" startPosition="2183" endLine="51" endPosition="2197">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@comments.0/@tags.1/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="55" startPosition="2253" endLine="67" endPosition="2674">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="55" startPosition="2253" endLine="68" endPosition="2781">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="56" startPosition="2264" endLine="56" endPosition="2324">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.0/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="56" startPosition="2264" endLine="57" endPosition="2347">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="57" startPosition="2332" endLine="57" endPosition="2347">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.0/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="59" startPosition="2363" endLine="60" endPosition="2439">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="59" startPosition="2370" endLine="59" endPosition="2382">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.1/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="60" startPosition="2401" endLine="60" endPosition="2439">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.1/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="61" startPosition="2447" endLine="62" endPosition="2524">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="61" startPosition="2454" endLine="61" endPosition="2462">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.2/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="62" startPosition="2481" endLine="62" endPosition="2485">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.2/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="62" startPosition="2485" endLine="62" endPosition="2503">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.2/@fragments.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="62" startPosition="2492" endLine="62" endPosition="2502">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.2/@fragments.2/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="62" startPosition="2503" endLine="62" endPosition="2524">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.2/@fragments.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="63" startPosition="2532" endLine="64" endPosition="2594">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="63" startPosition="2539" endLine="63" endPosition="2544">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.3/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="64" startPosition="2563" endLine="64" endPosition="2594">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.3/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="65" startPosition="2602" endLine="66" endPosition="2666">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.4"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="65" startPosition="2609" endLine="65" endPosition="2615">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.4/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="66" startPosition="2634" endLine="66" endPosition="2666">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@comments.0/@tags.4/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2679" endLine="68" endPosition="2683">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@returnType"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2710" endLine="68" endPosition="2722">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.0/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2710" endLine="68" endPosition="2735">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2710" endLine="68" endPosition="2722">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.0/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2737" endLine="68" endPosition="2747">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.1/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2737" endLine="68" endPosition="2747">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.1/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2737" endLine="68" endPosition="2756">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2758" endLine="68" endPosition="2761">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.2/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2758" endLine="68" endPosition="2767">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2769" endLine="68" endPosition="2772">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.3/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="68" startPosition="2769" endLine="68" endPosition="2779">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.0/@parameters.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="70" startPosition="2787" endLine="83" endPosition="3315">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="70" startPosition="2787" endLine="82" endPosition="3208">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="71" startPosition="2798" endLine="71" endPosition="2858">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.0/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="71" startPosition="2798" endLine="72" endPosition="2881">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="72" startPosition="2866" endLine="72" endPosition="2881">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.0/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="74" startPosition="2897" endLine="75" endPosition="2973">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="74" startPosition="2904" endLine="74" endPosition="2916">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.1/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="75" startPosition="2935" endLine="75" endPosition="2973">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.1/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="76" startPosition="2981" endLine="77" endPosition="3058">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="76" startPosition="2988" endLine="76" endPosition="2996">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.2/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="77" startPosition="3015" endLine="77" endPosition="3019">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.2/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="77" startPosition="3019" endLine="77" endPosition="3037">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.2/@fragments.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="77" startPosition="3026" endLine="77" endPosition="3036">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.2/@fragments.2/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="77" startPosition="3037" endLine="77" endPosition="3058">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.2/@fragments.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="78" startPosition="3066" endLine="79" endPosition="3128">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="78" startPosition="3073" endLine="78" endPosition="3078">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.3/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="79" startPosition="3097" endLine="79" endPosition="3128">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.3/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="80" startPosition="3136" endLine="81" endPosition="3200">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.4"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="80" startPosition="3143" endLine="80" endPosition="3149">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.4/@fragments.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="81" startPosition="3168" endLine="81" endPosition="3200">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@comments.0/@tags.4/@fragments.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3213" endLine="83" endPosition="3217">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@returnType"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3244" endLine="83" endPosition="3256">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.0/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3244" endLine="83" endPosition="3256">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.0/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3244" endLine="83" endPosition="3269">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.0"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3271" endLine="83" endPosition="3281">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.1/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3271" endLine="83" endPosition="3290">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.1"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3271" endLine="83" endPosition="3281">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.1/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3292" endLine="83" endPosition="3301">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.2"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3292" endLine="83" endPosition="3295">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.2/@type"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3303" endLine="83" endPosition="3313">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.3"/>
+  </children>
+  <children xsi:type="javaapplication:JavaNodeSourceRegion" startLine="83" startPosition="3303" endLine="83" endPosition="3306">
+    <node href="../CC4401_BlueJ_java.xmi#//@ownedElements.0/@ownedPackages.6/@ownedPackages.2/@ownedElements.0/@bodyDeclarations.1/@parameters.3/@type"/>
+  </children>
+  <unit href="../CC4401_BlueJ_java.xmi#//@compilationUnits.228"/>
+  <parent href="Package2Directory_java2kdm.xmi#/16"/>
+</javaapplication:Java2File>

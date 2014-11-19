@@ -105,7 +105,6 @@ import bluej.extmgr.ExtensionsManager;
 import bluej.extmgr.MenuManager;
 import bluej.extmgr.ToolsExtensionMenu;
 import bluej.extmgr.ViewExtensionMenu;
-import bluej.github.GitHubConnection;
 import bluej.groupwork.actions.CheckoutAction;
 import bluej.groupwork.actions.TeamActionGroup;
 import bluej.groupwork.ui.ActivityIndicator;
@@ -180,8 +179,8 @@ import bluej.views.MethodView;
 /**
  * The main user interface frame which allows editing of packages
  */
-
-public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener
+public class PkgMgrFrame extends AbstractPkgFrame
+    implements BlueJEventListener, MouseListener, PackageEditorListener, FocusListener
 {
     private static Font pkgMgrFont = PrefMgr.getStandardFont();
 
@@ -251,9 +250,10 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
     private List<Action> actionsToDisable;
     private List<JComponent> testItems;
     private MachineIcon machineIcon;
-
+    
     /* UI actions */ 
     private Action restartVMAction = RestartVMAction.getInstance();
+    
     
     /* The scroller which holds the PackageEditor we use to edit packages */
     private JScrollPane classScroller = null;
@@ -1347,7 +1347,7 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
         }
         return openedProject;
     }
-
+    
     /**Opens an empty window. Action performed when the "New Window" button is pressed*/
     public void doOpenWindow(){
     	/*Crea nueva ventana vacia*/
@@ -1368,7 +1368,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
     	frame.setVisible(true);
         	
     }
-
        
     
     /**
@@ -2758,7 +2757,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
                 testPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 14, 5));
 
                 runButton = createButton(RunTestsAction.getInstance(), false, false, 2, 4);
-
                 runButton.setText(Config.getString("pkgmgr.test.run"));
                 runButton.setAlignmentX(0.15f);
                 testPanel.add(runButton);
@@ -2839,9 +2837,7 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
                 javaMEPanel.add( label );
                 javaMEPanel.add( Box.createVerticalStrut( 4 ) );   
                 
-
                 AbstractButton button = createButton( DeployMIDletAction.getInstance(), false, false, 4, 4 );
-
                 button.setAlignmentX(0.5f);
                 javaMEPanel.add( button );
                 javaMEPanel.add( Box.createVerticalStrut( 4 ) );   
@@ -3039,7 +3035,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
             recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
             menu.add(recentProjectsMenu);
             createMenuItem(OpenNonBlueJAction.getInstance(), menu);
-
             createMenuItem(CloseProjectAction.getInstance(), menu);
             createMenuItem(SaveProjectAction.getInstance(), menu);
             createMenuItem(SaveProjectAsAction.getInstance(), menu);
@@ -3053,7 +3048,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
 
             createMenuItem(PageSetupAction.getInstance(), menu);
             createMenuItem(PrintAction.getInstance(), menu);
-
 
             if (!Config.usingMacScreenMenubar()) { // no "Quit" here for Mac
                 menu.addSeparator();
@@ -3073,14 +3067,12 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
 
             createMenuItem(NewUsesAction.getInstance(), menu);
             createMenuItem(NewInheritsAction.getInstance(), menu);
-
         }
 
         menu = new JMenu(Config.getString("menu.tools"));
         menu.setMnemonic(Config.getMnemonicKey("menu.tools"));
         menubar.add(menu);
         {
-
             createMenuItem(CompileAction.getInstance(), menu);
             createMenuItem(CompileSelectedAction.getInstance(), menu);
             createMenuItem(RebuildAction.getInstance(), menu);
@@ -3093,7 +3085,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
             testingMenu = new JMenu(Config.getString("menu.tools.testing"));
             testingMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
             {
-
                 createMenuItem(RunTestsAction.getInstance(), testingMenu);
                 endTestMenuItem = createMenuItem(EndTestRecordAction.getInstance(), testingMenu);
                 cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);
@@ -3157,7 +3148,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
             createCheckboxMenuItem(ShowDebuggerAction.getInstance(), menu, false);
             createCheckboxMenuItem(ShowTerminalAction.getInstance(), menu, false);
             createCheckboxMenuItem(ShowTextEvalAction.getInstance(), menu, false);
-
             JSeparator testSeparator = new JSeparator();
             testItems.add(testSeparator);
             menu.add(testSeparator);
@@ -3191,7 +3181,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
             createMenuItem(WebsiteAction.getInstance(), menu);
             createMenuItem(TutorialAction.getInstance(), menu);
             createMenuItem(StandardAPIHelpAction.getInstance(), menu);
-            
         }
         
                 
@@ -3213,6 +3202,7 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
         	
         }
         
+        
         addUserHelpItems(menu);
         updateRecentProjects();
 
@@ -3232,69 +3222,11 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
     }
     
     public void doNewIssueGitHub(){
-
-    	LoginDialog loginDlg = new LoginDialog(this);
-        loginDlg.setVisible(true);
-       
-        //until user enters valid input, busy waiting...
-        while(!loginDlg.isSucceeded()){
-        	//user cancels operation
-        	if(loginDlg.isCancelled()) return;
-        }
-        
-        String username = loginDlg.getUsername();
-        String password = loginDlg.getPassword();
-        
-        GitHubConnection ghc = new GitHubConnection();
-        //if bad credentials
-        if (200 != ghc.createClient(username, password)){
-        	JOptionPane.showMessageDialog(null, "Incorrect username or password.\n Please retry.", "Error", JOptionPane.ERROR_MESSAGE);
-        	
-        }
-        else{
-        	NewIssueDialog newIssDlg = new NewIssueDialog(this);
-        	newIssDlg.setVisible(true);
-        	
-        	//until user enters valid input, busy waiting...
-            while(!newIssDlg.isSucceeded()){
-            	//user cancels operation
-            	if(newIssDlg.isCancelled()) return;
-            }
-            
-            String repo = newIssDlg.getRepo();
-            String title = newIssDlg.getTitle();
-            String descr = newIssDlg.getDescription();
-            
-            try{
-            	List<String> repos = ghc.getRepositories();
-            	if (!repos.contains(repo)){
-            		JOptionPane.showMessageDialog(null, "No '"+repo+"' repository found", "Error", JOptionPane.ERROR_MESSAGE);
-                	return;
-            	}
-            	ghc.submitIssue(title, descr, repo);        	
-            }
-            catch (Exception e){
-            	JOptionPane.showMessageDialog(null, "Unexpected error. The operation was aborted", "Error", JOptionPane.ERROR_MESSAGE);
-            	return;            	
-            }
-            
-            JOptionPane.showMessageDialog(null, "The operation was completed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            	
-        }
-       
-    }
-
-        
-
-
-    /**
-=======
     	System.out.println("New Issue");
     }
 
 
    /**
->>>>>>> origin/windows_features_new
      * Add a new menu item to a menu.
      */
     private JCheckBoxMenuItem createCheckboxMenuItem(PkgMgrAction action, JMenu menu, boolean selected)
@@ -3344,7 +3276,6 @@ public class PkgMgrFrame extends AbstractPkgFrame implements BlueJEventListener,
     private void setupActionDisableSet()
     {
         actionsToDisable = new ArrayList<Action>();
-
         actionsToDisable.add(CloseProjectAction.getInstance());
         actionsToDisable.add(SaveProjectAction.getInstance());
         actionsToDisable.add(SaveProjectAsAction.getInstance());
