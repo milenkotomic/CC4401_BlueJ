@@ -863,7 +863,7 @@ public final class MoeActions
                 
             }
             if (node == null || !(node.getNode() instanceof MethodNode)) {
-                editor.writeMessage(Config.getString("editor.addjavadoc.notAMethod"));
+     
             } else {
                 MethodNode methodNode = ((MethodNode)node.getNode());
                 
@@ -877,7 +877,7 @@ public final class MoeActions
                 }
                 
                 if (hasJavadocComment) {
-                    editor.writeMessage(Config.getString("editor.addjavadoc.hasJavadoc"));
+
                 } else {
                 	 makejavadoc(methodNode, editor, node, caretPos);
 
