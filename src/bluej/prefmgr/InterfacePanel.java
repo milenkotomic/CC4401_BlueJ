@@ -50,6 +50,7 @@ import javax.swing.JTextField;
 import bluej.BlueJTheme;
 import bluej.Config;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedPkgFrame;
 import bluej.utility.filefilter.DirectoryFilter;
 
 /**
@@ -247,7 +248,11 @@ public class InterfacePanel extends JPanel
             PkgMgrFrame.updateTestingStatus();
             PkgMgrFrame.updateTeamStatus();
             PkgMgrFrame.updateJavaMEstatus(); 
-            
+        
+            TabbedPkgFrame.updateTestingStatus();
+            TabbedPkgFrame.updateTeamStatus();
+            TabbedPkgFrame.updateJavaMEstatus(); 
+                        
             String tkDir = toolkitDirField.getText(); 
             if (! tkDir.equals( "" )) {
                 Config.putPropString(toolkitDir, tkDir);

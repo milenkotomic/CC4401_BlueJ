@@ -51,6 +51,6 @@ final public class RebuildAction extends PkgMgrAction
     public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
-        pmf.getPackage().rebuild();
+        pmf.rebuild();
     }
 }

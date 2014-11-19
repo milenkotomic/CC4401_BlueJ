@@ -25,6 +25,7 @@ import bluej.debugger.DebuggerObject;
 import bluej.debugger.gentype.JavaType;
 import bluej.debugmgr.objectbench.ObjectBench;
 import bluej.debugmgr.objectbench.ObjectWrapper;
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.utility.JavaNames;
 
@@ -137,10 +138,10 @@ public class MethodInvokerRecord extends VoidMethodInvokerRecord
      * @see bluej.testmgr.record.VoidMethodInvokerRecord#toTestMethod(bluej.pkgmgr.PkgMgrFrame)
      */
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent,IPkgFrame frame)
     {
         StringBuffer sb = new StringBuffer();
-        sb.append(toTestMethodInit(pmf, secondIndent));
+        sb.append(toTestMethodInit(frame, secondIndent));
 
         String resultRef = toExpression();
 
@@ -165,7 +166,7 @@ public class MethodInvokerRecord extends VoidMethodInvokerRecord
      * up local variables if the result of the method is used more than once or
      * placed on the bench by using "Get".
      */
-    private String toTestMethodInit(PkgMgrFrame pkgMgrFrame, String secondIndent)
+    private String toTestMethodInit(IPkgFrame frame, String secondIndent)
     {
         // If we have already prepared the method call, we return the name that
         // references it.
@@ -173,6 +174,7 @@ public class MethodInvokerRecord extends VoidMethodInvokerRecord
             return "";
         }
 
+        PkgMgrFrame pkgMgrFrame = (PkgMgrFrame) frame;
         // Method result has not been put on the bench by using "Get".
         if (benchName == null) {
             if (getUsageCount() > 1) {

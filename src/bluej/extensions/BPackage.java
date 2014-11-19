@@ -212,9 +212,9 @@ public class BPackage
         packageId.getBluejPackage();
         PkgMgrFrame pmf = packageId.getPackageFrame();
         
-        List<ObjectWrapper> objects = pmf.getObjectBench().getObjects();
-        for(Iterator<ObjectWrapper> i=objects.iterator(); i.hasNext(); ) {
-            ObjectWrapper wrapper = i.next();
+        List<AbstractObjectWrapper> objects = pmf.getObjectBench().getObjects();
+        for(Iterator<AbstractObjectWrapper> i=objects.iterator(); i.hasNext(); ) {
+            AbstractObjectWrapper wrapper = i.next();
             if (instanceName.equals(wrapper.getName())) {
                 return wrapper.getBObject();
             }
@@ -234,11 +234,11 @@ public class BPackage
         packageId.getBluejPackage();
         PkgMgrFrame pmf = packageId.getPackageFrame();
    
-        List<ObjectWrapper> objectWrappers = pmf.getObjectBench().getObjects();
+        List<AbstractObjectWrapper> objectWrappers = pmf.getObjectBench().getObjects();
         BObject[] objects = new BObject [objectWrappers.size()];
         int index = 0;
-        for(Iterator<ObjectWrapper> i=objectWrappers.iterator(); i.hasNext(); ) {
-            ObjectWrapper wrapper = i.next();
+        for(Iterator<AbstractObjectWrapper> i=objectWrappers.iterator(); i.hasNext(); ) {
+        	AbstractObjectWrapper wrapper = i.next();
             objects[index] = wrapper.getBObject();
             index++;
         }

@@ -28,6 +28,7 @@ import javax.swing.*;
 
 import bluej.debugger.*;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
 import bluej.prefmgr.PrefMgr;
 
 /**
@@ -48,11 +49,11 @@ public class ArrayWrapper extends ObjectWrapper
     
     
 
-    public ArrayWrapper(PkgMgrFrame pmf, ObjectBench ob, DebuggerObject obj, String instanceName)
+    public ArrayWrapper(PkgMgrFrame pmf, ObjectBench objectBench, DebuggerObject obj, String instanceName)
     {
-        super(pmf, ob, obj, obj.getGenType(), instanceName);
+        super(pmf, objectBench, obj, obj.getGenType(), instanceName);
     }
-
+    
     /**
      * Creates the popup menu structure by parsing the object's class
      * inheritance hierarchy.

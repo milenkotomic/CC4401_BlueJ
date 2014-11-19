@@ -49,6 +49,7 @@ final public class SaveProjectAction extends PkgMgrAction
     public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
-        pmf.getProject().saveAll();
+        pmf.doSaveProject();
+        
     }
 }

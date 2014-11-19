@@ -27,6 +27,7 @@ import bluej.debugger.ExceptionDescription;
 import bluej.debugmgr.ExecutionEvent;
 import bluej.debugmgr.Invoker;
 import bluej.debugmgr.ResultWatcher;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.pkgmgr.PkgMgrFrame;
 import bluej.testmgr.record.InvokerRecord;
@@ -145,7 +146,7 @@ class DirectInvoker
      * generate an InvocationErrorException instead. In such cases no
      * expression arguments will be evaluated.
      *
-     * @param  onThisObjectInstance             the method is called on this object
+     * @param  instanceWrapper             the method is called on this object
      * @param  args                             The arguments for the method
      * @return                                  The result object; for a constructor call this is the
      *                                          constructed object; for any other invocation this will be
@@ -155,7 +156,7 @@ class DirectInvoker
      * @exception  InvocationArgumentException  Thrown if the arglist is not consistent with the signature
      * @exception  InvocationErrorException     Thrown if there is a system error
      */
-    DebuggerObject invokeMethod(ObjectWrapper onThisObjectInstance, MethodView callable, Object[] args)
+    DebuggerObject invokeMethod(AbstractObjectWrapper instanceWrapper, MethodView callable, Object[] args)
              throws InvocationArgumentException, InvocationErrorException
     {
         if (!paramsAlmostMatch(args, callable.getParameters())) {
@@ -168,7 +169,7 @@ class DirectInvoker
             invoker = new Invoker(pkgFrame, callable, watcher);
         }
         else {
-            invoker = new Invoker(pkgFrame, (MethodView) callable, onThisObjectInstance, watcher);
+            invoker = new Invoker(pkgFrame, (MethodView) callable, instanceWrapper, watcher);
         }
         String [] argStrings = convObjToString(args);
         invoker.invokeDirect(convObjToString(args));
@@ -179,7 +180,7 @@ class DirectInvoker
         String resultType = watcher.getResultType();
         if (resultType != null) {
             ExecutionEvent ee = new ExecutionEvent(pkgFrame.getPackage(), callable.getClassName(),
-                    (onThisObjectInstance==null)?null:onThisObjectInstance.getName());
+                    (instanceWrapper==null)?null:instanceWrapper.getName());
             ee.setMethodName(callable.getName());
             raiseEvent(ee, callable, argStrings, watcher);
         }

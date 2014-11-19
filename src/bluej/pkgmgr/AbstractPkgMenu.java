@@ -6,11 +6,13 @@ import java.awt.Insets;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
 
 import bluej.Config;
+import bluej.pkgmgr.actions.PkgMgrAction;
 import bluej.utility.Utility;
 
 public abstract class AbstractPkgMenu {
@@ -62,4 +64,19 @@ public abstract class AbstractPkgMenu {
         return button;
     }
 	
+    /**
+	 * Add a new menu item to a menu.
+	 */
+	protected JCheckBoxMenuItem createCheckboxMenuItem(PkgMgrAction action, JMenu menu, boolean selected)
+	{
+		//ButtonModel bmodel = action.getToggleModel(this);
+
+		JCheckBoxMenuItem item = new JCheckBoxMenuItem(action);
+		//if (bmodel != null)
+		// item.setModel(action.getToggleModel(this));
+		//else
+		item.setState(selected);
+		menu.add(item);
+		return item;
+	}
 }

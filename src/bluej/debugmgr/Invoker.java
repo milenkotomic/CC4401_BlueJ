@@ -48,6 +48,7 @@ import bluej.debugger.ExceptionDescription;
 import bluej.debugger.gentype.GenTypeParameter;
 import bluej.debugger.gentype.JavaType;
 import bluej.debugger.gentype.NameTransform;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectBenchInterface;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.pkgmgr.Package;
@@ -238,7 +239,7 @@ public class Invoker
      * @param watcher
      *            an object interested in the result of the invocation
      */
-    public Invoker(PkgMgrFrame pmf, MethodView member, ObjectWrapper objWrapper, ResultWatcher watcher)
+    public Invoker(PkgMgrFrame pmf, MethodView member, AbstractObjectWrapper objWrapper, ResultWatcher watcher)
     {
         initialize(pmf);
 

@@ -25,7 +25,9 @@ import java.awt.Graphics2D;
 
 import javax.swing.JMenuItem;
 
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
+import bluej.debugmgr.objectbench.ObjectWrapperTFU;
 import bluej.extensions.BDependency.Type;
 import bluej.extensions.event.ExtensionEvent;
 import bluej.extmgr.ExtensionMenu;
@@ -67,11 +69,11 @@ public final class ExtensionBridge
         return new BlueJ(aWrapper, aPrefManager);
     }
 
-    public static BObject newBObject(ObjectWrapper aWrapper) {
-        return new BObject(aWrapper);
+    public static BObject newBObject(AbstractObjectWrapper abstractObjectWrapper) {
+        return new BObject(abstractObjectWrapper);
     }
-
-    public static BProject newBProject(Project bluejPrj) {
+    
+   public static BProject newBProject(Project bluejPrj) {
         return new BProject(new Identifier(bluejPrj));
     }
 

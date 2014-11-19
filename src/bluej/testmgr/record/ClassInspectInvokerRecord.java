@@ -21,7 +21,9 @@
  */
 package bluej.testmgr.record;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
 
 /**
  * Records a single user interaction with the 
@@ -65,7 +67,7 @@ public class ClassInspectInvokerRecord extends InvokerRecord
     }
 
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent, IPkgFrame frame)
     {
         return secondIndent + className + statementEnd;
     }

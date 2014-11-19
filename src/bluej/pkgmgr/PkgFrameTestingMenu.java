@@ -1,5 +1,6 @@
 package bluej.pkgmgr;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,22 +15,25 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import bluej.Config;
 import bluej.pkgmgr.actions.CancelTestRecordAction;
 import bluej.pkgmgr.actions.EndTestRecordAction;
 import bluej.pkgmgr.actions.RunTestsAction;
+import bluej.pkgmgr.actions.ShowTestResultsAction;
 import bluej.prefmgr.PrefMgr;
 
 public class PkgFrameTestingMenu extends AbstractPkgMenu{
 
-	private JLabel testStatusMessage;
+	private JLabel testStatusMessage = new JLabel(" ");
     private JLabel recordingLabel;
     private AbstractButton endTestButton;
     private AbstractButton cancelTestButton;
     private JMenuItem endTestMenuItem;
     private JMenuItem cancelTestMenuItem;
+    private JMenuItem showTestResultsItem;
     
     private JMenu testingMenu;
     private List<JComponent> testItems = new ArrayList<JComponent>();
@@ -37,22 +41,41 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
     private AbstractButton runButton;
     
     public PkgFrameTestingMenu(){
-    	
+    	testingMenu = new JMenu(Config.getString("menu.tools.testing"));
+		testingMenu.setMnemonic(Config.getMnemonicKey("menu.tools"));
+	
     }
         
 	public void initTestingMenu(JMenu menu){
 	
 		createMenuItem(RunTestsAction.getInstance(), testingMenu);
 		endTestMenuItem = createMenuItem(EndTestRecordAction.getInstance(), testingMenu);
-	    cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);
+		cancelTestMenuItem = createMenuItem(CancelTestRecordAction.getInstance(), testingMenu);
 	    endTestMenuItem.setEnabled(false);
-	    cancelTestMenuItem.setEnabled(false);
+	    cancelTestMenuItem.setEnabled(false); 
 
 		testItems.add(testingMenu);
 		menu.add(testingMenu);
 		
 	}
+	
+	public void initViewTestingMenu(JMenu menu){
+		JSeparator testSeparator = new JSeparator();
+		testItems.add(testSeparator);
+		menu.add(testSeparator);
 
+		showTestResultsItem = createCheckboxMenuItem(ShowTestResultsAction.getInstance(), menu, false);
+		testItems.add(showTestResultsItem);
+	}
+
+	public JLabel getStatusMessage(){
+		return testStatusMessage;
+	}
+	
+	public void setFont(Font pkgMgrFont){
+		testStatusMessage.setFont(pkgMgrFont);
+	}
+	
     /**
      * Tell whether unit testing tools should be shown.
      */
@@ -119,7 +142,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(runButton);
 		 testPanel.add(Box.createVerticalStrut(8));
 
-		 JLabel recordingLabel = new JLabel(Config.getString("pkgmgr.test.record"), Config
+		 recordingLabel = new JLabel(Config.getString("pkgmgr.test.record"), Config
 				 .getFixedImageAsIcon("record.gif"), SwingConstants.LEADING);
 		 //recordingLabel.setFont(pkgMgrFont);
 		 recordingLabel.setEnabled(visible);
@@ -127,8 +150,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(recordingLabel);
 		 testPanel.add(Box.createVerticalStrut(3));
 
-		 Action action = EndTestRecordAction.getInstance();
-		 AbstractButton endTestButton = createButton(action, false, false, 2, 4);
+		 endTestButton = createButton(EndTestRecordAction.getInstance(), false, false, 2, 4);
 		 //make the button use a different label than the one from
 		 // action
 		 endTestButton.setText(Config.getString("pkgmgr.test.end"));
@@ -137,8 +159,7 @@ public class PkgFrameTestingMenu extends AbstractPkgMenu{
 		 testPanel.add(endTestButton);
 		 if(!Config.isMacOSLeopard()) testPanel.add(Box.createVerticalStrut(3));
 
-		 action = CancelTestRecordAction.getInstance();
-		 AbstractButton cancelTestButton = createButton(action, false, false, 2, 4);
+		 cancelTestButton = createButton(CancelTestRecordAction.getInstance(), false, false, 2, 4);
 		 //make the button use a different label than the one from
 		 // action
 		 cancelTestButton.setText(Config.getString("cancel"));

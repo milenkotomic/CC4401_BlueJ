@@ -3,8 +3,10 @@ package bluej.pkgmgr;
 public interface IPkgFrame{
 	/*Interface que deben cumplir todos los tipos de ventanas*/
 	
+	Object getLastFrame = null;
 	public void menuCall();
-		
+	public void clearStatus();	
+	
 	/*Llamadas a metodos cuando se apretan botones*/
 	
 	/*Project*/
@@ -12,10 +14,34 @@ public interface IPkgFrame{
 	public void doOpen();
 	public void doOpenNonBlueJ();
 	public void doClose(boolean keepLastFrame, boolean doSave);
+	public void doSaveProject();
+	public void doSaveAs(IPkgFrame target);
+	public void doImport();
+	public void doExport();
+	public void doPageSetup();
+	public void doPrint();
+	
+	/*Edit*/
+	public void doCreateNewClass();
+	public void doCreateNewPackage();
+	public void doAddFromFile();
+	public void doRemove();
+	public void doNewInherits();
+	public void doNewUses();
 	
 	/*Tools*/
+	public void doCompile();
+	public void compileSelected();
+	public void rebuild(); 
+	public void restartDebugger(); 
+	public void callLibraryClass();
+	public void generateProjectDocumentation();
 	public void showPreferences();
-		
+	
+	/*View*/
+	public void updateShowUsesInPackage();
+	public void updateShowExtendsInPackage();
+	
 	/*Help*/
 	public void aboutBlueJ();
 	public void showCopyright();
@@ -31,50 +57,26 @@ public interface IPkgFrame{
 	public void doOpenTab();
 	public void doOpenWindow();
 	
-
-	public void updateShowUsesInPackage();
 	
-	public void callLibraryClass();
+	
 	public void doTest();
-	public void restartDebugger();
-	public void doRemove();
-	public void doAddFromFile();
-	
-	public void doPrint();
-	public void doPageSetup();
-	
-	
-	public void doNewUses();
-	
-	public void doCreateNewPackage();
-	
-	public void doNewInherits();
-	public void doCreateNewClass();
-	public void doImport();
-	public void generateProjectDocumentation();
-	public void doExport();
-	public void doEndTest();
-	public void doDeployMIDlet();
-	public void compileSelected();
-	public void doCancelTest();
-	
 
-	public void updateShowExtendsInPackage();
-
-	public Project getProject();
-
-	public Package getPackage();
-
-	public void clearStatus();
-
-
+	/*public void doPushGitHub();
+	public void doNewIssueGitHub();
+	public void doCommitGitHub();	
 
 	/*Herramientas opcionales*/
 	/*public void updateTestingStatus();
 	public void updateTeamStatus();
 	public void updateJavaMEstatus();*/
-	
 
+	public void doEndTest();
+	public void doDeployMIDlet();
+	
+	public void doCancelTest();
+	public boolean isTextEvalVisible();
+	public void showHideTextEval(boolean b);
+	
 	
 	
 }

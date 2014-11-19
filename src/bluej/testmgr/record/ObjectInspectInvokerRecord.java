@@ -21,6 +21,7 @@
  */
 package bluej.testmgr.record;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -80,7 +81,7 @@ public class ObjectInspectInvokerRecord extends InvokerRecord
     }
 
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod(String secondIndent, IPkgFrame frame)
     {
         return null;
     }

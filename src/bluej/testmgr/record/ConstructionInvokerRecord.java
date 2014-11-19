@@ -21,7 +21,9 @@
  */
 package bluej.testmgr.record;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
+import bluej.pkgmgr.TabbedFrameUnit;
 
 /**
  * Records a single user interaction with the object construction
@@ -101,7 +103,7 @@ public class ConstructionInvokerRecord extends InvokerRecord
      * @return a String representing the test method src
      */
     @Override
-    public String toTestMethod(PkgMgrFrame pmf, String secondIndent)
+    public String toTestMethod (String secondIndent, IPkgFrame frame)
     {
         return secondIndent + type + " " + name + " = " + command + statementEnd;
     }

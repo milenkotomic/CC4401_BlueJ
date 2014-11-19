@@ -59,52 +59,6 @@ final public class SaveProjectAsAction extends PkgMgrAction
     public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
-        saveAs(pmf, pmf.getProject());
+        pmf.doSaveAs(pmf);
     }
-    
-    public void saveAs(IPkgFrame pmf2, Project project)
-    {
-        // get a file name to save under
-        File newName = FileUtility.getDirName((JFrame)pmf2,
-                Config.getString("pkgmgr.saveAs.title"),
-                Config.getString("pkgmgr.saveAs.buttonLabel"), false, true);
-
-        if (newName != null) {
-            project.saveAll();
-
-            int result = FileUtility.copyDirectory(project.getProjectDir(),
-                    newName);
-
-            switch (result) {
-            case FileUtility.NO_ERROR:
-                break;
-
-            case FileUtility.DEST_EXISTS_NOT_DIR:
-                DialogManager.showError((JFrame)pmf2, "directory-exists-file");
-                return;
-            case FileUtility.DEST_EXISTS_NON_EMPTY:
-                DialogManager.showError((JFrame)pmf2, "directory-exists-non-empty");
-                return;
-
-            case FileUtility.SRC_NOT_DIRECTORY:
-            case FileUtility.COPY_ERROR:
-                DialogManager.showError((JFrame)pmf2, "cannot-save-project");
-                return;
-            }
-
-            PkgMgrFrame.closeProject(project);
-
-            // open new project
-            Project openProj = Project.openProject(newName.getAbsolutePath(), null);
-
-            if (openProj != null) {
-                Package pkg = openProj.getPackage("");
-                PkgMgrFrame pmf = PkgMgrFrame.createFrame(pkg);
-                pmf.setVisible(true);
-            } else {
-                Debug.message("Save as: could not open package under new name");
-            }
-        }
-    }
-
 }

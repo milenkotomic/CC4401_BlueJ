@@ -22,7 +22,6 @@
 package bluej.pkgmgr.actions;
 
 import bluej.pkgmgr.IPkgFrame;
-import bluej.pkgmgr.PkgMgrFrame;
 
 /**
  * "Use library class" command. Allow the user to instantiate an object

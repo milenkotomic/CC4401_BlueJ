@@ -52,6 +52,6 @@ final public class CompileAction extends PkgMgrAction
     public void actionPerformed(IPkgFrame pmf)
     {
         pmf.menuCall();
-        pmf.getPackage().compile();
+        pmf.doCompile();
     }
 }

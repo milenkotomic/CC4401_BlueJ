@@ -1,14 +1,23 @@
 package bluej.pkgmgr;
 
+import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 
 import bluej.Config;
+import bluej.debugmgr.objectbench.ObjectBenchTFU;
 import bluej.debugmgr.texteval.TextEvalArea;
+import bluej.debugmgr.texteval.TextEvalAreaTFU;
 
 public class TextEvaluatorMgr {
 	private boolean showingTextEvaluator = false;
-	private TextEvalArea textEvaluator;
+	private TextEvalAreaTFU textEvaluator;
+	private ObjectBenchTFU objbench;
 		
+	public TextEvaluatorMgr(TextEvalAreaTFU text, ObjectBenchTFU objbench){
+		 textEvaluator = text;
+		 this.objbench = objbench;
+	}
+	
 	/**
      * Tell whether we are currently showing the text evaluation pane.
      * 
@@ -19,13 +28,21 @@ public class TextEvaluatorMgr {
         return showingTextEvaluator;
     }
 
+    public TextEvalAreaTFU getTextEval(){
+    	return textEvaluator;
+    }
+    
+    public JComponent getFocus(){
+    	return textEvaluator.getFocusableComponent();
+    }
+    
     /**
      * Show or hide the text evaluation component.
      */
-    public void showHideTextEval(boolean show)
+    public boolean showHideTextEval(boolean show)
     {
         if (showingTextEvaluator == show) // already showing the right thing?
-            return;
+            return false;
 
         if (show) {
             //addTextEvaluatorPane();
@@ -33,10 +50,11 @@ public class TextEvaluatorMgr {
         }
         else {
             removeTextEvaluatorPane();
-            //editor.requestFocus();
+            return true;
         }
-        //pack();
+
         showingTextEvaluator = show;
+        return false;
     }
 
     /**
@@ -74,27 +92,20 @@ public class TextEvaluatorMgr {
     }
 /*
 
-    private void addTextEvaluatorPane()
-    {
-        //classScroller.setPreferredSize(classScroller.getSize()); // memorize
-                                                                 // current size
-        if (textEvaluator == null) {
-            textEvaluator = new TextEvalArea(this, pkgMgrFont);
-            objectBenchSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, objbench, textEvaluator);
-            objectBenchSplitPane.setBorder(null);
-            objectBenchSplitPane.setResizeWeight(1.0);
-            objectBenchSplitPane.setDividerSize(5);
-            if (!Config.isRaspberryPi()) objectBenchSplitPane.setOpaque(false);
-            itemsToDisable.add(textEvaluator);
-            addCtrlTabShortcut(textEvaluator.getFocusableComponent());
-        }
-        else {
-            objectBenchSplitPane.setLeftComponent(objbench);
-        }
-        splitPane.setBottomComponent(objectBenchSplitPane);
-        showingTextEvaluator = true;
-    }
 
-    */
-    
+    /**
+     * Add the text evaluation pane in the lower area of the frame.
+     */
+    protected JSplitPane addTextEvaluatorPane()
+    {
+       	JSplitPane objectBenchSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, objbench, textEvaluator);
+        objectBenchSplitPane.setBorder(null);
+        objectBenchSplitPane.setResizeWeight(1.0);
+        objectBenchSplitPane.setDividerSize(5);
+        if (!Config.isRaspberryPi()) objectBenchSplitPane.setOpaque(false);
+        objectBenchSplitPane.setLeftComponent(objbench);
+                
+        showingTextEvaluator = true;
+        return objectBenchSplitPane;
+    }       
 }

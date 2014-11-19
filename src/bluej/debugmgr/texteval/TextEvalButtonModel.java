@@ -23,6 +23,7 @@ package bluej.debugmgr.texteval;
 
 import javax.swing.JToggleButton;
 
+import bluej.pkgmgr.IPkgFrame;
 import bluej.pkgmgr.PkgMgrFrame;
 
 /**
@@ -34,9 +35,9 @@ import bluej.pkgmgr.PkgMgrFrame;
  */
 public class TextEvalButtonModel extends JToggleButton.ToggleButtonModel
 {
-    private PkgMgrFrame pmf;
+    private IPkgFrame pmf;
     
-    public TextEvalButtonModel(PkgMgrFrame pmf)
+    public TextEvalButtonModel(IPkgFrame pmf)
     {
         super();
         this.pmf = pmf;

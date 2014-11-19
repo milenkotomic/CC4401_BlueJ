@@ -1,6 +1,5 @@
 package bluej.pkgmgr;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -10,61 +9,100 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
-import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import bluej.BlueJEvent;
 import bluej.BlueJTheme;
 import bluej.Config;
+import bluej.collect.DataCollector;
+import bluej.debugmgr.LibraryCallDialogTFU;
 import bluej.extmgr.MenuManager;
-import bluej.pkgmgr.PkgMgrFrame.ProjectOpener;
+import bluej.extmgr.ToolsExtensionMenu;
+import bluej.extmgr.ViewExtensionMenu;
+import bluej.pkgmgr.target.role.UnitTestClassRole;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.Debug;
 import bluej.utility.DialogManager;
 import bluej.utility.FileUtility;
+import bluej.utility.GradientFillPanel;
 import bluej.utility.Utility;
 
 public class TabbedPkgFrame extends AbstractPkgFrame {
 	JTabbedPane jtp;
 	PkgFrameMenu menuMgr;
-	PkgFrameTestingMenu testMenu;
-	private JLabel statusbar;
+	private static JLabel statusbar;
 	private JMenu recentProjectsMenu;
-	private static boolean testToolsShown;
 	
 	private MenuManager toolsMenuManager;
 	private MenuManager viewMenuManager;
 	
+	/*Variables comunes a todas las pestanas, se deben entregar como parametro*/
+	private PkgFrameTestingMenu test = new PkgFrameTestingMenu();
+	private PkgFrameJavaME javaME = new PkgFrameJavaME();
+	private PkgFrameTeamMenu team = new PkgFrameTeamMenu();
+		
 	private static List<TabbedFrameUnit> pkgTabs = new ArrayList<TabbedFrameUnit>();
 	protected TabbedFrameUnit recentFrame = null;
-		
+	
+	public TabbedFrameUnit getLastFrame(){
+		return recentFrame;
+	}
+	
 	public TabbedPkgFrame(){
 		setupWindow();
-		
-		menuMgr = new PkgFrameMenu();
-		testMenu = new PkgFrameTestingMenu();
-		
+				
 		jtp = new JTabbedPane();
-		getContentPane().add(jtp); //Incluye las pestaï¿½as en el JPanel actual, sin esto, no se ve nada!
+		jtp.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	            int index = jtp.getSelectedIndex();
+	            TabbedFrameUnit tfu = findTFUbyIndex(index);
+	            recentFrame = tfu;
+	            if(recentFrame.isEmptyFrame()){
+	            	recentFrame.enableFunctions(false);
+	            }else{
+	            	recentFrame.enableFunctions(true);
+	            }
+	            
+	        }
+	    });
+				
 		
-		recentFrame = new TabbedFrameUnit();
+		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));   
+		
+
+		setupMenu();
+		getContentPane().add(jtp); //Incluye las pestañas en el JPanel actual, sin esto, no se ve nada!
+		
+		recentFrame = new TabbedFrameUnit(menuMgr,test,javaME,team,true);
 		pkgTabs.add(recentFrame);	
 		
 		jtp.addTab("BlueJ", recentFrame.getTab());
-	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp));
-		
-		recentProjectsMenu = new JMenu(Config.getString("menu.package.openRecent"));
-        setupMenu();
+	    jtp.setTabComponentAt(0, new ButtonTabComponent(jtp,this));
+		    
+        toolsMenuManager = new MenuManager(menuMgr.getToolMenuPopUp());
+        if (frameCount() <= 1) {
+            toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(null));
+            toolsMenuManager.addExtensionMenu(null);
+        }
         
-        testToolsShown = testMenu.wantToSeeTestingTools();
-  
+        // Create the menu manager that looks after extension view menus
+        viewMenuManager = new MenuManager(menuMgr.getViewMenuPopUp());
+
+        // If this is the first frame create the extension view menu now.
+        // (Otherwise, it will be created during project open.)
+        if (frameCount() <= 1) 
+        	viewMenuManager.addExtensionMenu(null);
+        
 	}
 
     public void doNewIssueGitHub(){}
@@ -80,32 +118,97 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	    	setIconImage(icon);
 	    }
 	   
-	    setSize(new Dimension(695, 575));
+	    setSize(new Dimension(695, 610));
 	    setLocation(20,20);   
 	}
 	
 	private void setupMenu(){
 		JMenuBar menubar = new JMenuBar();
 		setJMenuBar(menubar);
+		updateRecentProjects();
+		menuMgr = new PkgFrameMenu(menubar);
+
+		menuMgr.setupPackageMenu(javaME,recentProjectsMenu);
+		menuMgr.setupEditMenu();
+		menuMgr.setupToolMenu(test,team);
+		menuMgr.setupViewMenu(test);
+		JMenu HelpMenu = menuMgr.setupHelpMenu();
 		
-		menuMgr.setupMenu(menubar,recentProjectsMenu);
+		addUserHelpItems(HelpMenu);
+        updateRecentProjects();
+		
+		menuMgr.setupGitHubMenu();
+		menuMgr.setupWindowsMenu();		
 	}
 
+	/**
+     * Add user defined help menus. Users can add help menus via the
+     * bluej.help.items property. See comment in bluej.defs.
+     */
+    private void addUserHelpItems(JMenu menu)
+    {
+        String helpItems = Config.getPropString("bluej.help.items", "");
+
+        if (helpItems != null && helpItems.length() > 0) {
+            menu.addSeparator();
+            URLDisplayer urlDisplayer = new URLDisplayer();
+
+            StringTokenizer t = new StringTokenizer(helpItems);
+
+            while (t.hasMoreTokens()) {
+                String itemID = t.nextToken();
+                String itemName = Config.getPropString("bluej.help." + itemID + ".label");
+                String itemURL = Config.getPropString("bluej.help." + itemID + ".url");
+                JMenuItem item = new JMenuItem(itemName);
+                item.setActionCommand(itemURL);
+                item.addActionListener(urlDisplayer);
+                menu.add(item);
+            }
+        }
+    }
+
+	
 	public TabbedFrameUnit createFrame(Package pkg){
-		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg);
+		TabbedFrameUnit tfu = new TabbedFrameUnit(pkg,menuMgr,test,javaME,team,false);
 				
 		pkgTabs.add(tfu);
 		return tfu;
 	}
 	
 	public TabbedFrameUnit createFrame(){
-		TabbedFrameUnit tfu = new TabbedFrameUnit();
+		TabbedFrameUnit tfu = new TabbedFrameUnit(menuMgr,test,javaME,team,false);
 		
 		pkgTabs.add(tfu);	
 		return tfu;
 
 	}
 	
+	protected void removeFrame(int index){	
+		
+        if (index != -1) {
+        	if(frameCount() != 1){
+        			closeFrame(findTFUbyIndex(index));
+        			jtp.remove(index);     	
+        	}
+        	else{
+        		doClose(false,true);
+        	}
+        
+        }
+		
+	}
+	
+	private TabbedFrameUnit findTFUbyIndex(int index){
+		 for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+	            TabbedFrameUnit pmf = i.next();
+
+	            int k = jtp.indexOfComponent(pmf.getTab());
+	            if (k == index)
+	                return pmf;
+	     }	 
+		 return null;
+	}
+		
 	 /**
      * Called on (almost) every menu invocation to clean up.
      */
@@ -160,41 +263,38 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
      */
     private void updateWindow()
     {
-        recentFrame.updateWindow();
+    	updateWindowTitle(recentFrame);
+    	recentFrame.updateWindow();
       
     }
-    
-       
-    
-    /**
-     * Remove a frame from the set of currently open PkgMgrFrames. The
-     * PkgMgrFrame must not be editing a package when this function is called.
-     */
+  
     public static void closeFrame(TabbedFrameUnit frame)
     {
-        if (!frame.isEmptyFrame())
-            throw new IllegalArgumentException();
-
-        pkgTabs.remove(frame);
-
-        BlueJEvent.removeListener(frame);
-        PrefMgr.setFlag(PrefMgr.SHOW_TEXT_EVAL, frame.isTextEvalVisible());
-
-        // frame should be garbage collected but we will speed it
-        // on its way
-        //pkgTabs.dispose();
+    	if(frame != null){
+	   		pkgTabs.remove(frame);
+	
+	        BlueJEvent.removeListener(frame);
+	        PrefMgr.setFlag(PrefMgr.SHOW_TEXT_EVAL, frame.isTextEvalVisible());
+    	}    
     }
            
     /*ACTIONS*/
         
+    public void doCreateNewClass(){
+    	recentFrame.doCreateNewClass();
+    }
+    
+    public void doCreateNewPackage(){
+    	recentFrame.doCreateNewPackage();
+    }
+    
     public void doOpenTab(){
-		TabbedFrameUnit newTab = new TabbedFrameUnit();
+		TabbedFrameUnit newTab = new TabbedFrameUnit(menuMgr,test,javaME,team,false);
         pkgTabs.add(newTab);
 		        
 		jtp.addTab("BlueJ", newTab.getTab());
-		jtp.setTabComponentAt(jtp.indexOfComponent(newTab.getTab()), new ButtonTabComponent(jtp));
+		jtp.setTabComponentAt(jtp.indexOfComponent(newTab.getTab()), new ButtonTabComponent(jtp,this));
 	}
-    
     public void doOpenWindow(){
     	TabbedPkgFrame frame = new TabbedPkgFrame();
      	frame.setVisible(true);
@@ -288,6 +388,13 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
             
             if (recentFrame.isEmptyFrame()) {
                 recentFrame.openPackage(unNamedPkg);
+                toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(unNamedPkg));
+                toolsMenuManager.addExtensionMenu(unNamedPkg.getProject());
+
+                viewMenuManager.setMenuGenerator(new ViewExtensionMenu(unNamedPkg));
+                viewMenuManager.addExtensionMenu(unNamedPkg.getProject());
+
+                updateWindowTitle(recentFrame);
             }
             else {
                 TabbedFrameUnit pmf = createFrame(unNamedPkg);
@@ -319,10 +426,11 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         if (frameCount() == 1) {
             if (keepLastFrame) {
                 recentFrame.testRecordingEnded(); // disable test controls
-                recentFrame.closePackage();
-                
+                toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(recentFrame.getPackage()));
+                recentFrame.closePackage(toolsMenuManager,viewMenuManager);
+                                                
                 updateRecentProjects();
-                menuMgr.enableFunctions(false); // changes menu items
+                recentFrame.enableFunctions(false); // changes menu items
                 updateWindow();
                 toolsMenuManager.addExtensionMenu(null);
                 viewMenuManager.addExtensionMenu(null);
@@ -332,7 +440,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
             }
         }
         else {
-           recentFrame.closePackage(); // remove package and frame
+           recentFrame.closePackage(toolsMenuManager,viewMenuManager); // remove package and frame
            closeFrame(recentFrame);
         }
     }
@@ -368,28 +476,44 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
         recentFrame.importFromFile(classes);
     }
     
-	
+	public void doRemove(){
+		recentFrame.doRemove();
+	}
+    
 	 /**
     * Check whether the status of the 'Show unit test tools' preference has
     * changed, and if it has, show or hide them as requested.
     */
-   public void updateTestingStatus()
-   {
-       if (testToolsShown != testMenu.wantToSeeTestingTools()) {
-           for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
-             
-               TabbedFrameUnit pmf = i.next();
-               
-               //Testing tools are always hidden in Java ME packages.  
-               if (pmf.isJavaMEpackage()) {
-            	   testMenu.showTestingTools(false);
-               }
-               else {
-                   testMenu.showTestingTools(!testToolsShown);               
-               }
-           }
-           testToolsShown = !testToolsShown;
+  	public static void updateTestingStatus(){
+		for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+			TabbedFrameUnit pmf = i.next();
+			pmf.updateTestShow();
+			pmf.updateTestingStatus();
        }
+	}
+		
+   /**
+    * Check whether the status of the 'Show teamwork tools' preference has
+    * changed, and if it has, show or hide them as requested.
+    */
+   public static void updateTeamStatus(){
+	   for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+		   TabbedFrameUnit pmf = i.next();
+		   pmf.updateTeamShow();
+		   pmf.updateTeamStatus();
+	   }
+   }
+   
+   /**
+    * Check whether the status of the 'Show Java ME tools' preference has
+    * changed, and if it has, show or hide them as requested.
+    */
+   public static void updateJavaMEstatus(){
+	   for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+		   TabbedFrameUnit tfu = i.next();            
+		   tfu.updateJavaMEShow();
+		   tfu.updateJavaMEstatus();
+	   }
    }
 
    /**
@@ -403,26 +527,38 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        if (openProj == null)
            return false;
        else {
-           Package initialPkg = openProj.getPackage(openProj.getInitialPackageName());
+    	   Package initialPkg = openProj.getPackage(openProj.getInitialPackageName());
 
            TabbedFrameUnit pmf = findFrame(initialPkg);
 
            if (pmf == null) {
                if (recentFrame.isEmptyFrame()) {
                    pmf = recentFrame;
-                   //pmf.openPackage(initialPkg);
-               }
+                   pmf.openPackage(initialPkg);
+                   toolsMenuManager.setMenuGenerator(new ToolsExtensionMenu(pmf.getPackage()));
+                   toolsMenuManager.addExtensionMenu(pmf.getProject());              
+                   updateWindowTitle(pmf);
+              }
                else {
                    pmf = createFrame(initialPkg);
                    DialogManager.tileWindow(pmf, this);
                }
            }
 
-           //pmf.setVisible(true);
-
            return true;
        }
    }
+   
+   /**
+    * Set the window title to show the current package name.
+    */
+   private void updateWindowTitle(TabbedFrameUnit tfu)
+   {
+       String title = tfu.getTabTitle();
+       int index = jtp.indexOfComponent(tfu.getTab());
+       jtp.setTitleAt(index, title);
+       
+   }  
    
    /**
     * Open a dialog that lets the user choose a project. The project selected
@@ -455,7 +591,7 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        if (projectPath != null) {
            if (projectPath.isDirectory() || Project.isProject(projectPath.toString())) {
                if(openProject(projectPath.getAbsolutePath())) {
-                   openedProject = true;
+                  openedProject = true;
                }
            }
            else {
@@ -468,7 +604,8 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
            // Close newly created frame if it was never used.
            closeFrame(pmf);
        }
-       return openedProject;
+      
+      return openedProject;
    }
    
    /**
@@ -540,11 +677,133 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        }
    }
    
+   public void doNewUses(){
+	   recentFrame.doNewUses();
+	   setStatus(Config.getString("pkgmgr.chooseUsesFrom"));
+   }
+   
+   public void doNewInherits(){
+	   recentFrame.doNewInherits();
+	   setStatus(Config.getString("pkgmgr.chooseInhFrom"));
+   }
+   
+   /**
+    * Toggle the state of the "show uses arrows" switch.
+    */
+   public void updateShowUsesInPackage()
+   {
+      recentFrame.updateShowUses(menuMgr.isShowUses());
+   }
+
+   public void updateShowExtendsInPackage()
+   {
+	   recentFrame.updateShowExtends(menuMgr.isShowExtends());
+   }
+   
+   //Variable inicializada de forma lazy, ¿vale la pena?
+   private ProjectPrintDialog projectPrintDialog = null;
+   /**
+    * Implementation of the "print" user function
+    */
+   public void doPrint()
+   {
+       if (projectPrintDialog == null)
+    	   projectPrintDialog = new ProjectPrintDialog(this);
+
+       if (projectPrintDialog.display()) {
+        PackagePrintManager printManager = new PackagePrintManager(recentFrame.getPackage(), pageFormatMgr.getPageFormat(),
+                  projectPrintDialog);
+          printManager.start();
+       }
+   }
+   
+   
+   private PageFormatMgr pageFormatMgr = new PageFormatMgr();
+   /**
+    * Creates a page setup dialog to alter page dimensions.
+    *  
+    */
+   public void doPageSetup()
+   {   
+	pageFormatMgr.doPageSetup();
+      
+   }
+    
+   /**
+    * Import into a new project or import into the current project.
+    */
+   public void doImport()
+   {
+       // prompt for the directory to import from
+       File importDir = FileUtility.getDirName(this, Config.getString("pkgmgr.importPkg.title"), Config
+               .getString("pkgmgr.importPkg.buttonLabel"), true, false);
+
+       if (importDir == null)
+           return;
+
+       if (!importDir.isDirectory())
+           return;
+
+       // if we are an empty then we shouldn't go on (we shouldn't get
+       // here)
+       if (recentFrame.isEmptyFrame())
+           return;
+
+       // recursively copy files from import directory to package directory
+       recentFrame.importProjectDir(importDir, true);
+   }
+   
+   private ExportManagerTFU exporter = null;
+   /**
+    * Implementation of the "Export" user function
+    */
+   public void doExport()
+   {  
+	   exporter = new ExportManagerTFU(recentFrame);
+	   exporter.export();
+	   setStatus(Config.getString("pkgmgr.exported.jar"));
+   }
+   
+   public void doSaveProject(){
+   		recentFrame.saveProject();
+   }
+   
+   public void doSaveAs(IPkgFrame target){
+	   recentFrame.doSaveAs(recentFrame);
+   }
+   
+   public void doCompile(){
+	   recentFrame.doCompile();
+   }
+   
+   public void compileSelected(){
+	   recentFrame.compileSelected();
+   }
+   
+   public void rebuild(){
+	   recentFrame.rebuild();
+   }
+   
+   public void generateProjectDocumentation(){
+	   recentFrame.generateProjectDocumentation();
+   }
+   
+   public void restartDebugger(){
+	   recentFrame.restartDebugger();
+   }
+   
+   private LibraryCallDialogTFU libraryCallDialog = null;
+  
+   public void callLibraryClass()
+   {
+       libraryCallDialog = new LibraryCallDialogTFU(recentFrame);
+       libraryCallDialog.setVisible(true);
+   }
    
    /**
     * Display a message in the status bar of the frame
     */
-   public final void setStatus(final String status)
+   public final static void setStatus(final String status)
    {
         EventQueue.invokeLater(new Runnable() {
            public void run() {
@@ -554,7 +813,64 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
        });
        
    }
-   
+    
+   public static TabbedFrameUnit[] getAllProjectFrames(Project proj)
+   {
+       return getAllProjectFrames(proj, "");
+   }
+
+   /**
+    * Find all PkgMgrFrames which are currently editing a particular project,
+    * and which are below a certain point in the package heirarchy.
+    * 
+    * @param proj
+    *            the project whose packages to look for
+    * @param pkgPrefix
+    *            the package name of a package to look for it and all its
+    *            children ie if passed java.lang we would return frames for
+    *            java.lang, and java.lang.reflect if they exist
+    * 
+    * @return an array of open PkgMgrFrame objects which are currently editing
+    *         a package from this project and which have the package prefix
+    *         specified, or null if none exist
+    */
+   public static TabbedFrameUnit[] getAllProjectFrames(Project proj, String pkgPrefix)
+   {
+       List<TabbedFrameUnit> list = new ArrayList<TabbedFrameUnit>();
+       String pkgPrefixWithDot = pkgPrefix + ".";
+
+       for (Iterator<TabbedFrameUnit> i = pkgTabs.iterator(); i.hasNext();) {
+           TabbedFrameUnit pmf = i.next();
+
+           if (!pmf.isEmptyFrame() && pmf.getProject() == proj) {
+
+               String fullName = pmf.getPackage().getQualifiedName();
+
+               // we either match against the package prefix with a
+               // dot added (this stops false matches against similarly
+               // named package ie java.lang and java.language) or we
+               // match the full name against the package prefix
+               if (fullName.startsWith(pkgPrefixWithDot))
+                   list.add(pmf);
+               else if (fullName.equals(pkgPrefix) || (pkgPrefix.length() == 0))
+                   list.add(pmf);
+           }
+       }
+
+       if (list.isEmpty())
+           return null;
+
+       return list.toArray(new TabbedFrameUnit[list.size()]);
+   }
+    
+	public boolean isTextEvalVisible() {
+		return recentFrame.isTextEvalVisible();
+	}
+
+	public void showHideTextEval(boolean b) {
+		recentFrame.showHideTextEval(b);
+		
+	}
    
 	class ProjectOpener implements ActionListener{
 	
@@ -569,90 +885,22 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 		           setStatus(Config.getString("pkgmgr.error.open"));
 		   }
 	}
-
-
-	@Override
-	public void updateShowUsesInPackage() {
-		// TODO Auto-generated method stub
 		
-	}
+    class URLDisplayer implements ActionListener{
+    	public URLDisplayer()
+    	{}
 
-	@Override
-	public void callLibraryClass() {
-		// TODO Auto-generated method stub
-		
-	}
+    	@Override
+    	public void actionPerformed(ActionEvent evt)
+    	{
+    		String url = evt.getActionCommand();
+    		showWebPage(url);
+    	}
+    }
 
-	@Override
+	
 	public void doTest() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void restartDebugger() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doRemove() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doPrint() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doPageSetup() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doNewUses() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doCreateNewPackage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doNewInherits() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doCreateNewClass() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doImport() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void generateProjectDocumentation() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doExport() {
-		// TODO Auto-generated method stub
-		
+			
 	}
 
 	@Override
@@ -668,34 +916,11 @@ public class TabbedPkgFrame extends AbstractPkgFrame {
 	}
 
 	@Override
-	public void compileSelected() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void doCancelTest() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void updateShowExtendsInPackage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Project getProject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Package getPackage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
     
 }
 

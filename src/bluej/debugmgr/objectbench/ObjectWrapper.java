@@ -94,7 +94,7 @@ import bluej.views.ViewFilter;
  *
  * @author  Michael Kolling
  */
-public class ObjectWrapper extends JComponent implements Accessible, FocusListener, InvokeListener, KeyListener, NamedValue
+public class ObjectWrapper extends AbstractObjectWrapper
 {
     // Strings
     static String methodException = Config.getString("debugger.objectwrapper.methodException");
@@ -150,27 +150,27 @@ public class ObjectWrapper extends JComponent implements Accessible, FocusListen
      * Get an object wrapper for a user object. 
      * 
      * @param pmf   The package manager frame
-     * @param ob    The object bench
+     * @param objectBench    The object bench
      * @param obj   The object to wrap
      * @param iType   The static type of the object, used as a fallback if
      *                the runtime type is inaccessible
      * @param instanceName  The name for the object reference
      * @return
      */
-    static public ObjectWrapper getWrapper(PkgMgrFrame pmf, ObjectBench ob,
+    static public ObjectWrapper getWrapper(PkgMgrFrame pmf, ObjectBench objectBench,
                                             DebuggerObject obj,
                                             GenTypeClass iType,
                                             String instanceName)
     {
         if (obj.isArray()) {
-            return new ArrayWrapper(pmf, ob, obj, instanceName);
+            return new ArrayWrapper(pmf, objectBench, obj, instanceName);
         }
         else {
-            return new ObjectWrapper(pmf, ob, obj, iType, instanceName);
+            return new ObjectWrapper(pmf, objectBench, obj, iType, instanceName);
         }
     }
 
-    protected ObjectWrapper(PkgMgrFrame pmf, ObjectBench ob, DebuggerObject obj, GenTypeClass iType, String instanceName)
+    protected ObjectWrapper(PkgMgrFrame pmf, ObjectBench objectBench, DebuggerObject obj, GenTypeClass iType, String instanceName)
     {
         // first one we construct will give us more info about the size of the screen
         if(!itemHeightKnown) {
@@ -179,7 +179,7 @@ public class ObjectWrapper extends JComponent implements Accessible, FocusListen
 
         this.pmf = pmf;
         this.pkg = pmf.getPackage();
-        this.ob = ob;
+        this.ob = objectBench;
         this.obj = obj;
         this.iType = iType;
         this.setName(instanceName);
@@ -256,20 +256,7 @@ public class ObjectWrapper extends JComponent implements Accessible, FocusListen
     // ----------------------------------------------
     
     private BObject singleBObject;  // Every ObjectWrapper has none or one BObject
-    
-    /**
-     * Return the extensions BObject associated with this ObjectWrapper.
-     * There should be only one BObject object associated with each Package.
-     * @return the BPackage associated with this Package.
-     */
-    public synchronized final BObject getBObject ()
-    {
-        if ( singleBObject == null )
-          singleBObject = ExtensionBridge.newBObject(this);
-          
-        return singleBObject;
-    }
-    
+       
     /**
      * Perform any necessary cleanup before removal from the object bench.
      */

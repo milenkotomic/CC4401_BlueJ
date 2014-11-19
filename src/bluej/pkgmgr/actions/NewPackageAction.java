@@ -22,7 +22,6 @@
 package bluej.pkgmgr.actions;
 
 import bluej.pkgmgr.IPkgFrame;
-import bluej.pkgmgr.PkgMgrFrame;
 
 /**
  * "New Package" command. Allows the user to create a new sub-package with a

@@ -50,6 +50,7 @@ import org.junit.Test;
 import bluej.Config;
 import bluej.collect.DataCollector;
 import bluej.debugger.DebuggerObject;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.editor.Editor;
 import bluej.parser.SourceLocation;
@@ -650,7 +651,7 @@ public class UnitTestClassRole extends ClassRole
             
             {
                 List<String> names = new ArrayList<String>();
-                for (ObjectWrapper obj : pmf.getObjectBench().getObjects())
+                for (AbstractObjectWrapper obj : pmf.getObjectBench().getObjects())
                 {
                     names.add(obj.getName());
                 }

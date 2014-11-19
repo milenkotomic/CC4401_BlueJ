@@ -67,6 +67,7 @@ import bluej.debugmgr.inspector.Inspector;
 import bluej.debugmgr.inspector.InspectorManager;
 import bluej.debugmgr.inspector.ObjectInspector;
 import bluej.debugmgr.inspector.ResultInspector;
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.editor.Editor;
 import bluej.extensions.BProject;
@@ -727,7 +728,7 @@ public class Project implements DebuggerListener, InspectorManager
         
         // See if it is on the bench:
         String benchName = null;
-        for (ObjectWrapper ow : PkgMgrFrame.findFrame(pkg).getObjectBench().getObjects())
+        for (AbstractObjectWrapper ow : PkgMgrFrame.findFrame(pkg).getObjectBench().getObjects())
         {
             if (ow.getObject().equals(obj))
                 benchName = ow.getName();
@@ -1421,11 +1422,20 @@ public class Project implements DebuggerListener, InspectorManager
     {
         // remove bench objects for all frames in this project
         PkgMgrFrame[] frames = PkgMgrFrame.getAllProjectFrames(this);
-
-        for (int i = 0; i < frames.length; i++) {
-            frames[i].getObjectBench().removeAllObjects(getUniqueId());
-            frames[i].clearTextEval();
-        }
+        TabbedFrameUnit[] tfUnits = TabbedPkgFrame.getAllProjectFrames(this);
+        
+        if(frames!=null){
+	        for (int i = 0; i < frames.length; i++) {
+	            frames[i].getObjectBench().removeAllObjects(getUniqueId());
+	            frames[i].clearTextEval();
+	        }
+        }else{
+        	for (int i = 0; i < tfUnits.length; i++) {
+        		tfUnits[i].getObjectBench().removeAllObjects(getUniqueId());
+        		tfUnits[i].clearTextEval();
+        	}
+        }	
+        	
     }
 
     /**

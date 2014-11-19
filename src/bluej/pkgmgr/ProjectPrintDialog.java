@@ -51,9 +51,9 @@ public class ProjectPrintDialog extends EscapeDialog
      * 
      * @param parent the frame that called the print dialog
      */
-    public ProjectPrintDialog(PkgMgrFrame parent)
+    public ProjectPrintDialog(IPkgFrame parent)
     {
-        super(parent, Config.getString("pkgmgr.printDialog.title"), true);
+        super((JFrame)parent, Config.getString("pkgmgr.printDialog.title"), true);
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent E)
@@ -76,11 +76,19 @@ public class ProjectPrintDialog extends EscapeDialog
                 
         printSource = new JCheckBox(Config.getString("pkgmgr.printDialog.printSource"));
         mainPanel.add(printSource);
-                
-        if(parent.getPackage().isUnnamedPackage()) {
+         
+        Boolean bool;
+        if(parent instanceof PkgMgrFrame){
+        	bool = ((PkgMgrFrame)parent).getPackage().isUnnamedPackage();
+        }else{
+        	bool = ((TabbedPkgFrame)parent).getLastFrame().getPackage().isUnnamedPackage();
+        }
+        
+        if(bool) {
             printReadme = new JCheckBox(Config.getString("pkgmgr.printDialog.printReadme"));
             mainPanel.add(printReadme);
         }
+        
         mainPanel.add(Box.createVerticalStrut(BlueJTheme.generalSpacingWidth));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));

@@ -23,6 +23,7 @@ package bluej.extmgr;
 
 import javax.swing.JMenuItem;
 
+import bluej.debugmgr.objectbench.AbstractObjectWrapper;
 import bluej.debugmgr.objectbench.ObjectWrapper;
 import bluej.extensions.BObject;
 import bluej.extensions.ExtensionBridge;
@@ -36,17 +37,17 @@ import bluej.extensions.MenuGenerator;
  */
 public class ObjectExtensionMenu implements ExtensionMenu
 {
-    private ObjectWrapper objectWrapper;
+    private AbstractObjectWrapper objectWrapper;
 
     /**
      * Constructor. Creates a new {@link ObjectExtensionMenu}.
      * 
-     * @param objectWrapper
+     * @param abstractObjectWrapper
      *            The object which was selected by the user.
      */
-    public ObjectExtensionMenu(ObjectWrapper objectWrapper)
+    public ObjectExtensionMenu(AbstractObjectWrapper abstractObjectWrapper)
     {
-        this.objectWrapper = objectWrapper;
+        this.objectWrapper = abstractObjectWrapper;
     }
 
     @Override
