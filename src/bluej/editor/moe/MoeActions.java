@@ -20,6 +20,7 @@ package bluej.editor.moe;
 import java.awt.Container;
 import java.awt.Event;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -33,6 +34,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,6 +68,9 @@ import javax.swing.JPanel;
 import bluej.Config;
 import bluej.debugger.gentype.JavaType;
 import bluej.editor.moe.MoeIndent.AutoIndentInformation;
+import bluej.parser.InfoParser;
+import bluej.parser.entity.ClassLoaderResolver;
+import bluej.parser.entity.EntityResolver;
 import bluej.parser.entity.JavaEntity;
 import bluej.parser.nodes.CommentNode;
 import bluej.parser.nodes.FieldNode;
@@ -1120,8 +1125,16 @@ public final class MoeActions
     	public DetectCodeSmellAction() {
 			super("detect-codesmell");
 		}
-		public String detect(String path) {
-			return "Aquí van los code-smells detectados";
+		public String detect(String path) throws FileNotFoundException {
+			BufferedReader reader;
+			EntityResolver resolver;
+			InfoParser infop;
+			reader = (new BufferedReader(new InputStreamReader(new FileInputStream(new File(path)))));
+			resolver = new ClassLoaderResolver(InfoParser.class.getClassLoader());
+			infop = new InfoParser(reader, resolver);
+			infop.parseCU();
+			//String res = 
+			return  infop.getReport();
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -1134,29 +1147,25 @@ public final class MoeActions
             int caretPos=0;
             caretPos = editor.getCurrentTextPane().getCaretPosition();
             NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
-            path(editor, caretPos,node);
+            try {
+				path(editor);
+			} catch (HeadlessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
-		public void path(MoeEditor editor, int caretPos,NodeAndPosition<ParsedNode> node) {
-			while (node != null && node.getNode().getNodeType() != ParsedNode.NODETYPE_TYPEDEF) {
-                node = node.getNode().findNodeAt(caretPos, node.getPosition());
-                
-            }
-            if (node == null || !(node.getNode() instanceof ParsedTypeNode)) {
-                editor.writeMessage(Config.getString("Not in a Class"));
-            } 
-            else {
-                ParsedTypeNode fieldNode = ((ParsedTypeNode)node.getNode());
-                String var= fieldNode.getName();
-                String path=editor.getFilename();
-                JPanel frame= new JPanel();
-                JOptionPane.showMessageDialog(frame,
-                	    "Path: "+ path +
-                	    "\n Class to analize: "+ var+
-                	    "\n Detections:\n"+ detect(path),
-                	    "Code Smell Detector",
-                	    JOptionPane.PLAIN_MESSAGE);
-            }
+		public void path(MoeEditor editor) throws HeadlessException, FileNotFoundException {
+		
+            String path=editor.getFilename();
+            JPanel frame= new JPanel();
+            JOptionPane.showMessageDialog(frame,
+            	    "Report:\n"+ detect(path),
+            	    "Code Smell Detector",
+            	    JOptionPane.PLAIN_MESSAGE);
 		}
     }
 		

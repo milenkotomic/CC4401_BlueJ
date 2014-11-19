@@ -1333,9 +1333,9 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 		 }
 
 		 @Override
-		 public int cohesionLevel() {
+		 public int couplingLevel() {
 			 // TODO Auto-generated method stub
-			 return 0;
+			 return imports.size();
 		 }
 
 		 @Override
@@ -1398,6 +1398,35 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 		public int switchStmts() {
 			return switchStmtCounter;
 		}
+		
+		public String getReport(){
+			String longMethod = complexMethods(15).size()>0?"\t Long method \n":"";			
+			String largeClass = methodQuantity()>7 || instanceVariables() > 7 || couplingLevel() > 3?"\t Large Class \n":"";
+			String longParameterList = manyParameters(3).size()>0?"\t Long Parameter List \n":"";
+			String switchStatements = switchStmts()>2?"\t Switch Statements \n":"";	
+			String deadCode = getUnusedPrivateMethods().size()>0?"\t Dead Code \n":"";	
+			
+			String res = "\t Instance Variables: " + instanceVariables() + "\n"
+			+ "\t Methods: " + methodQuantity() + "\n"
+			+ "\t Coupling Level(imports): " + couplingLevel() + "\n"
+			+ "\t Unused Private Methods: " + getUnusedPrivateMethods().size() + "\n"
+			+ "\t Methods with a long parameter list: " + manyParameters(3).size() + "\n"
+			+ "\t Long Methods: " + complexMethods(15).size() + "\n"
+			+ "\t Switch statements: " + switchStmts()+ "\n \n"
+			+ "Detections: \n"
+			+ longMethod
+			+ largeClass
+			+ longParameterList
+			+ switchStatements
+			+ deadCode;
+			
+			
+			
+			
+			
+			return res;
+		}
+
 
 
 }
