@@ -39,7 +39,6 @@ import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
 import bluej.Config;
-import bluej.parser.JavadocDetector;
 
 /**
  * A compiler implementation using the Compiler API introduced in Java 6.
@@ -72,12 +71,7 @@ public class CompilerAPICompiler extends Compiler
     public boolean compile(final File[] sources, final CompileObserver observer,
             final boolean internal, List<String> userOptions, Charset fileCharset) 
     {
-    	JavadocDetector jd=new JavadocDetector();
-    	for (int i=0;i<sources.length;i++){
-    		try {
-				jd.javadocReport(sources[i]);
-			} catch (Exception e) {			}
-    	}
+
     	boolean result = true;
         JavaCompiler jc = ToolProvider.getSystemJavaCompiler();
         List<String> optionsList = new ArrayList<String>();

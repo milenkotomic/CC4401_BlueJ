@@ -20,6 +20,7 @@ package bluej.editor.moe;
 import java.awt.Container;
 import java.awt.Event;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -33,6 +34,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,16 +63,21 @@ import javax.swing.text.Keymap;
 import javax.swing.text.TextAction;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import javax.swing.JPanel;
 
 import bluej.Config;
 import bluej.debugger.gentype.JavaType;
 import bluej.editor.moe.MoeIndent.AutoIndentInformation;
+import bluej.parser.InfoParser;
+import bluej.parser.entity.ClassLoaderResolver;
+import bluej.parser.entity.EntityResolver;
 import bluej.parser.entity.JavaEntity;
 import bluej.parser.nodes.CommentNode;
 import bluej.parser.nodes.FieldNode;
 import bluej.parser.nodes.MethodNode;
 import bluej.parser.nodes.NodeTree.NodeAndPosition;
 import bluej.parser.nodes.ParsedNode;
+import bluej.parser.nodes.ParsedTypeNode;
 import bluej.prefmgr.PrefMgr;
 import bluej.prefmgr.PrefMgrDialog;
 import bluej.utility.Debug;
@@ -803,6 +810,50 @@ public final class MoeActions
         {
             super ("add-javadoc");
         }
+        
+        private void makejavadoc(MethodNode methodNode , MoeEditor editor, NodeAndPosition<ParsedNode> node, int caretPos ){
+            StringBuilder indent = new StringBuilder();
+            int column = editor.getLineColumnFromOffset(node.getPosition()).getColumn();
+            for (int i = 0;i < column-1;i++)
+                indent.append(' ');
+            StringBuilder newComment = new StringBuilder();
+            newComment.append("/**\n");
+            
+            JavaEntity retTypeEntity = methodNode.getReturnType();
+            
+            if (retTypeEntity == null) {
+                // It's a constructor:
+                newComment.append(indent).append(" * ").append(methodNode.getName()).append(" ");
+                newComment.append(Config.getString("editor.addjavadoc.constructor")).append("\n");
+            } else {
+                // It's a method:
+                newComment.append(indent).append(" * ").append(Config.getString("editor.addjavadoc.method"));
+                newComment.append(" ").append(methodNode.getName()).append("\n");
+            }
+            newComment.append(indent).append(" *\n");
+
+            for (String s: methodNode.getParamNames()) {
+                newComment.append(indent).append(" * @para ").append(s).append("  ");
+                newComment.append(Config.getString("editor.addjavadoc.parameter")).append("\n");
+            }
+            
+            if (retTypeEntity != null) {
+                JavaType retType = retTypeEntity.resolveAsType().getType();
+                if (retType != null && !retType.isVoid()) {
+                    newComment.append(indent).append(" * @return ");
+                    newComment.append(Config.getString("editor.addjavadoc.returnValue")).append("\n");
+                }
+            }
+            
+            newComment.append(indent).append(" */\n").append(indent);
+            
+            editor.undoManager.beginCompoundEdit();
+            editor.getCurrentTextPane().setCaretPosition(node.getPosition());
+            editor.getCurrentTextPane().replaceSelection(newComment.toString());
+            editor.getCurrentTextPane().setCaretPosition((caretPos + newComment.length()));
+            editor.undoManager.endCompoundEdit();
+        }
+        
         private void createjavadoc(MoeEditor editor, int caretPos, NodeAndPosition<ParsedNode> node){
         	
             
@@ -812,7 +863,7 @@ public final class MoeActions
                 
             }
             if (node == null || !(node.getNode() instanceof MethodNode)) {
-                editor.writeMessage(Config.getString("editor.addjavadoc.notAMethod"));
+     
             } else {
                 MethodNode methodNode = ((MethodNode)node.getNode());
                 
@@ -826,48 +877,10 @@ public final class MoeActions
                 }
                 
                 if (hasJavadocComment) {
-                    editor.writeMessage(Config.getString("editor.addjavadoc.hasJavadoc"));
-                } else {
-                    StringBuilder indent = new StringBuilder();
-                    int column = editor.getLineColumnFromOffset(node.getPosition()).getColumn();
-                    for (int i = 0;i < column-1;i++)
-                        indent.append(' ');
-                    StringBuilder newComment = new StringBuilder();
-                    newComment.append("/**\n");
-                    
-                    JavaEntity retTypeEntity = methodNode.getReturnType();
-                    
-                    if (retTypeEntity == null) {
-                        // It's a constructor:
-                        newComment.append(indent).append(" * ").append(methodNode.getName()).append(" ");
-                        newComment.append(Config.getString("editor.addjavadoc.constructor")).append("\n");
-                    } else {
-                        // It's a method:
-                        newComment.append(indent).append(" * ").append(Config.getString("editor.addjavadoc.method"));
-                        newComment.append(" ").append(methodNode.getName()).append("\n");
-                    }
-                    newComment.append(indent).append(" *\n");
 
-                    for (String s: methodNode.getParamNames()) {
-                        newComment.append(indent).append(" * @param ").append(s).append("  ");
-                        newComment.append(Config.getString("editor.addjavadoc.parameter")).append("\n");
-                    }
-                    
-                    if (retTypeEntity != null) {
-                        JavaType retType = retTypeEntity.resolveAsType().getType();
-                        if (retType != null && !retType.isVoid()) {
-                            newComment.append(indent).append(" * @return ");
-                            newComment.append(Config.getString("editor.addjavadoc.returnValue")).append("\n");
-                        }
-                    }
-                    
-                    newComment.append(indent).append(" */\n").append(indent);
-                    
-                    editor.undoManager.beginCompoundEdit();
-                    editor.getCurrentTextPane().setCaretPosition(node.getPosition());
-                    editor.getCurrentTextPane().replaceSelection(newComment.toString());
-                    editor.getCurrentTextPane().setCaretPosition((caretPos + newComment.length()));
-                    editor.undoManager.endCompoundEdit();
+                } else {
+                	 makejavadoc(methodNode, editor, node, caretPos);
+
                 }
             
             }
@@ -882,14 +895,33 @@ public final class MoeActions
             if (!editor.containsSourceCode()){
                 return;
             }
-            int caretPos=0;
-           caretPos = editor.getCurrentTextPane().getCaretPosition();
-            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
-            createjavadoc(editor, caretPos,node);
-         
-           
+            int caretPos= getLastpositionofclass(editor).getPosition();
             
+            //getnode class           
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            
+            int classnode_end	= getLastpositionofclass(editor).getEnd();
+            while (caretPos <= classnode_end ){
+            	createjavadoc(editor, caretPos,node);
+            	caretPos++;
+            	classnode_end= getLastpositionofclass(editor).getEnd();
+            	
+            }           
         }
+        private NodeAndPosition<ParsedNode>  getLastpositionofclass(MoeEditor editor){
+        	int caretPos=0;
+            
+            //getnode class           
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            while (true){
+            	if (node!=null)
+            		break;
+            	caretPos++;
+            	node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            }
+            return node;
+        }
+        
     }
 
     // --------------------------------------------------------------------
@@ -1087,6 +1119,60 @@ public final class MoeActions
 		}
     }
     
+    // --------------------------------------------------------------------
+    
+    class DetectCodeSmellAction extends MoeAbstractAction{
+    	public DetectCodeSmellAction() {
+			super("detect-codesmell");
+		}
+		public String detect(String path) throws FileNotFoundException {
+			BufferedReader reader;
+			EntityResolver resolver;
+			InfoParser infop;
+			reader = (new BufferedReader(new InputStreamReader(new FileInputStream(new File(path)))));
+			resolver = new ClassLoaderResolver(InfoParser.class.getClassLoader());
+			infop = new InfoParser(reader, resolver);
+			infop.parseCU();
+			//String res = 
+			return  infop.getReport();
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			MoeEditor editor = getEditor(e);
+            
+            //this method should not be actioned if the editor is not displaying source code
+            if (!editor.containsSourceCode()){
+                return;
+            }
+            int caretPos=0;
+            caretPos = editor.getCurrentTextPane().getCaretPosition();
+            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
+            try {
+				path(editor);
+			} catch (HeadlessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		public void path(MoeEditor editor) throws HeadlessException, FileNotFoundException {
+		
+            String path=editor.getFilename();
+            JPanel frame= new JPanel();
+            JOptionPane.showMessageDialog(frame,
+            	    "Report:\n"+ detect(path),
+            	    "Code Smell Detector",
+            	    JOptionPane.PLAIN_MESSAGE);
+		}
+    }
+		
+    	
+    
+    
+
     // --------------------------------------------------------------------
 
     class CutLineAction extends MoeAbstractAction
@@ -2278,6 +2364,7 @@ public final class MoeActions
                 new CopyLineAction(),
                 new CreateGetterAction(),
                 new CreateSetterAction(),
+                new DetectCodeSmellAction(),
                 new CutLineAction(), 
                 new CutEndOfLineAction(), 
                 new CutWordAction(),
