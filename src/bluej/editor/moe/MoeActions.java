@@ -74,6 +74,7 @@ import bluej.parser.entity.EntityResolver;
 import bluej.parser.entity.JavaEntity;
 import bluej.parser.nodes.CommentNode;
 import bluej.parser.nodes.FieldNode;
+import bluej.parser.nodes.ImportNode;
 import bluej.parser.nodes.MethodNode;
 import bluej.parser.nodes.NodeTree.NodeAndPosition;
 import bluej.parser.nodes.ParsedNode;
@@ -861,7 +862,7 @@ public final class MoeActions
             }
             if (node == null || !(node.getNode() instanceof MethodNode)) {
 
-                Debug.message("node");
+             
             } else {
                 MethodNode methodNode = ((MethodNode)node.getNode());
                 
@@ -876,7 +877,6 @@ public final class MoeActions
                 
                 if (hasJavadocComment) {
 
-                    Debug.message("comment");
                 } else {
                 	 makejavadoc(methodNode, editor, node, caretPos);
 
@@ -905,7 +905,9 @@ public final class MoeActions
             	caretPos++;
             	classnode_end= getLastpositionofclass(editor).getEnd();
             	
-            }           
+            }
+            editor.writeMessage(Config.getString("Done"));
+            
         }
         private NodeAndPosition<ParsedNode>  getLastpositionofclass(MoeEditor editor){
         	int caretPos=0;
@@ -913,7 +915,7 @@ public final class MoeActions
             //getnode class           
             NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
             while (true){
-            	if (node!=null)
+            	if (node!=null && !(node.getNode() instanceof ImportNode) )
             		break;
             	caretPos++;
             	node = editor.getParsedNode().findNodeAt(caretPos, 0);
