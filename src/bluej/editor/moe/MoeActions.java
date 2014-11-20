@@ -912,10 +912,10 @@ public final class MoeActions
         private NodeAndPosition<ParsedNode>  getLastpositionofclass(MoeEditor editor){
         	int caretPos=0;
             
-            //getnode class           
+            //getnode class
             NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
             while (true){
-            	if (node!=null && !(node.getNode() instanceof ImportNode) )
+            	if (node!=null && node.getNode().getNodeType() == ParsedNode.NODETYPE_TYPEDEF )
             		break;
             	caretPos++;
             	node = editor.getParsedNode().findNodeAt(caretPos, 0);
@@ -1134,7 +1134,6 @@ public final class MoeActions
 			resolver = new ClassLoaderResolver(InfoParser.class.getClassLoader());
 			infop = new InfoParser(reader, resolver);
 			infop.parseCU();
-			//String res = 
 			return  infop.getReport();
 		}
 		@Override
@@ -1145,9 +1144,6 @@ public final class MoeActions
             if (!editor.containsSourceCode()){
                 return;
             }
-            int caretPos=0;
-            caretPos = editor.getCurrentTextPane().getCaretPosition();
-            NodeAndPosition<ParsedNode> node = editor.getParsedNode().findNodeAt(caretPos, 0);
             try {
 				path(editor);
 			} catch (HeadlessException e1) {
