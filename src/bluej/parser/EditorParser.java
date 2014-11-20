@@ -1,21 +1,18 @@
 /*
+ /*
  This file is part of the BlueJ program. 
  Copyright (C) 2010,2011,2012,2013  Michael Kolling and John Rosenberg 
-
  This program is free software; you can redistribute it and/or 
  modify it under the terms of the GNU General Public License 
  as published by the Free Software Foundation; either version 2 
  of the License, or (at your option) any later version. 
-
  This program is distributed in the hope that it will be useful, 
  but WITHOUT ANY WARRANTY; without even the implied warranty of 
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
  GNU General Public License for more details. 
-
  You should have received a copy of the GNU General Public License 
  along with this program; if not, write to the Free Software 
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA. 
-
  This file is subject to the Classpath exception as provided in the  
  LICENSE.txt file that accompanied this code.
  */
@@ -1333,9 +1330,8 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 		 }
 
 		 @Override
-		 public int cohesionLevel() {
-			 // TODO Auto-generated method stub
-			 return 0;
+		 public int couplingLevel() {
+			 return imports.size();
 		 }
 
 		 @Override
@@ -1398,6 +1394,35 @@ public class EditorParser extends JavaParser implements CodeSmellsDetector
 		public int switchStmts() {
 			return switchStmtCounter;
 		}
+		
+		public String getReport(){
+			String longMethod = complexMethods(15).size()>0?"\t Long method \n":"";			
+			String largeClass = methodQuantity()>7 || instanceVariables() > 7 || couplingLevel() > 3?"\t Large Class \n":"";
+			String longParameterList = manyParameters(3).size()>0?"\t Long Parameter List \n":"";
+			String switchStatements = switchStmts()>2?"\t Switch Statements \n":"";	
+			String deadCode = getUnusedPrivateMethods().size()>0?"\t Dead Code \n":"";	
+			
+			String res = "\t Instance Variables: " + instanceVariables() + "\n"
+			+ "\t Methods: " + methodQuantity() + "\n"
+			+ "\t Coupling Level(imports): " + couplingLevel() + "\n"
+			+ "\t Unused Private Methods: " + getUnusedPrivateMethods().size() + "\n"
+			+ "\t Methods with a long parameter list: " + manyParameters(3).size() + "\n"
+			+ "\t Long Methods: " + complexMethods(15).size() + "\n"
+			+ "\t Switch statements: " + switchStmts()+ "\n \n"
+			+ "Detections: \n"
+			+ longMethod
+			+ largeClass
+			+ longParameterList
+			+ switchStatements
+			+ deadCode;
+			
+			
+			
+			
+			
+			return res;
+		}
+
 
 
 }
